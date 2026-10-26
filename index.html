@@ -21,36 +21,39 @@
       min-height: 100dvh;
       padding: 24px;
       background-color: white;
-
-      /* Main image on top, clean image underneath */
       background-image:
         url("background1.jpg"),
         url("backgroundclean.jpg");
-      background-size:
-        contain,
-        cover;
-      background-position:
-        left top,
-        center center;
-      background-repeat:
-        no-repeat,
-        no-repeat;
+      background-size: contain, cover;
+      background-position: left top, center center;
+      background-repeat: no-repeat, no-repeat;
       background-attachment: scroll;
-
       color: black;
       font-family: "Times New Roman", Times, serif;
       font-size: 14px;
       font-weight: normal;
     }
 
+    .description {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      max-width: 360px;
+      line-height: 1.3;
+      z-index: 2;
+    }
+
     .events {
       position: absolute;
-      top: 28%;
-      left: 5%;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       gap: 7px;
+      text-align: center;
+      z-index: 2;
     }
 
     .events a,
@@ -68,50 +71,60 @@
       position: fixed;
       bottom: 24px;
       left: 24px;
+      z-index: 2;
+    }
+
+    .random-image {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: min(38vw, 520px);
+      height: min(48vh, 420px);
+      object-fit: contain;
+      object-position: right bottom;
+      z-index: 1;
     }
 
     @media (max-width: 600px) {
       body {
         padding: 18px;
-        background-size:
-          100% auto,
-          cover;
-        background-position:
-          left top,
-          center center;
+        background-size: 100% auto, cover;
+        background-position: left top, center center;
+      }
+
+      .description {
+        top: 18px;
+        left: 18px;
+        max-width: 45%;
       }
 
       .events {
-        position: relative;
-        top: auto;
-        left: auto;
-        margin-top: 35vh;
+        top: 32px;
+        left: 50%;
         gap: 10px;
-        padding-bottom: 70px;
+        max-width: 48%;
       }
 
       .contact {
         left: 18px;
         bottom: 18px;
       }
-    }
 
-    @media (max-height: 500px) and (min-width: 601px) {
-      .events {
-        position: relative;
-        top: auto;
-        left: auto;
-        padding-bottom: 60px;
-      }
-
-      .contact {
-        position: fixed;
+      .random-image {
+        right: 18px;
+        bottom: 48px;
+        width: 55vw;
+        height: 32vh;
       }
     }
   </style>
 </head>
 
 <body>
+
+  <div class="description">
+    An itinerant screening series dedicated to showcasing funny, sad, and perverse artist’s moving image organised by Bronte Dow and Freya Field-Donovan.
+  </div>
 
   <main class="events">
     <a href="weathergirl-9.html">Weathergirl 9 (upcoming)</a>
@@ -126,6 +139,32 @@
   </main>
 
   <a class="contact" href="mailto:">Contact</a>
+
+  <img
+    class="random-image"
+    id="randomImage"
+    src="1.jpg"
+    alt=""
+  >
+
+  <script>
+    const randomImage = document.getElementById("randomImage");
+    let previousImage = 0;
+
+    function changeImage() {
+      let nextImage;
+
+      do {
+        nextImage = Math.floor(Math.random() * 20) + 1;
+      } while (nextImage === previousImage);
+
+      previousImage = nextImage;
+      randomImage.src = nextImage + ".jpg";
+    }
+
+    changeImage();
+    setInterval(changeImage, 5000);
+  </script>
 
 </body>
 </html>
