@@ -23,7 +23,6 @@
       font-size: 18px;
       font-weight: normal;
       color: black;
-
       background-image: url("backgroundclean.jpg");
       background-size: cover;
       background-position: center;
@@ -51,25 +50,25 @@
       z-index: 2;
     }
 
-    /* Large logo fixed in the top-right */
+    /* Logo: 100 times the previous 400px width */
     .logo {
       position: fixed;
       top: 20px;
       right: 24px;
-      width: 400px;
-      max-width: 45vw;
+      width: 40000px;
+      max-width: none;
       height: auto;
       z-index: 10;
     }
 
-    /* Rotating images, positioned up and right */
+    /* Rotating images: twice the previous maximum dimensions */
     .random-image {
       position: fixed;
       top: 42%;
       left: 57%;
       transform: translate(-50%, -50%);
-      width: min(45vw, 600px);
-      height: min(50vh, 480px);
+      width: min(90vw, 1200px);
+      height: min(100vh, 960px);
       object-fit: contain;
       z-index: 1;
     }
@@ -108,15 +107,15 @@
       .logo {
         top: 16px;
         right: 16px;
-        width: 240px;
-        max-width: 55vw;
+        width: 24000px;
+        max-width: none;
       }
 
       .random-image {
         top: 46%;
         left: 58%;
-        width: 65vw;
-        height: 38vh;
+        width: 130vw;
+        height: 76vh;
       }
 
       .bottom-description {
@@ -134,10 +133,6 @@
     @media (max-width: 380px) {
       .events {
         font-size: 14px;
-      }
-
-      .logo {
-        width: 190px;
       }
 
       .description {
@@ -193,7 +188,6 @@
       } while (number === previousNumber);
 
       previousNumber = number;
-
       randomImage.src = number + ".jpg";
     }
 
