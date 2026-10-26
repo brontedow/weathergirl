@@ -14,36 +14,48 @@
       color: black;
       font-family: "Times New Roman", Times, serif;
       font-size: 14px;
-      font-weight: normal;
+      line-height: 1.4;
     }
 
     .logo {
       position: absolute;
       top: 24px;
       right: 24px;
-      width: 140px;
+      width: 180px;
       height: auto;
     }
 
-    .events {
-      margin-top: 110px;
-      width: fit-content;
+    main {
+      margin-top: 150px;
+      max-width: 420px;
     }
 
-    .events a {
+    .section-title {
+      font-size: 11px;
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 0 0 12px;
+    }
+
+    .upcoming {
+      margin-bottom: 42px;
+    }
+
+    .event-link {
       display: block;
       width: fit-content;
-      margin-bottom: 7px;
       color: black;
       text-decoration: none;
+      margin-bottom: 6px;
     }
 
-    .events a:hover {
+    .event-link:hover {
       text-decoration: underline;
     }
 
     .contact {
-      position: absolute;
+      position: fixed;
       bottom: 24px;
       left: 24px;
       color: black;
@@ -62,11 +74,11 @@
       .logo {
         top: 18px;
         right: 18px;
-        width: 110px;
+        width: 140px;
       }
 
-      .events {
-        margin-top: 100px;
+      main {
+        margin-top: 125px;
       }
 
       .contact {
@@ -83,15 +95,25 @@
     <img class="logo" src="weathergirl-title.jpg" alt="Weathergirl">
   </a>
 
-  <main class="events">
-    <a href="weathergirl-8.html">Weathergirl 8</a>
-    <a href="weathergirl-7.html">Weathergirl 7</a>
-    <a href="weathergirl-6.html">Weathergirl 6</a>
-    <a href="weathergirl-5.html">Weathergirl 5</a>
-    <a href="weathergirl-4.html">Weathergirl 4</a>
-    <a href="weathergirl-3.html">Weathergirl 3</a>
-    <a href="weathergirl-2.html">Weathergirl 2</a>
-    <a href="weathergirl-1.html">Weathergirl 1</a>
+  <main>
+    <section class="upcoming">
+      <h2 class="section-title">Upcoming</h2>
+      <a class="event-link" href="weathergirl-9.html">
+        Weathergirl 9
+      </a>
+    </section>
+
+    <section class="archive">
+      <h2 class="section-title">Past events</h2>
+      <a class="event-link" href="weathergirl-8.html">Weathergirl 8</a>
+      <a class="event-link" href="weathergirl-7.html">Weathergirl 7</a>
+      <a class="event-link" href="weathergirl-6.html">Weathergirl 6</a>
+      <a class="event-link" href="weathergirl-5.html">Weathergirl 5</a>
+      <a class="event-link" href="weathergirl-4.html">Weathergirl 4</a>
+      <a class="event-link" href="weathergirl-3.html">Weathergirl 3</a>
+      <a class="event-link" href="weathergirl-2.html">Weathergirl 2</a>
+      <a class="event-link" href="weathergirl-1.html">Weathergirl 1</a>
+    </section>
   </main>
 
   <a class="contact" href="mailto:">Contact</a>
