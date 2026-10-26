@@ -1,31 +1,9 @@
-brontedow
-weathergirl
-Repository navigation
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-weathergirl
-/index.html
-brontedow
-brontedow
-Update index.html
-e5c8e13
- · 
-5 minutes ago
-163 lines (138 loc) · 3.42 KB
-
-Code
-
-Blame
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weathergirl</title>
 
   <style>
@@ -41,24 +19,30 @@ Blame
       font-size: 18px;
       font-weight: normal;
       color: black;
-
-      background-image:
-        url("background1.jpg"),
-        url("backgroundclean.jpg");
-      background-size: auto 110%, cover;
-      background-position:
-        calc(50% + 24px) center,
-        center center;
-      background-repeat: no-repeat, no-repeat;
-      background-attachment: scroll, scroll;
+      background: url("backgroundclean.jpg") center center / cover no-repeat;
     }
 
+    /* Logo stays in view when the browser is resized */
+    .logo {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      width: clamp(85px, 12vw, 155px);
+      max-height: 20vh;
+      height: auto;
+      object-fit: contain;
+      object-position: top right;
+      z-index: 10;
+    }
+
+    /* Screening navigation */
     .events {
       position: absolute;
       top: 56px;
       left: 40px;
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 11px;
       z-index: 2;
     }
@@ -74,20 +58,11 @@ Blame
       text-decoration: underline;
     }
 
-    .bottom-left {
-      position: fixed;
-      left: 40px;
-      bottom: 28px;
-      width: calc(100% - 80px);
-      z-index: 2;
+    .upcoming {
+      color: black;
     }
 
-    .description {
-      font-size: 18px;
-      line-height: 1.4;
-      white-space: nowrap;
-    }
-
+    /* Rotating images */
     .random-image {
       position: fixed;
       right: 7%;
@@ -98,37 +73,120 @@ Blame
       z-index: 1;
     }
 
-    @media (max-width: 600px) {
-      body {
-        background-size: auto 100%, cover;
-        background-position:
-          calc(50% + 18px) center,
-          center center;
+    /* Description */
+    .bottom-left {
+      position: fixed;
+      left: 40px;
+      bottom: 28px;
+      width: min(650px, calc(100% - 80px));
+      z-index: 3;
+    }
+
+    .description {
+      font-size: 18px;
+      line-height: 1.4;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    /* Medium screens */
+    @media (max-width: 900px) {
+      .logo {
+        right: 24px;
+        top: 20px;
+        width: clamp(85px, 15vw, 130px);
       }
 
       .events {
-        top: 56px;
-        left: 18px;
-        gap: 11px;
+        left: 24px;
       }
 
       .bottom-left {
-        left: 18px;
-        bottom: 18px;
-        width: calc(100% - 36px);
-      }
-
-      .description {
-        white-space: normal;
-        font-size: 18px;
-        line-height: 1.4;
+        left: 24px;
+        bottom: 24px;
+        width: min(550px, calc(100% - 48px));
       }
 
       .random-image {
-        right: 8%;
-        bottom: 12%;
-        width: 55vw;
-        height: 36vh;
+        right: 4%;
+        width: 42vw;
+        height: 40vh;
+      }
+    }
+
+    /* Narrow screens */
+    @media (max-width: 600px) {
+      body {
+        background-position: center;
+        background-attachment: scroll;
+      }
+
+      .logo {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        width: clamp(75px, 25vw, 115px);
+        max-height: 15vh;
+      }
+
+      .events {
+        position: relative;
+        top: auto;
+        left: auto;
+        padding: 120px 18px 0;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .random-image {
+        position: relative;
+        display: block;
+        right: auto;
+        bottom: auto;
+        width: min(78vw, 360px);
+        height: auto;
+        max-height: 35vh;
+        margin: 28px auto 150px;
+      }
+
+      .bottom-left {
+        position: fixed;
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        width: auto;
+        max-height: 30vh;
+        overflow-y: auto;
+        padding-top: 8px;
+      }
+
+      .description {
+        font-size: 16px;
+        line-height: 1.4;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+    }
+
+    /* Very narrow browser windows */
+    @media (max-width: 340px) {
+      .events {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .bottom-left {
+        left: 14px;
+        right: 14px;
+        bottom: 12px;
+      }
+
+      .description {
+        font-size: 15px;
+      }
+
+      .random-image {
+        width: 85vw;
       }
     }
   </style>
@@ -136,18 +194,19 @@ Blame
 
 <body>
 
+  <img class="logo" src="logo.png" alt="Weathergirl">
 
-<nav class="events">
-  <span class="upcoming">Weathergirl 9 (upcoming)</span>
-  <a href="weathergirl-8.html">Weathergirl 8</a>
-  <a href="weathergirl-7.html">Weathergirl 7</a>
-  <a href="weathergirl-6.html">Weathergirl 6</a>
-  <a href="weathergirl-5.html">Weathergirl 5</a>
-  <a href="weathergirl-4.html">Weathergirl 4</a>
-  <a href="weathergirl-3.html">Weathergirl 3</a>
-  <a href="weathergirl-2.html">Weathergirl 2</a>
-  <a href="weathergirl-1.html">Weathergirl 1</a>
-</nav>
+  <nav class="events">
+    <span class="upcoming">Weathergirl 9 (upcoming)</span>
+    <a href="weathergirl-8.html">Weathergirl 8</a>
+    <a href="weathergirl-7.html">Weathergirl 7</a>
+    <a href="weathergirl-6.html">Weathergirl 6</a>
+    <a href="weathergirl-5.html">Weathergirl 5</a>
+    <a href="weathergirl-4.html">Weathergirl 4</a>
+    <a href="weathergirl-3.html">Weathergirl 3</a>
+    <a href="weathergirl-2.html">Weathergirl 2</a>
+    <a href="weathergirl-1.html">Weathergirl 1</a>
+  </nav>
 
   <img
     id="randomImage"
@@ -165,7 +224,7 @@ Blame
 
   <script>
     const randomImage = document.getElementById("randomImage");
-    let previousNumber = 1;
+    let previousNumber = 0;
 
     function loadRandomImage() {
       let number;
@@ -174,8 +233,13 @@ Blame
         number = Math.floor(Math.random() * 32) + 1;
       } while (number === previousNumber);
 
-      previousNumber = number;
-      randomImage.src = number + ".jpg";
+      const nextImage = new Image();
+      nextImage.onload = function () {
+        randomImage.src = nextImage.src;
+        previousNumber = number;
+      };
+
+      nextImage.src = number + ".jpg";
     }
 
     loadRandomImage();
@@ -184,6 +248,3 @@ Blame
 
 </body>
 </html>
-Symbols
-‎UTF-8‎
-Loading
