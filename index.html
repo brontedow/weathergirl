@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weathergirl</title>
 
   <style>
@@ -11,47 +11,33 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      margin: 0;
-      min-height: 100%;
-    }
-
     body {
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
-      min-height: 100dvh;
-      padding: 24px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 18px;
+      font-weight: normal;
+      color: black;
 
-      background-color: white;
       background-image:
         url("background1.jpg"),
         url("backgroundclean.jpg");
-      background-size:
-        contain,
-        cover;
+      background-size: auto 110%, cover;
       background-position:
-        24px top,
-        calc(50% + 12px) center;
-      background-repeat:
-        no-repeat,
-        no-repeat;
-      background-attachment: scroll;
-
-      color: black;
-      font-family: "Times New Roman", Times, serif;
-      font-size: 14px;
-      font-weight: normal;
+        calc(50% + 24px) center,
+        center center;
+      background-repeat: no-repeat, no-repeat;
+      background-attachment: scroll, scroll;
     }
 
     .events {
       position: absolute;
       top: 56px;
-      left: 24px;
-
+      left: 40px;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 7px;
-
+      gap: 11px;
       z-index: 2;
     }
 
@@ -59,7 +45,6 @@
     .description a {
       color: black;
       text-decoration: none;
-      font-size: 14px;
     }
 
     .events a:hover,
@@ -67,57 +52,42 @@
       text-decoration: underline;
     }
 
-    .events .upcoming {
-      font-size: 14px;
-      font-weight: normal;
-    }
-
     .bottom-left {
       position: fixed;
-      left: 24px;
-      bottom: 24px;
-      width: calc(100% - 48px);
-
+      left: 40px;
+      bottom: 28px;
+      width: calc(100% - 80px);
       z-index: 2;
     }
 
     .description {
+      font-size: 18px;
+      line-height: 1.4;
       white-space: nowrap;
-      line-height: 1.3;
-      font-size: 14px;
     }
 
     .random-image {
       position: fixed;
-
-      right: 8%;
-      bottom: 12%;
-
-      width: min(38vw, 520px);
-      height: min(45vh, 420px);
-
+      right: 7%;
+      bottom: 10%;
+      width: min(45vw, 600px);
+      height: min(50vh, 480px);
       object-fit: contain;
-      object-position: center center;
-
       z-index: 1;
     }
 
     @media (max-width: 600px) {
       body {
-        padding: 18px;
-
-        background-size:
-          100% auto,
-          cover;
+        background-size: auto 100%, cover;
         background-position:
-          20px top,
-          calc(50% + 12px) center;
+          calc(50% + 18px) center,
+          center center;
       }
 
       .events {
         top: 56px;
         left: 18px;
-        gap: 7px;
+        gap: 11px;
       }
 
       .bottom-left {
@@ -128,13 +98,15 @@
 
       .description {
         white-space: normal;
+        font-size: 18px;
+        line-height: 1.4;
       }
 
       .random-image {
         right: 8%;
         bottom: 12%;
-        width: 45vw;
-        height: 32vh;
+        width: 55vw;
+        height: 36vh;
       }
     }
   </style>
@@ -142,8 +114,7 @@
 
 <body>
 
-  <main class="events">
-    <span class="upcoming">Weathergirl 9 (upcoming)</span>
+  <nav class="events">
     <a href="weathergirl-8.html">Weathergirl 8</a>
     <a href="weathergirl-7.html">Weathergirl 7</a>
     <a href="weathergirl-6.html">Weathergirl 6</a>
@@ -152,40 +123,40 @@
     <a href="weathergirl-3.html">Weathergirl 3</a>
     <a href="weathergirl-2.html">Weathergirl 2</a>
     <a href="weathergirl-1.html">Weathergirl 1</a>
-  </main>
-
-  <div class="bottom-left">
-    <div class="description">
-      An itinerant screening series dedicated to showcasing funny, sad, and perverse artist’s moving image organised by Bronte Dow and Freya Field-Donovan. You can contact us <a href="mailto:dowbronte@gmail.com?cc=freya.field.donovan@gmail.com">here</a>.
-    </div>
-  </div>
+    <span class="upcoming">Weathergirl 9 (upcoming)</span>
+  </nav>
 
   <img
-    class="random-image"
     id="randomImage"
+    class="random-image"
     src="1.jpg"
     alt=""
   >
 
+  <div class="bottom-left">
+    <div class="description">
+      An itinerant screening series dedicated to showcasing funny, sad, and perverse artist’s moving image organised by Bronte Dow and Freya Field-Donovan. You can contact us
+      <a href="mailto:dowbronte@gmail.com?cc=freya.field.donovan@gmail.com">here</a>.
+    </div>
+  </div>
+
   <script>
     const randomImage = document.getElementById("randomImage");
+    let previousNumber = 1;
 
-    let previousImage = 0;
-
-    function changeImage() {
-      let nextImage;
+    function loadRandomImage() {
+      let number;
 
       do {
-        nextImage = Math.floor(Math.random() * 32) + 1;
-      } while (nextImage === previousImage);
+        number = Math.floor(Math.random() * 32) + 1;
+      } while (number === previousNumber);
 
-      previousImage = nextImage;
-      randomImage.src = nextImage + ".jpg";
+      previousNumber = number;
+      randomImage.src = number + ".jpg";
     }
 
-    changeImage();
-
-    setInterval(changeImage, 5000);
+    loadRandomImage();
+    setInterval(loadRandomImage, 5000);
   </script>
 
 </body>
