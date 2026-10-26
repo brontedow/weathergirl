@@ -1,30 +1,385 @@
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: "Times New Roman", Times, serif;
-}
 
-.logo {
-  font-family: "Times New Roman", Times, serif;
-  font-size: clamp(58px, 10vw, 128px);
-  font-weight: bold;
-  letter-spacing: -0.055em;
-  line-height: .85;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-nav,
-.date,
-.tag,
-.section-label,
-.strapline,
-.hero p,
-footer {
-  font-family: "Times New Roman", Times, serif;
-}
+  <title>Weathergirl — Screening Series</title>
+  <meta name="description" content="Weathergirl is a roving screening series for artists' moving image and experimental film.">
 
-h1, h2, h3 {
-  font-family: "Times New Roman", Times, serif;
-  text-transform: uppercase;
-  font-weight: bold;
-}
+  <style>
+    :root {
+      --paper: #f5f3ed;
+      --ink: #191916;
+      --line: #aaa89f;
+      --highlight: #e7f34b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1800px;
+      margin: 0 auto;
+      padding: 24px 4vw 48px;
+    }
+
+    /* HEADER AND TITLE IMAGE */
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo {
+      display: block;
+      width: min(100%, 650px);
+      flex-shrink: 1;
+    }
+
+    .logo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 14px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .strapline {
+      padding: 14px 0 20px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    /* MAIN IMAGE */
+
+    .hero {
+      min-height: 300px;
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+      color: white;
+      background-color: #c6c8bf;
+      background-image:
+        linear-gradient(0deg, #17191588, transparent 70%),
+        url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2000&q=85");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* INTRODUCTION */
+
+    h1, h2, h3 {
+      font-family: "Times New Roman", Times, serif;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin: 28px 0 10px;
+      font-size: clamp(42px, 7vw, 84px);
+      line-height: .98;
+      letter-spacing: -0.04em;
+    }
+
+    .intro {
+      max-width: 740px;
+      font-size: clamp(19px, 2.2vw, 25px);
+      line-height: 1.4;
+    }
+
+    /* PROGRAMME LISTINGS */
+
+    .section-label {
+      margin-top: 42px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr) minmax(160px, .7fr) 24px;
+      align-items: start;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .date {
+      font-size: 14px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 4px 7px;
+      background: var(--highlight);
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .event-title {
+      font-size: 18px;
+    }
+
+    .venue {
+      font-size: 15px;
+    }
+
+    .arrow {
+      font-size: 23px;
+      text-align: right;
+    }
+
+    /* ABOUT */
+
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 32px;
+      padding: 42px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .about h2 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .about p {
+      max-width: 680px;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    /* FOOTER */
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-top: 24px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+      .page {
+        padding: 18px 5vw 32px;
+      }
+
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .logo {
+        width: min(100%, 550px);
+      }
+
+      nav {
+        gap: 16px;
+        font-size: 13px;
+      }
+
+      .strapline {
+        line-height: 1.5;
+      }
+
+      .hero {
+        min-height: 210px;
+        padding: 18px;
+      }
+
+      .event {
+        grid-template-columns: minmax(0, 1fr) 24px;
+        gap: 8px 16px;
+      }
+
+      .event-date,
+      .event-title,
+      .venue {
+        grid-column: 1;
+      }
+
+      .arrow {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .about h2 {
+        font-size: 36px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <header>
+      <a class="logo" href="#" aria-label="Weathergirl home">
+        <img src="weathergirl-title.jpg" alt="Weathergirl">
+      </a>
+
+      <nav aria-label="Main navigation">
+        <a href="#programme">Programme</a>
+        <a href="#about">About</a>
+        <a href="#archive">Archive</a>
+        <a href="mailto:weathergirlevents@gmail.com">Contact</a>
+      </nav>
+    </header>
+
+    <div class="strapline">
+      Roving screening series / London + elsewhere
+    </div>
+
+    <section class="hero">
+      <p>Artists' moving image / Film / Gatherings</p>
+    </section>
+
+    <section aria-labelledby="intro-title">
+      <h1 id="intro-title">Films for uncertain times.</h1>
+
+      <p class="intro">
+        Weathergirl is a roving screening series for artists' moving
+        image and experimental film. We bring films into conversation
+        with places, people and ideas.
+      </p>
+    </section>
+
+    <section id="programme" aria-labelledby="programme-title">
+      <div class="section-label" id="programme-title">
+        Upcoming programme
+      </div>
+
+      <div class="event">
+        <div>
+          <span class="tag">Coming soon</span>
+          <br>
+          <span class="date">Date TBA</span>
+        </div>
+
+        <div class="event-title">
+          A new programme is in the works.
+        </div>
+
+        <div class="venue">
+          London and elsewhere
+        </div>
+
+        <div class="arrow">↗</div>
+      </div>
+    </section>
+
+    <section id="archive" aria-labelledby="archive-title">
+      <div class="section-label" id="archive-title">
+        Past programmes
+      </div>
+
+      <div class="event">
+        <div class="date">Archive</div>
+
+        <div class="event-title">
+          Previous screenings and programmes
+        </div>
+
+        <div class="venue">
+          Programme details coming soon
+        </div>
+
+        <div class="arrow">↗</div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2>About<br>Weathergirl</h2>
+
+      <div>
+        <p>
+          Weathergirl is an itinerant screening series founded by
+          artists and programmers Freya Field-Donovan and Bronte Dow.
+          We organise screenings of artists' moving image, bringing
+          work together through shared questions, unexpected
+          connections and the contexts in which films are shown.
+        </p>
+
+        <p>
+          For programme announcements and enquiries, get in touch
+          by email or follow us on Instagram.
+        </p>
+
+        <p>
+          <a href="mailto:weathergirlevents@gmail.com">
+            Get in touch ↗
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <span>Weathergirl © 2026</span>
+      <span>London + elsewhere</span>
+      <a href="https://www.instagram.com/">
+        Instagram ↗
+      </a>
+    </footer>
+
+  </main>
+</body>
+</html>
