@@ -3,444 +3,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weathergirl — Artists' Film & Moving Image</title>
-  <meta name="description" content="Weathergirl is an itinerant programme of artist film screenings by Bronte Dow and Freya Field-Donovan.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weathergirl</title>
 
   <style>
-    :root {
-      --blue: #253db8;
-      --paper: #ffffff;
-      --line: #253db8;
-      --margin: clamp(18px, 3.2vw, 48px);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
-      background: var(--paper);
-      color: var(--blue);
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 15px;
-      line-height: 1.35;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
-
-    .page {
-      padding: 0 var(--margin);
-    }
-
-    header {
-      min-height: 125px;
-      padding: 24px 0 20px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 32px;
-      border-bottom: 1px solid var(--line);
+      padding: 24px;
+      background: white;
+      color: black;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14px;
+      font-weight: normal;
     }
 
     .logo {
-      display: block;
-      width: clamp(135px, 19vw, 250px);
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 140px;
       height: auto;
-      object-fit: contain;
-      object-position: left top;
     }
 
-    .nav {
-      display: flex;
-      gap: clamp(14px, 2.6vw, 36px);
-      padding-top: 7px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+    .events {
+      margin-top: 110px;
+      width: fit-content;
     }
 
-    .nav a {
-      font-size: 13px;
-    }
-
-    .intro {
-      padding: 24px 0 36px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-    }
-
-    .intro p {
-      margin: 0;
-      max-width: 520px;
-      font-size: clamp(17px, 2vw, 25px);
-      line-height: 1.25;
-      letter-spacing: -0.035em;
-    }
-
-    .intro-note {
-      max-width: 340px;
-      justify-self: end;
-      font-size: 13px;
-      letter-spacing: 0;
-      line-height: 1.45;
-    }
-
-    .section-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 20px;
-      padding: 9px 0;
-      border-top: 1px solid var(--line);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .programme {
-      padding-bottom: 64px;
-    }
-
-    .event {
-      display: grid;
-      grid-template-columns: minmax(120px, 0.75fr) minmax(180px, 1.4fr) minmax(150px, 0.85fr);
-      gap: 24px;
-      padding: 15px 0 19px;
-      border-bottom: 1px solid var(--line);
-      align-items: start;
-    }
-
-    .event-date,
-    .event-location {
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .event-title {
-      margin: 0;
-      font-size: clamp(19px, 2.3vw, 28px);
-      line-height: 1.05;
-      font-weight: 400;
-      letter-spacing: -0.045em;
-    }
-
-    .event-description {
-      margin-top: 9px;
-      font-size: 13px;
-      max-width: 390px;
-      line-height: 1.45;
-    }
-
-    .event-location {
-      justify-self: end;
-      text-align: right;
-    }
-
-    .event-link {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 12px;
-    }
-
-    .archive {
-      padding-bottom: 64px;
-    }
-
-    .archive-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 30px 18px;
-      padding-top: 20px;
-    }
-
-    .archive-item {
+    .events a {
       display: block;
+      width: fit-content;
+      margin-bottom: 7px;
+      color: black;
+      text-decoration: none;
     }
 
-    .archive-image {
-      aspect-ratio: 4 / 3;
-      background: #f2f2f2;
-      margin-bottom: 10px;
-      overflow: hidden;
+    .events a:hover {
+      text-decoration: underline;
     }
 
-    .archive-image img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: opacity 180ms ease;
+    .contact {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      color: black;
+      text-decoration: none;
     }
 
-    .archive-item:hover .archive-image img {
-      opacity: 0.78;
+    .contact:hover {
+      text-decoration: underline;
     }
 
-    .archive-title {
-      font-size: 16px;
-      line-height: 1.2;
-    }
-
-    .archive-meta {
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    .about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      padding: 18px 0 60px;
-      border-top: 1px solid var(--line);
-    }
-
-    .about h2 {
-      margin: 0;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-weight: 400;
-    }
-
-    .about p {
-      margin: 0 0 14px;
-      max-width: 490px;
-      font-size: 16px;
-      letter-spacing: -0.015em;
-    }
-
-    footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 20px;
-      border-top: 1px solid var(--line);
-      padding: 14px 0 24px;
-      font-size: 12px;
-    }
-
-    @media (max-width: 650px) {
-      header {
-        min-height: auto;
-        flex-direction: column;
-        gap: 20px;
-        padding: 20px 0;
+    @media (max-width: 600px) {
+      body {
+        padding: 18px;
       }
 
       .logo {
-        width: 165px;
+        top: 18px;
+        right: 18px;
+        width: 110px;
       }
 
-      .nav {
-        justify-content: flex-start;
-        gap: 20px;
-        padding-top: 0;
+      .events {
+        margin-top: 100px;
       }
 
-      .intro {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 22px 0 30px;
-      }
-
-      .intro-note {
-        justify-self: start;
-      }
-
-      .event {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px 16px;
-      }
-
-      .event-title-wrap {
-        grid-column: 1 / -1;
-        grid-row: 2;
-      }
-
-      .event-location {
-        grid-column: 2;
-        grid-row: 1;
-      }
-
-      .event-date {
-        grid-column: 1;
-        grid-row: 1;
-      }
-
-      .archive-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px 12px;
-      }
-
-      .about {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 8px;
+      .contact {
+        left: 18px;
+        bottom: 18px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
 
-    <header>
-      <a href="#" aria-label="Weathergirl home">
-        <img
-          class="logo"
-          src="weathergirl-title.jpg"
-          alt="Weathergirl"
-        >
-      </a>
+  <a href="index.html">
+    <img class="logo" src="weathergirl-title.jpg" alt="Weathergirl">
+  </a>
 
-      <nav class="nav" aria-label="Main navigation">
-        <a href="#programme">Programme</a>
-        <a href="#archive">Archive</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
+  <main class="events">
+    <a href="weathergirl-8.html">Weathergirl 8</a>
+    <a href="weathergirl-7.html">Weathergirl 7</a>
+    <a href="weathergirl-6.html">Weathergirl 6</a>
+    <a href="weathergirl-5.html">Weathergirl 5</a>
+    <a href="weathergirl-4.html">Weathergirl 4</a>
+    <a href="weathergirl-3.html">Weathergirl 3</a>
+    <a href="weathergirl-2.html">Weathergirl 2</a>
+    <a href="weathergirl-1.html">Weathergirl 1</a>
+  </main>
 
-    <main>
-      <section class="intro">
-        <p>
-          Weathergirl is an itinerant programme of artists' film and
-          moving image screenings organised by Bronte Dow and
-          Freya Field-Donovan.
-        </p>
+  <a class="contact" href="mailto:">Contact</a>
 
-        <div class="intro-note">
-          London, UK<br>
-          Independent screenings, collaborations and other activities.
-        </div>
-      </section>
-
-      <section class="programme" id="programme">
-        <div class="section-heading">
-          <span>Programme</span>
-          <span>Upcoming / Selected</span>
-        </div>
-
-        <!-- Replace these example entries with real events. -->
-
-        <article class="event">
-          <div class="event-date">
-            Upcoming<br>
-            Date TBC
-          </div>
-
-          <div class="event-title-wrap">
-            <h2 class="event-title">
-              <a href="#contact">Screening title</a>
-            </h2>
-            <div class="event-description">
-              Programme details, participating artists and additional
-              information to be announced.
-            </div>
-            <a class="event-link" href="#contact">Further information ↗</a>
-          </div>
-
-          <div class="event-location">
-            Venue TBC<br>
-            London
-          </div>
-        </article>
-
-      </section>
-
-      <section class="archive" id="archive">
-        <div class="section-heading">
-          <span>Archive</span>
-          <span>Past programmes</span>
-        </div>
-
-        <div class="archive-grid">
-
-          <a class="archive-item" href="#contact">
-            <div class="archive-image">
-              <img
-                src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80"
-                alt="Cinema seats"
-                loading="lazy"
-              >
-            </div>
-            <div class="archive-title">Weathergirl × The Liberated Film Club</div>
-            <div class="archive-meta">Screening programme</div>
-          </a>
-
-          <a class="archive-item" href="#contact">
-            <div class="archive-image">
-              <img
-                src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80"
-                alt="Clouds in the sky"
-                loading="lazy"
-              >
-            </div>
-            <div class="archive-title">Selected programme</div>
-            <div class="archive-meta">Screening programme</div>
-          </a>
-
-          <a class="archive-item" href="#contact">
-            <div class="archive-image">
-              <img
-                src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=900&q=80"
-                alt="Water and waves"
-                loading="lazy"
-              >
-            </div>
-            <div class="archive-title">Selected programme</div>
-            <div class="archive-meta">Screening programme</div>
-          </a>
-
-        </div>
-      </section>
-
-      <section class="about" id="about">
-        <h2>About</h2>
-
-        <div>
-          <p>
-            Weathergirl is a collaborative project by Bronte Dow and
-            Freya Field-Donovan, bringing artists' moving image into
-            shared spaces through an itinerant programme of screenings.
-          </p>
-          <p>
-            The programme brings together artists' films across
-            different periods, practices and contexts.
-          </p>
-        </div>
-      </section>
-    </main>
-
-    <footer id="contact">
-      <div>Weathergirl © 2026</div>
-      <div>
-        <a href="mailto:weathergirlevents@gmail.com">Email</a>
-        &nbsp; / &nbsp;
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      </div>
-    </footer>
-
-  </div>
 </body>
 </html>
