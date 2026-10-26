@@ -6,15 +6,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weathergirl 6</title>
   <style>
-    body { margin: 24px; font-family: "Times New Roman", Times, serif; font-size: 16px; color: black; background: white; line-height: 1.5; }
-    .back { display: block; margin-bottom: 24px; color: black; text-decoration: none; }
-    .poster { display: block; width: auto; max-width: 100%; max-height: 75vh; object-fit: contain; object-position: left top; margin-bottom: 24px; }
-    .text { max-width: 750px; }
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      min-height: 100vh;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 16px;
+      color: black;
+      line-height: 1.5;
+      background: url("backgroundclean.jpg") center / cover fixed no-repeat;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: black;
+      text-decoration: none;
+    }
+
+    .back:hover { text-decoration: underline; }
+
+    .text {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: 40px;
+      align-items: start;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .poster {
+      grid-column: 1;
+      grid-row: 1 / span 100;
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: calc(100vh - 100px);
+      object-fit: contain;
+      object-position: top left;
+    }
+
+    .text p {
+      grid-column: 2;
+      min-width: 0;
+      margin: 0 0 1em;
+      overflow-wrap: anywhere;
+    }
+
     a { color: black; }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 18px;
+        background-attachment: scroll;
+      }
+
+      .text {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .poster {
+        width: auto;
+        max-width: 100%;
+        max-height: 65vh;
+      }
+    }
   </style>
 </head>
 <body>
   <a class="back" href="index.html">← Weathergirl</a>
+
   <main class="text">
     <img class="poster" src="Screenshot 2026-10-26 at 22.24.20.png" alt="Weathergirl 6 screening poster">
 
