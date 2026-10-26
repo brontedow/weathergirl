@@ -7,21 +7,29 @@
   <title>Weathergirl</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+    }
+
     body {
       margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
       padding: 24px;
       background-color: white;
-      background-image: url("background.jpg");
+      background-image: url("background1.jpg");
       background-size: cover;
-      background-position: center;
+      background-position: left top;
       background-repeat: no-repeat;
       background-attachment: fixed;
       color: black;
       font-family: "Times New Roman", Times, serif;
       font-size: 14px;
       font-weight: normal;
-      min-height: 100vh;
-      box-sizing: border-box;
     }
 
     .events {
@@ -29,18 +37,21 @@
       top: 50%;
       left: 24px;
       transform: translateY(-50%);
-      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 7px;
+      max-width: calc(100vw - 48px);
     }
 
-    .events a {
-      display: block;
-      width: fit-content;
-      margin-bottom: 7px;
+    .events a,
+    .contact {
       color: black;
       text-decoration: none;
     }
 
-    .events a:hover {
+    .events a:hover,
+    .contact:hover {
       text-decoration: underline;
     }
 
@@ -48,27 +59,40 @@
       position: fixed;
       bottom: 24px;
       left: 24px;
-      color: black;
-      text-decoration: none;
-    }
-
-    .contact:hover {
-      text-decoration: underline;
     }
 
     @media (max-width: 600px) {
       body {
         padding: 18px;
+        background-position: left top;
         background-attachment: scroll;
       }
 
       .events {
         left: 18px;
+        top: 45%;
+        transform: translateY(-50%);
+        gap: 10px;
+        max-width: calc(100vw - 36px);
       }
 
       .contact {
         left: 18px;
         bottom: 18px;
+      }
+    }
+
+    @media (max-height: 500px) {
+      .events {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        padding-bottom: 60px;
+      }
+
+      .contact {
+        position: fixed;
       }
     }
   </style>
