@@ -11,7 +11,7 @@
       margin: 0;
       padding: 24px;
       background-color: white;
-      background-image: url("background.png");
+      background-image: url("background.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -24,19 +24,11 @@
       box-sizing: border-box;
     }
 
-    .logo {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      width: 140px;
-      height: auto;
-    }
-
     .events {
       position: absolute;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      left: 24px;
+      transform: translateY(-50%);
       width: fit-content;
     }
 
@@ -70,10 +62,8 @@
         background-attachment: scroll;
       }
 
-      .logo {
-        top: 18px;
-        right: 18px;
-        width: 110px;
+      .events {
+        left: 18px;
       }
 
       .contact {
@@ -85,10 +75,6 @@
 </head>
 
 <body>
-
-  <a href="index.html">
-    <img class="logo" src="weathergirl-title.jpg" alt="Weathergirl">
-  </a>
 
   <main class="events">
     <a href="weathergirl-9.html">Weathergirl 9 (upcoming)</a>
