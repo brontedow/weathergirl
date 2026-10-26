@@ -21,11 +21,22 @@
       min-height: 100dvh;
       padding: 24px;
       background-color: white;
-      background-image: url("background1.jpg");
-      background-size: contain;
-      background-position: left top;
-      background-repeat: no-repeat;
+
+      /* Main image on top, clean image underneath */
+      background-image:
+        url("background1.jpg"),
+        url("backgroundclean.jpg");
+      background-size:
+        contain,
+        cover;
+      background-position:
+        left top,
+        center center;
+      background-repeat:
+        no-repeat,
+        no-repeat;
       background-attachment: scroll;
+
       color: black;
       font-family: "Times New Roman", Times, serif;
       font-size: 14px;
@@ -62,8 +73,12 @@
     @media (max-width: 600px) {
       body {
         padding: 18px;
-        background-size: 100% auto;
-        background-position: left top;
+        background-size:
+          100% auto,
+          cover;
+        background-position:
+          left top,
+          center center;
       }
 
       .events {
