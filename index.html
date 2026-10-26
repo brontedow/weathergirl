@@ -10,11 +10,18 @@
     body {
       margin: 0;
       padding: 24px;
-      background: white;
+      background-color: white;
+      background-image: url("background.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       color: black;
       font-family: "Times New Roman", Times, serif;
       font-size: 14px;
       font-weight: normal;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     .logo {
@@ -46,7 +53,7 @@
     }
 
     .contact {
-      position: absolute;
+      position: fixed;
       bottom: 24px;
       left: 24px;
       color: black;
@@ -60,6 +67,7 @@
     @media (max-width: 600px) {
       body {
         padding: 18px;
+        background-attachment: scroll;
       }
 
       .logo {
