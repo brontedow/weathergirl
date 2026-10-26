@@ -20,8 +20,6 @@
     body {
       min-height: 100vh;
       font-family: "Times New Roman", Times, serif;
-      font-size: 18px;
-      font-weight: normal;
       color: black;
       background-image: url("backgroundclean.jpg");
       background-size: cover;
@@ -42,17 +40,17 @@
     /* Screening links */
     .events {
       position: absolute;
-      top: 56px;
-      left: 40px;
+      top: 4vh;
+      left: 2.5vw;
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 0.65em;
       z-index: 2;
-      font-size: 18px;
-      line-height: 1.2;
+      font-size: clamp(20px, 1.6vw, 28px);
+      line-height: 1.15;
     }
 
-    /* Logo: slightly smaller, moved up and left */
+    /* Large logo, moved up and left */
     .logo {
       position: fixed;
       top: 5px;
@@ -64,11 +62,11 @@
       z-index: 10;
     }
 
-    /* Rotating images: near the centre, slightly left and lower */
+    /* Rotating images centred on screen */
     .random-image {
       position: fixed;
-      top: 55%;
-      left: 47%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
       width: min(48vw, 650px);
       height: min(55vh, 520px);
@@ -76,23 +74,23 @@
       z-index: 1;
     }
 
-    /* Description arranged as a compact block */
+    /* Single-line description along the bottom */
     .bottom-description {
       position: fixed;
-      left: 40px;
-      bottom: 24px;
+      left: 2.5vw;
+      right: 2.5vw;
+      bottom: 2.5vh;
       z-index: 5;
-      width: 650px;
-      max-width: calc(100vw - 80px);
     }
 
     .description {
       margin: 0;
-      font-family: "Times New Roman", Times, serif;
-      font-size: 18px;
+      width: 100%;
+      font-size: clamp(10px, 1.05vw, 18px);
       font-weight: normal;
-      line-height: 1.5;
-      letter-spacing: 0.15px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      white-space: nowrap;
     }
 
     @media (max-width: 700px) {
@@ -101,37 +99,47 @@
       }
 
       .events {
-        top: 30px;
-        left: 18px;
-        gap: 9px;
-        font-size: 18px;
+        top: 3vh;
+        left: 4vw;
+        gap: 0.6em;
+        font-size: clamp(17px, 4.5vw, 22px);
+        line-height: 1.15;
       }
 
       .logo {
         top: 8px;
-        right: 35px;
+        right: 20px;
         width: 320px;
         max-width: 55vw;
       }
 
       .random-image {
-        top: 55%;
-        left: 47%;
-        width: 52vw;
-        height: 40vh;
+        top: 50%;
+        left: 50%;
+        width: 65vw;
+        height: 42vh;
       }
 
       .bottom-description {
-        left: 18px;
-        right: 18px;
-        bottom: 18px;
-        width: auto;
-        max-width: none;
+        left: 4vw;
+        right: 4vw;
+        bottom: 2vh;
       }
 
       .description {
-        font-size: 18px;
-        line-height: 1.5;
+        font-size: clamp(8px, 2.5vw, 14px);
+        line-height: 1.2;
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .events {
+        font-size: 16px;
+      }
+
+      .description {
+        font-size: 10px;
       }
     }
   </style>
@@ -166,10 +174,7 @@
 
   <div class="bottom-description">
     <p class="description">
-      An itinerant screening series dedicated to showcasing<br>
-      funny, sad, and perverse artist’s moving image organised<br>
-      by Bronte Dow and Freya Field-Donovan. Contact us
-      <a href="mailto:dowbronte@gmail.com">here</a>.
+      An itinerant screening series dedicated to showcasing funny, sad, and perverse artist’s moving image organised by Bronte Dow and Freya Field-Donovan. Contact us <a href="mailto:dowbronte@gmail.com">here</a>.
     </p>
   </div>
 
