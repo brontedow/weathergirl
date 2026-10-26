@@ -11,21 +11,21 @@
       box-sizing: border-box;
     }
 
-    html {
+    html, body {
+      margin: 0;
       min-height: 100%;
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
       min-height: 100dvh;
       padding: 24px;
       background-color: white;
       background-image: url("background1.jpg");
-      background-size: cover;
+      background-size: contain;
       background-position: left top;
       background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-attachment: scroll;
       color: black;
       font-family: "Times New Roman", Times, serif;
       font-size: 14px;
@@ -34,14 +34,12 @@
 
     .events {
       position: absolute;
-      top: 50%;
-      left: 24px;
-      transform: translateY(-50%);
+      top: 28%;
+      left: 5%;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 7px;
-      max-width: calc(100vw - 48px);
     }
 
     .events a,
@@ -64,16 +62,17 @@
     @media (max-width: 600px) {
       body {
         padding: 18px;
+        background-size: 100% auto;
         background-position: left top;
-        background-attachment: scroll;
       }
 
       .events {
-        left: 18px;
-        top: 45%;
-        transform: translateY(-50%);
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-top: 35vh;
         gap: 10px;
-        max-width: calc(100vw - 36px);
+        padding-bottom: 70px;
       }
 
       .contact {
@@ -82,12 +81,11 @@
       }
     }
 
-    @media (max-height: 500px) {
+    @media (max-height: 500px) and (min-width: 601px) {
       .events {
         position: relative;
         top: auto;
         left: auto;
-        transform: none;
         padding-bottom: 60px;
       }
 
