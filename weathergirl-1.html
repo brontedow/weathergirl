@@ -1,12 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weathergirl 1</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -16,7 +18,7 @@
       font-size: 16px;
       color: black;
       line-height: 1.5;
-      background: url("backgroundclean.jpg") center / cover fixed no-repeat;
+      background: url("11.jpg") center center / cover fixed no-repeat;
     }
 
     .back {
@@ -26,7 +28,9 @@
       text-decoration: none;
     }
 
-    .back:hover { text-decoration: underline; }
+    .back:hover {
+      text-decoration: underline;
+    }
 
     .text {
       display: grid;
@@ -37,17 +41,6 @@
       margin: 0 auto;
     }
 
-    .poster {
-      grid-column: 1;
-      grid-row: 1 / span 100;
-      display: block;
-      width: 100%;
-      height: auto;
-      max-height: calc(100vh - 100px);
-      object-fit: contain;
-      object-position: top left;
-    }
-
     .text p {
       grid-column: 2;
       min-width: 0;
@@ -55,70 +48,88 @@
       overflow-wrap: anywhere;
     }
 
-    a { color: black; }
+    a {
+      color: black;
+    }
 
     @media (max-width: 700px) {
       body {
         padding: 18px;
         background-attachment: scroll;
+        background-position: center center;
+        background-size: cover;
       }
 
       .text {
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: 0;
       }
 
-      .poster {
-        width: auto;
-        max-width: 100%;
-        max-height: 65vh;
+      .text p {
+        margin-bottom: 1em;
       }
     }
   </style>
 </head>
+
 <body>
+
   <a class="back" href="index.html">← Weathergirl</a>
 
   <main class="text">
-    <img class="poster" src="screeninginvitemsg2.png" alt="Weathergirl 1 screening invite">
 
-    <p>Dear friends,</p>
+    <p>
+      Shirley Clarke<br>
+      Therese Henningsen &amp; Aki Ilomäki<br>
+      Steve Reinke<br>
+      Deniz Ünal
+    </p>
 
-    <p>We are showing some films on Friday 15 March 2024 at Pelican House, 144 Cambridge Heath Road, E1 5QJ.</p>
+    <p>
+      With contributions by Tim Donovan and Gina Dow
+    </p>
 
-    <p>Doors at 7pm, screening starts at 8pm. Bar will stay open afterwards.</p>
+    <p>
+      Friday 15 March 2024<br>
+      Pelican House, London
+    </p>
 
-    <p>Screening includes:</p>
+    <p>
+      Doors at 7pm, screening starts at 8pm. Bar will stay open afterwards.
+    </p>
 
-    <p>Shirley Clarke<br>
-    Therese Henningsen &amp; Aki Ilomäki<br>
-    Steve Reinke<br>
-    Deniz Ünal</p>
+    <p>––</p>
 
-    <p>With contributions by Tim Donovan and Gina Dow</p>
+    <p>
+      Shirley Clarke was an American filmmaker.
+    </p>
 
-    <p>Shirley Clarke was an American filmmaker.</p>
-    <p>Tim Donovan is an artist and tiler based in Austin, Texas.</p>
+    <p>
+      Tim Donovan is an artist and tiler based in Austin, Texas.
+    </p>
 
-    <p>Gina Dow is a Canberran based in southern New South Wales, Australia.</p>
+    <p>
+      Gina Dow is a Canberran based in southern New South Wales, Australia.
+    </p>
 
-    <p>Therese Henningsen is a filmmaker based in London.</p>
+    <p>
+      Therese Henningsen is a filmmaker based in London.
+    </p>
 
-    <p>Aki Ilomäki is an artist based in Palermo, Italy.</p>
+    <p>
+      Aki Ilomäki is an artist based in Palermo, Italy.
+    </p>
 
-    <p>Steve Reinke is a Canadian artist and writer.</p>
+    <p>
+      Steve Reinke is a Canadian artist and writer.
+    </p>
 
-    <p>Deniz Ünal is an artist and teacher, born in Istanbul and living in London.</p>
+    <p>
+      Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
+    </p>
 
-    <p><strong>+ Friday 15 March, 7pm<br>
-    + Pelican House, 144 Cambridge Heath Road, E1 5QJ<br>
-    + Free entrance<br>
-    + Cheap drinks at the bar</strong></p>
-
-    <p>Hope to see you there. Let us know if you can make it.</p>
-
-    <p>Bronte and Freya</p>
   </main>
+
 </body>
 </html>
