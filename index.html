@@ -39,7 +39,7 @@
 
     .events {
       position: absolute;
-      top: calc(4vh + 3.45em);
+      top: calc(4vh + 2.2em);
       left: 2.5vw;
       display: flex;
       flex-direction: column;
@@ -47,23 +47,16 @@
       gap: 0.65em;
       max-width: 45vw;
       z-index: 20;
-      pointer-events: auto;
       line-height: 1.15;
       font-size: clamp(14px, 1.4vw, 22px);
-      font-weight: normal;
+      font-weight: 400;
     }
 
     .events a {
-      position: relative;
       display: inline-block;
       max-width: 100%;
       overflow-wrap: anywhere;
-      font-size: 1em;
-      pointer-events: auto;
-    }
-
-    .events a:hover {
-      color: #914b3b;
+      font-weight: 400;
     }
 
     .logo {
@@ -78,7 +71,6 @@
       pointer-events: none;
     }
 
-    /* Random images */
     .random-image {
       position: fixed;
       top: 60%;
@@ -87,25 +79,54 @@
       width: min(67vw, 920px);
       height: min(70vh, 700px);
       object-fit: contain;
-      object-position: center center;
+      object-position: center;
       z-index: 2;
       pointer-events: none;
     }
 
-    /* About and contact link */
     .about-link {
       position: fixed;
-      top: 4vh;
-      right: 4.5vw;
+      top: 5.5vh;
+      right: 7vw;
       z-index: 30;
-      font-size: clamp(26px, 2.7vw, 38px);
+      font-size: clamp(34px, 3.5vw, 50px);
       line-height: 1;
-      font-weight: normal;
-      text-decoration: none;
-      pointer-events: auto;
+      font-weight: 400;
     }
 
-    .about-link:hover {
+    .programme {
+      display: none;
+      position: fixed;
+      top: 16%;
+      left: 62%;
+      transform: translateX(-50%);
+      width: min(67vw, 920px);
+      height: 70vh;
+      overflow-y: auto;
+      z-index: 5;
+      padding: 20px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .programme.visible {
+      display: block;
+    }
+
+    .programme p {
+      margin: 0 0 1em;
+    }
+
+    .programme .close {
+      display: inline-block;
+      margin-bottom: 20px;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 20px;
+    }
+
+    .events a.active {
       color: #914b3b;
     }
 
@@ -115,16 +136,11 @@
       }
 
       .events {
-        top: calc(3vh + 3.45em);
+        top: calc(3vh + 2.2em);
         left: 4vw;
         max-width: 48vw;
         gap: 0.6em;
-        line-height: 1.15;
         font-size: clamp(14px, 3.5vw, 19px);
-      }
-
-      .events a {
-        font-size: 1em;
       }
 
       .logo {
@@ -142,15 +158,18 @@
       }
 
       .about-link {
-        top: 3.5vh;
-        right: 7vw;
-        font-size: 31px;
+        top: 5vh;
+        right: 10vw;
+        font-size: 38px;
       }
-    }
 
-    @media (max-width: 380px) {
-      .events {
-        font-size: 14px;
+      .programme {
+        top: 18%;
+        left: 50%;
+        width: 90vw;
+        height: 68vh;
+        padding: 16px;
+        font-size: 15px;
       }
     }
   </style>
@@ -167,41 +186,99 @@
     <a href="./weathergirl-4.html">Weathergirl 4</a>
     <a href="./weathergirl-3.html">Weathergirl 3</a>
     <a href="./weathergirl-2.html">Weathergirl 2</a>
-    <a href="./weathergirl-1.html">Weathergirl 1</a>
+    <a href="#" id="weathergirl1">Weathergirl 1</a>
   </nav>
 
   <a class="about-link" href="./aboutcontact.html" aria-label="About and contact">+</a>
 
-  <img
-    class="logo"
-    src="logo.png"
-    alt="Weathergirl"
-  >
+  <img class="logo" src="logo.png" alt="Weathergirl">
 
-  <img
-    id="randomImage"
-    class="random-image"
-    src="1.jpg"
-    alt=""
-  >
+  <img id="randomImage" class="random-image" src="1.png" alt="">
+
+  <section id="programme1" class="programme" aria-live="polite">
+    <a href="#" class="close" id="closeProgramme">← Back</a>
+
+    <p>
+      A programme of works by Shirley Clarke, Therese Henningsen &amp; Aki Ilomäki,
+      Steve Reinke and Deniz Ünal. With contributions by Tim Donovan and Gina Dow
+    </p>
+
+    <p>
+      Friday, 15 March 2024, Pelican House, London
+    </p>
+
+    <p>––</p>
+
+    <p>Shirley Clarke was an American filmmaker.</p>
+
+    <p>Tim Donovan is an artist and tiler based in Austin, Texas.</p>
+
+    <p>Gina Dow is a Canberran based in southern New South Wales, Australia.</p>
+
+    <p>Therese Henningsen is a filmmaker based in London.</p>
+
+    <p>Aki Ilomäki is an artist based in Palermo, Italy.</p>
+
+    <p>Steve Reinke is a Canadian artist and writer.</p>
+
+    <p>Deniz Ünal is an artist and teacher, born in Istanbul and living in London.</p>
+  </section>
 
   <script>
     const randomImage = document.getElementById("randomImage");
-    let previousNumber = 0;
+    const programme1 = document.getElementById("programme1");
+    const weathergirl1 = document.getElementById("weathergirl1");
+    const closeProgramme = document.getElementById("closeProgramme");
+
+    const imageNumbers = [
+      1, 2, 3, 5, 6, 7, 8, 9, 10, 13, 14, 15,
+      16, 17, 18, 19, 22, 25, 26, 27, 28, 31, 32
+    ];
+
+    let previousNumber = null;
+    let imageTimer;
 
     function loadRandomImage() {
+      if (programme1.classList.contains("visible")) return;
+
       let number;
 
       do {
-        number = Math.floor(Math.random() * 32) + 1;
+        number = imageNumbers[
+          Math.floor(Math.random() * imageNumbers.length)
+        ];
       } while (number === previousNumber);
 
       previousNumber = number;
-      randomImage.src = number + ".jpg";
+      randomImage.src = number === 32 ? "32.jpg" : number + ".png";
     }
 
+    function showProgramme1(event) {
+      event.preventDefault();
+      clearInterval(imageTimer);
+
+      randomImage.src = "11.jpg";
+      randomImage.style.display = "none";
+      programme1.classList.add("visible");
+      weathergirl1.classList.add("active");
+    }
+
+    function hideProgramme1(event) {
+      event.preventDefault();
+
+      programme1.classList.remove("visible");
+      weathergirl1.classList.remove("active");
+      randomImage.style.display = "block";
+
+      loadRandomImage();
+      imageTimer = setInterval(loadRandomImage, 5000);
+    }
+
+    weathergirl1.addEventListener("click", showProgramme1);
+    closeProgramme.addEventListener("click", hideProgramme1);
+
     loadRandomImage();
-    setInterval(loadRandomImage, 5000);
+    imageTimer = setInterval(loadRandomImage, 5000);
   </script>
 
 </body>
