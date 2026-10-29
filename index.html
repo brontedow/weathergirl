@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,13 +14,16 @@
   --edge: 2.5vw;
   --logo-width: clamp(240px, 32vw, 460px);
   --font-size: 16px;
+  --line-height: 1.5;
+  --paragraph-spacing: 1.2em;
 }
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   min-height: 100%;
   background: var(--background);
@@ -29,7 +33,7 @@ body {
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
   font-size: var(--font-size);
-  line-height: 1.5;
+  line-height: var(--line-height);
 }
 
 a {
@@ -41,6 +45,18 @@ a:hover,
 a:focus-visible {
   color: var(--hover);
   text-decoration: none !important;
+}
+
+/* Consistent typography across every page */
+p,
+nav,
+.home-event,
+.archive-link,
+.programme,
+.programme-content,
+.about-content {
+  font-size: var(--font-size);
+  line-height: var(--line-height);
 }
 
 /* Fixed blue logo */
@@ -86,8 +102,8 @@ a:focus-visible {
 .home-event {
   display: block;
   padding: 2px 0;
-  font-size: var(--font-size);
-  line-height: 1.5;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .home-image-area {
@@ -129,12 +145,14 @@ a:focus-visible {
   flex-direction: column;
   align-items: flex-start;
   gap: 7px;
-  font-size: var(--font-size);
-  line-height: 1.5;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .archive-link {
   display: inline-block;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 /* Current event highlighted in lime green */
@@ -156,13 +174,19 @@ a:focus-visible {
   width: 100%;
 }
 
-/* Irregular collage rather than a uniform tiled grid */
+/*
+  Irregular collage, without cropping.
+
+  The gallery uses intrinsic image heights.
+  Each image's full original dimensions are preserved.
+  No fixed row heights or object-fit: cover.
+*/
 .event-poster {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: 55px;
-  grid-auto-flow: dense;
-  align-items: stretch;
+  grid-auto-rows: auto;
+  grid-auto-flow: row;
+  align-items: start;
   gap: 12px;
   min-width: 0;
   width: 100%;
@@ -172,56 +196,54 @@ a:focus-visible {
 .event-poster img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   max-width: 100%;
   min-width: 0;
-  object-fit: cover;
-  object-position: center;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center top;
+  align-self: start;
   filter: none !important;
   opacity: 1 !important;
   mix-blend-mode: normal !important;
 }
 
-/* Varied image proportions */
+/* Varied image widths for an irregular collage */
 .event-poster img:nth-child(6n + 1) {
   grid-column: span 3;
-  grid-row: span 4;
 }
 
 .event-poster img:nth-child(6n + 2) {
   grid-column: span 3;
-  grid-row: span 3;
 }
 
 .event-poster img:nth-child(6n + 3) {
   grid-column: span 2;
-  grid-row: span 3;
 }
 
 .event-poster img:nth-child(6n + 4) {
   grid-column: span 2;
-  grid-row: span 4;
 }
 
 .event-poster img:nth-child(6n + 5) {
   grid-column: span 2;
-  grid-row: span 3;
 }
 
 .event-poster img:nth-child(6n) {
   grid-column: span 3;
-  grid-row: span 3;
 }
 
-/* Designated posters span the gallery width */
+/* Designated posters span the gallery width.
+   Height remains automatic to prevent cropping. */
 .event-poster img.is-poster {
   grid-column: 1 / -1;
-  grid-row: span 5;
+  grid-row: auto;
   width: 100%;
-  height: 100%;
+  height: auto;
   max-width: 100%;
+  max-height: none;
   object-fit: contain;
-  object-position: left center;
+  object-position: left top;
 }
 
 /* Programme text below the images */
@@ -229,14 +251,25 @@ a:focus-visible {
   width: 100%;
   max-width: none;
   min-width: 0;
-  font-size: var(--font-size);
-  line-height: 1.5;
+  font-size: inherit;
+  line-height: inherit;
   overflow-wrap: anywhere;
   padding: 0;
 }
 
+.programme-content {
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .programme-content p {
-  margin: 0 0 1.2em;
+  margin: 0 0 var(--paragraph-spacing);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.programme-content p:last-child {
+  margin-bottom: 0;
 }
 
 .programme-content .separator {
@@ -267,12 +300,18 @@ a:focus-visible {
 
 .about-content {
   max-width: 680px;
-  font-size: var(--font-size);
-  line-height: 1.5;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .about-content p {
-  margin: 0 0 1.2em;
+  margin: 0 0 var(--paragraph-spacing);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.about-content p:last-child {
+  margin-bottom: 0;
 }
 
 .about-content a {
@@ -307,33 +346,29 @@ a:focus-visible {
 
   .event-poster {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: 55px;
+    grid-auto-rows: auto;
     gap: 10px;
   }
 
   .event-poster img:nth-child(4n + 1) {
     grid-column: span 2;
-    grid-row: span 4;
   }
 
   .event-poster img:nth-child(4n + 2) {
     grid-column: span 2;
-    grid-row: span 3;
   }
 
   .event-poster img:nth-child(4n + 3) {
     grid-column: span 2;
-    grid-row: span 3;
   }
 
   .event-poster img:nth-child(4n) {
     grid-column: span 2;
-    grid-row: span 4;
   }
 
   .event-poster img.is-poster {
     grid-column: 1 / -1;
-    grid-row: span 5;
+    grid-row: auto;
   }
 }
 
@@ -368,526 +403,4 @@ a:focus-visible {
   }
 
   .home-random-image {
-    width: 90vw;
-    height: 55vh;
-  }
-
-  .event-view {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 3vh;
-    padding-top: calc(var(--logo-width) * .25 + 3vh);
-  }
-
-  .archive {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .archive-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 7px 15px;
-  }
-
-  .event-main {
-    grid-column: 1;
-    grid-row: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    min-width: 0;
-    width: 100%;
-  }
-
-  .event-poster {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 50px;
-    gap: 8px;
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .event-poster img:nth-child(n) {
-    grid-column: span 1;
-    grid-row: span 3;
-  }
-
-  .event-poster img:nth-child(4n + 1) {
-    grid-column: span 2;
-    grid-row: span 4;
-  }
-
-  .event-poster img:nth-child(4n + 2) {
-    grid-column: span 1;
-    grid-row: span 3;
-  }
-
-  .event-poster img:nth-child(4n + 3) {
-    grid-column: span 1;
-    grid-row: span 3;
-  }
-
-  .event-poster img:nth-child(4n) {
-    grid-column: span 2;
-    grid-row: span 3;
-  }
-
-  .event-poster img.is-poster {
-    grid-column: 1 / -1;
-    grid-row: span 4;
-    height: 100%;
-    max-height: none;
-    object-fit: contain;
-  }
-
-  .programme {
-    width: 100%;
-    max-width: none;
-    padding-right: 0;
-  }
-
-  .about-panel {
-    padding-top: calc(var(--logo-width) * .25 + 4vh);
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header class="site-header">
-  <a href="#about" id="logo-link"
-     aria-label="Open About page" aria-expanded="false">
-    <img class="logo" src="bluelogo.png" alt="Weathergirl">
-  </a>
-</header>
-
-<main>
-
-  <!-- HOMEPAGE -->
-  <section id="home-view" class="home-view">
-    <div class="home-layout">
-
-      <nav class="home-event-list" aria-label="Screening archive">
-        <a class="home-event" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
-        <a class="home-event" href="#" data-event="8">Weathergirl 8</a>
-        <a class="home-event" href="#" data-event="7">Weathergirl 7</a>
-        <a class="home-event" href="#" data-event="6">Weathergirl 6</a>
-        <a class="home-event" href="#" data-event="5">Weathergirl 5</a>
-        <a class="home-event" href="#" data-event="4">Weathergirl 4</a>
-        <a class="home-event" href="#" data-event="3">Weathergirl 3</a>
-        <a class="home-event" href="#" data-event="2">Weathergirl 2</a>
-        <a class="home-event" href="#" data-event="1">Weathergirl 1</a>
-      </nav>
-
-      <div class="home-image-area">
-        <img id="home-random-image" class="home-random-image"
-             src="32.jpg" alt="Weathergirl">
-      </div>
-
-    </div>
-  </section>
-
-  <!-- EVENT PAGE -->
-  <section id="event-view" class="event-view hidden">
-
-    <nav class="archive" aria-label="Screening archive">
-      <div class="archive-list">
-        <a class="archive-link" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
-        <a class="archive-link" href="#" data-event="8">Weathergirl 8</a>
-        <a class="archive-link" href="#" data-event="7">Weathergirl 7</a>
-        <a class="archive-link" href="#" data-event="6">Weathergirl 6</a>
-        <a class="archive-link" href="#" data-event="5">Weathergirl 5</a>
-        <a class="archive-link" href="#" data-event="4">Weathergirl 4</a>
-        <a class="archive-link" href="#" data-event="3">Weathergirl 3</a>
-        <a class="archive-link" href="#" data-event="2">Weathergirl 2</a>
-        <a class="archive-link" href="#" data-event="1">Weathergirl 1</a>
-      </div>
-    </nav>
-
-    <div class="event-main">
-      <div class="event-poster" id="event-poster"></div>
-
-      <section class="programme">
-        <div class="programme-content" id="programme-content"></div>
-      </section>
-    </div>
-
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about-panel" id="about-panel">
-    <div class="about-content">
-      <p>
-        An itinerant screening series showcasing funny, sad and perverse artists’ moving image, organised by Bronte Dow and Freya Field-Donovan. You can contact us <a href="mailto:dowbronte@gmail.com">here</a>.
-      </p>
-    </div>
-  </section>
-
-</main>
-
-<script>
-const programmes = {
-  1: {
-    poster: "ab.jpg",
-    images: ["12delete.jpg", "baudelaire.jpg", "11.jpg"],
-    html: `
-      <p>A programme of works by:</p>
-
-      <p>
-        Shirley Clarke<br>
-        Therese Henningsen &amp; Aki Ilomäki<br>
-        Steve Reinke<br>
-        Deniz Ünal
-      </p>
-
-      <p>With contributions by Tim Donovan and Gina Dow</p>
-
-      <p>15 March 2025</p>
-
-      <p>Pelican House, London</p>
-
-      <p class="separator">––</p>
-
-      <p>Shirley Clarke was an American filmmaker.</p>
-
-      <p>Tim Donovan is an artist and tiler based in Austin, Texas.</p>
-
-      <p>Gina Dow is a Canberran based in southern New South Wales, Australia.</p>
-
-      <p>Therese Henningsen is a filmmaker based in London.</p>
-
-      <p>Aki Ilomäki is an artist based in Palermo, Italy.</p>
-
-      <p>Steve Reinke is a Canadian artist and writer.</p>
-
-      <p>Deniz Ünal is an artist and teacher, born in Istanbul and living in London.</p>
-    `
-  },
-
-  2: {
-    poster: null,
-    images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png"],
-    html: `
-      <p>A programme of works by:</p>
-
-      <p>
-        Adam Christensen<br>
-        Keren Cytter<br>
-        Marion Scemama &amp; David Wojnarowicz<br>
-        Leslie Thornton<br>
-        Sam Tierney
-      </p>
-
-      <p>And music from Katie Shannon, Ed Lehan and Jim Janco.</p>
-
-      <p>10 August 2024</p>
-
-      <p>Avalon Cafe, London</p>
-    `
-  },
-
-  3: {
-    poster: "Weathergirl-Existers-Flyer.jpg",
-    images: ["e1.jpg", "e2.jpg", "e3.jpg", "e4.jpg", "13.png", "15.png", "32.jpg", "17.jpg"],
-    html: `
-      <p>A programme of works by:</p>
-
-      <p>
-        Andrew Kӧtting<br><br>
-        Stan Douglas<br><br>
-        George Kuchar<br><br>
-        Rosalind Nashashibi<br><br>
-        Ryan Trecartin
-      </p>
-
-      <p>Friday 22 November</p>
-
-      <p>Existers, London</p>
-    `
-  },
-
-  4: {
-    poster: null,
-    images: ["17.png", "tm1.jpg", "tm2.jpg", "tm3.jpg", "tm4.jpg", "7.png", "29.png", "28.png"],
-    html: `
-      <p>Programme of works by Therese Henningsen and Marc Isaacs.</p>
-
-      <p>Friday 14 March 2025</p>
-
-      <p>Avalon Cafe, London</p>
-
-      <p>
-        Programme:<br>
-        Therese Henningsen, <em>After Time</em> (2023)<br><br>
-        Sidsel Meineche Hansen, Therese Henningsen, <em>Baby Jesus</em> (2023)<br><br>
-        Marc Isaacs, <em>Lift</em> (2001)
-      </p>
-
-      <p>Music from Weak DJs after the screening.</p>
-    `
-  },
-
-  5: {
-    poster: "Poster_CittipunktWeathergirl.png",
-    images: ["2.jpg", "28.png", "29.png", "31.png"],
-    html: `
-      <p>Cittipunkt (Berlin) teamed up with Weathergirl (London) to present an XL PROGRAMME OF NEW VIDEO WORK. Artists and filmmakers were invited to produce a new work in a short space of time made specifically for the screening. The programme is an opportunity for tests, sketches, the resuscitation of lost projects, the bringing to light of unused footage, holiday pics, lo-fi ideas, speculative gestures and exorcisms. The programme was screened twice, in London and Berlin.</p>
-
-      <p>Thursday 24 July 2025</p>
-
-      <p>Avalon Cafe, London</p>
-
-      <p>Saturday 2 August 2025</p>
-
-      <p>Cittipunkt, Berlin</p>
-
-      <p>Participating artists:</p>
-
-      <p><em>Rosa Aiello / Emanuel Almborg / Leïla Arenou / Lars Karl Becker &amp; Daniela Kneip Velescu / Gabriel Bielawski / Max Bloching / Jude Browning / Cindie Cheung / Oliver Corino / Bronte Dow &amp; Freya Field-Donovan / Ruth Angel Edwards / Philip Ewe / Loretta Fahrenholz / Syd Farrington / Susan Finlay / New Noveta, Sophie Sleigh-Johnson &amp; Elena Bushueva / Adam Gallagher / Mania Godarzani-Bakhtiari / Sidsel Meineche Hansen / Edmund Hardy / Therese Henningsen / Winnie Herbstein / Umi Ishihara / Clara Jo / William Joys / Mette Juhl / Sam Kenswil / Nina Könnemann / Laura Langer / Sophie Lee / Ming Lin / Tomás Maglione / Tiphanie Mall / Chloée Maugile / Alice Mendelowitz / Stuart Middleton / Leonie Nagel / George Nesbitt / Nikhil Vettukattil / Kadeem Oak / Lennart Pasch / Ksenia Pedan &amp; Olga Pedan / François Pisapia / Piotr Urbaniec / Dudu Quintanilha / Harriet Rickard / Max Stocklosa / Alexandra Symons-Sutcliffe &amp; Simon Lässig / Katie Shannon / Sam Tierney / Viktor Timofeev / Wilf Thust / Lena Tutunjian / Dan Ward / Pitt Wenninger / Angharad Williams / Karen Zimmermann</em></p>
-    `
-  },
-
-  6: {
-    poster: "Screenshot 2026-10-26 at 22.24.20.png",
-    images: ["closeup1.jpg", "closeup2.jpg", "closeup3.jpg"],
-    html: `
-      <p>Halloween special with The Liberated Film Club. Costumes not compulsory.</p>
-
-      <p>Friday 31 October 2025</p>
-
-      <p>Close-Up, London.</p>
-
-      <p>The Liberated Film Club's policy is that the audience doesn't know what they're going to watch until the screening starts, so sorry about that.</p>
-    `
-  },
-
-  7: {
-    poster: "Book Launch Charlie Chaplin.jpg",
-    images: [
-      "WhatsApp Image 2026-10-29 at 11.45.32 (30).jpeg",
-      "WhatsApp Image 2026-10-29 at 11.45.32 (29).jpeg",
-      "WhatsApp Image 2026-10-29 at 11.45.32 (28).jpeg",
-      "WhatsApp Image 2026-10-29 at 11.45.32 (12).jpeg"
-    ],
-    html: `
-      <p>Launch of <em>The Charlie Chaplin</em>, a new book by Oliver Corino</p>
-
-      <p>Wednesday 25 March 2026</p>
-
-      <p>Horse Hospital, London</p>
-
-      <p><em>“My immediate concenrs [sic] are with regard to the levels of intoxication involved with the victims and suspects. There is also serious concern that the staff were intoxicated and their ability to manage the venue in this instance was seriously impaired, proven by the fact that a member of the public could get behind the bar and remove a knife and then use it to cause serious injury.”</em></p>
-
-      <p>A theme that figures in the literature of every era is the perception that important things are becoming lost to history. Based on news articles and police reports found online, The Charlie Chaplin returns to the dog days of The Charlie Chaplin pub in Elephant and Castle to give a literary account of the night of the 17th of June 2017, which, if it does anything, shows that there is a difference between literature and a police report.</p>
-
-      <p><a href="https://www.olivercorino.co.uk/" target="_blank" rel="noopener">https://www.olivercorino.co.uk/</a></p>
-    `
-  },
-
-  8: {
-    poster: "FINAL_INSTA_Weathergirl_AnnettaArtboard 2 2.jpg",
-    images: ["19.png", "18.png", "26.png", "21.jpg", "27.png", "postcards.jpg", "Annetta Photos Oct 3 2026 (1).jpg"],
-    html: `
-      <p>A screening on the theme of housing in aid of <a href="https://rodehousingcoop.com/" target="_blank" rel="noopener">Rode</a>, a new housing co-operative and artists’ space in Lewisham.</p>
-
-      <p>Saturday 3 October 2026</p>
-
-      <p>House of Annetta, London</p>
-    `
-  },
-
-  9: {
-    poster: null,
-    images: [],
-    html: ``
-  }
-};
-
-/* Homepage random images */
-const randomImages = [
-  "32.jpg",
-  "a5.jpg",
-  "1.jpg",
-  "3.jpg",
-  "17.jpg",
-  "27.jpg",
-  "avalon.jpg"
-];
-
-const homeRandomImage = document.getElementById("home-random-image");
-let lastRandomImage = null;
-let randomImageRequest = 0;
-
-function preloadImage(src) {
-  return new Promise(resolve => {
-    const image = new Image();
-
-    image.onload = () => resolve(true);
-    image.onerror = () => resolve(false);
-    image.src = src;
-  });
-}
-
-async function showRandomImage() {
-  const request = ++randomImageRequest;
-
-  const candidates = randomImages
-    .filter(src => src !== lastRandomImage)
-    .sort(() => Math.random() - 0.5);
-
-  for (const src of candidates) {
-    const loaded = await preloadImage(src);
-
-    if (request !== randomImageRequest) return;
-
-    if (loaded) {
-      homeRandomImage.src = src;
-      homeRandomImage.alt = "Weathergirl";
-      lastRandomImage = src;
-      return;
-    }
-  }
-
-  console.warn(
-    "Weathergirl: no homepage images could be loaded. Check the filenames and ensure the images are in the same folder as index.html."
-  );
-}
-
-showRandomImage();
-setInterval(showRandomImage, 5000);
-
-/* Page elements */
-const homeView = document.getElementById("home-view");
-const eventView = document.getElementById("event-view");
-const eventPoster = document.getElementById("event-poster");
-const programmeContent = document.getElementById("programme-content");
-const aboutPanel = document.getElementById("about-panel");
-const logoLink = document.getElementById("logo-link");
-
-let currentPage = "home";
-
-/* Event links */
-document.querySelectorAll("[data-event]").forEach(link => {
-  link.addEventListener("click", event => {
-    event.preventDefault();
-    showEvent(link.dataset.event);
-  });
-});
-
-/* Build the event image gallery */
-function addEventImage(src, eventId, index) {
-  const image = document.createElement("img");
-
-  const isPoster =
-    programmes[String(eventId)]?.poster === src && index === 0;
-
-  if (isPoster) {
-    image.classList.add("is-poster");
-  }
-
-  image.src = src;
-  image.alt = `Weathergirl ${eventId}, image ${index + 1}`;
-  image.loading = "lazy";
-
-  image.addEventListener("error", () => {
-    console.warn(
-      `Weathergirl: could not load "${src}". Check the filename and file location.`
-    );
-
-    image.remove();
-  });
-
-  eventPoster.appendChild(image);
-}
-
-/* Homepage */
-function showHome() {
-  currentPage = "home";
-
-  homeView.classList.remove("hidden");
-  eventView.classList.add("hidden");
-  aboutPanel.classList.remove("is-open");
-
-  logoLink.setAttribute("href", "#about");
-  logoLink.setAttribute("aria-label", "Open About page");
-  logoLink.setAttribute("aria-expanded", "false");
-
-  showRandomImage();
-  window.scrollTo(0, 0);
-}
-
-/* Event page */
-function showEvent(id) {
-  const programme = programmes[id];
-
-  if (!programme) return;
-
-  currentPage = "event";
-
-  homeView.classList.add("hidden");
-  aboutPanel.classList.remove("is-open");
-  eventView.classList.remove("hidden");
-
-  /* Highlight the selected event in lime green */
-  document.querySelectorAll(".archive-link").forEach(link => {
-    if (link.dataset.event === String(id)) {
-      link.setAttribute("aria-current", "page");
-    } else {
-      link.removeAttribute("aria-current");
-    }
-  });
-
-  eventPoster.replaceChildren();
-  eventPoster.dataset.event = String(id);
-
-  const images = [
-    ...(programme.poster ? [programme.poster] : []),
-    ...(programme.images || [])
-  ];
-
-  images.forEach((src, index) => {
-    addEventImage(src, id, index);
-  });
-
-  programmeContent.innerHTML = programme.html || "";
-
-  logoLink.setAttribute("href", "#about");
-  logoLink.setAttribute("aria-label", "Open About page");
-  logoLink.setAttribute("aria-expanded", "false");
-
-  window.scrollTo(0, 0);
-}
-
-/* About */
-function showAbout() {
-  currentPage = "about";
-
-  homeView.classList.add("hidden");
-  eventView.classList.add("hidden");
-  aboutPanel.classList.add("is-open");
-
-  logoLink.setAttribute("href", "#home");
-  logoLink.setAttribute("aria-label", "Return to homepage");
-  logoLink.setAttribute("aria-expanded", "true");
-
-  window.scrollTo(0, 0);
-}
-
-/* Logo toggles between About and homepage */
-logoLink.addEventListener("click", event => {
-  event.preventDefault();
-
-  if (currentPage === "about") {
-    showHome();
-  } else {
-    showAbout();
-  }
-});
-
-/* Start */
-showHome();
-</script>
-
-</body>
-</html>
+    width: 90
