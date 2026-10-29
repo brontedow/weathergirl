@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,15 +17,11 @@
   --archive-width: 180px;
   --content-gap: 4vw;
   --image-gap: 18px;
-  --image-ratio: 4 / 3;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html,
-body {
+html, body {
   margin: 0;
   min-height: 100%;
   background: var(--background);
@@ -42,24 +39,19 @@ a {
   text-decoration: none !important;
 }
 
-a:hover,
-a:focus-visible {
+a:hover, a:focus-visible {
   color: var(--hover);
   text-decoration: none !important;
 }
 
-/* Fixed logo */
 .site-header {
   position: fixed;
   top: 2vh;
   right: var(--edge);
   z-index: 20;
-  padding: 0;
 }
 
-#logo-link {
-  display: block;
-}
+#logo-link { display: block; }
 
 .logo {
   display: block;
@@ -69,10 +61,7 @@ a:focus-visible {
   object-fit: contain;
 }
 
-/* Consistent top spacing across pages */
-.home-view,
-.event-view,
-.about-panel {
+.home-view, .event-view, .about-panel {
   padding-top: calc(var(--logo-width) * .2 + 4vh);
 }
 
@@ -119,11 +108,9 @@ a:focus-visible {
   height: min(75vh, 760px);
   object-fit: contain;
   object-position: center;
-  filter: none !important;
-  opacity: 1 !important;
 }
 
-/* Event page */
+/* Event page and archive */
 .event-view {
   display: grid;
   grid-template-columns: var(--archive-width) minmax(0, 1fr);
@@ -162,38 +149,37 @@ a:focus-visible {
   color: var(--hover) !important;
 }
 
-/* Larger gallery, with the first image given priority */
+/*
+  The gallery and programme share a grid.
+  Portraits occupy half the gallery width.
+  Landscape images span the full event area.
+*/
 .event-main {
   grid-column: 2;
   grid-row: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, .7fr);
-  column-gap: 28px;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, .65fr);
+  grid-auto-flow: row;
+  column-gap: 26px;
+  row-gap: var(--image-gap);
   align-items: start;
   min-width: 0;
   width: 100%;
 }
 
 .event-poster {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-content: start;
-  align-items: start;
-  gap: var(--image-gap);
-  min-width: 0;
-  width: 100%;
-  margin: 0;
+  display: contents;
 }
 
 .event-poster img {
   display: block;
+  grid-column: auto;
   width: 100%;
   height: auto;
-  aspect-ratio: var(--image-ratio);
-  min-width: 0;
   max-width: 100%;
+  min-width: 0;
   object-fit: contain;
-  object-position: center;
+  object-position: top center;
   background: #fff;
   margin: 0;
   padding: 0;
@@ -202,15 +188,26 @@ a:focus-visible {
   mix-blend-mode: normal !important;
 }
 
-/* First image is larger and occupies the full gallery width */
-.event-poster img:first-child {
-  grid-column: 1 / -1;
-  width: 100%;
-  aspect-ratio: 3 / 2;
+/* Orientation classes are assigned by JavaScript */
+.event-main img.portrait {
+  grid-column: auto;
 }
 
-/* Event text */
+.event-main img.landscape {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+/* Make the first image prominent */
+.event-main img:first-of-type {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+/* Programme text occupies the right-hand column */
 .programme {
+  grid-column: 2;
+  grid-row: 1 / span 100;
   width: 100%;
   max-width: none;
   min-width: 0;
@@ -218,29 +215,23 @@ a:focus-visible {
   line-height: 1.5;
   overflow-wrap: anywhere;
   padding: 0;
+  margin-top: 0;
+  z-index: 1;
+  pointer-events: auto;
 }
 
-.programme-content p {
-  margin: 0 0 1.2em;
+/* Keep text readable above any images passing behind its column */
+.programme-content {
+  position: relative;
+  background: #fff;
 }
 
-.programme-content .separator {
-  margin: 1.5em 0;
-}
+.programme-content p { margin: 0 0 1.2em; }
+.programme-content .separator { margin: 1.5em 0; }
+.programme-content strong { font-weight: 700; }
+.programme-content em { font-style: italic; }
 
-.programme-content strong {
-  font-weight: 700;
-}
-
-.programme-content em {
-  font-style: italic;
-}
-
-.programme-content a {
-  text-decoration: none !important;
-}
-
-/* About page */
+/* About */
 .about-panel {
   display: none;
   padding-right: var(--edge);
@@ -248,9 +239,7 @@ a:focus-visible {
   padding-left: var(--edge);
 }
 
-.about-panel.is-open {
-  display: block;
-}
+.about-panel.is-open { display: block; }
 
 .about-content {
   max-width: 680px;
@@ -258,17 +247,8 @@ a:focus-visible {
   line-height: 1.5;
 }
 
-.about-content p {
-  margin: 0 0 1.2em;
-}
-
-.about-content a {
-  text-decoration: none !important;
-}
-
-.hidden {
-  display: none !important;
-}
+.about-content p { margin: 0 0 1.2em; }
+.hidden { display: none !important; }
 
 /* Tablet */
 @media (max-width: 1100px) {
@@ -284,25 +264,8 @@ a:focus-visible {
   }
 
   .event-main {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr);
+    grid-template-columns: minmax(0, 1fr) minmax(190px, .65fr);
     column-gap: 18px;
-  }
-
-  .event-poster {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
-    margin: 0;
-  }
-
-  .event-poster img {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: var(--image-ratio);
-    margin: 0;
-  }
-
-  .event-poster img:first-child {
-    aspect-ratio: 3 / 2;
   }
 }
 
@@ -314,7 +277,6 @@ a:focus-visible {
     --archive-width: 100%;
     --content-gap: 0;
     --image-gap: 12px;
-    --image-ratio: 4 / 3;
   }
 
   .site-header {
@@ -322,8 +284,7 @@ a:focus-visible {
     right: var(--edge);
   }
 
-  .home-view,
-  .about-panel {
+  .home-view, .about-panel {
     padding-top: calc(var(--logo-width) * .25 + 4vh);
   }
 
@@ -333,13 +294,9 @@ a:focus-visible {
     min-height: auto;
   }
 
-  .home-event-list {
-    width: 100%;
-  }
+  .home-event-list { width: 100%; }
 
-  .home-image-area {
-    min-height: 45vh;
-  }
+  .home-image-area { min-height: 45vh; }
 
   .home-random-image {
     width: 90vw;
@@ -365,55 +322,44 @@ a:focus-visible {
     width: 100%;
   }
 
-  .archive-link {
-    width: auto;
-  }
+  .archive-link { width: auto; }
 
   .event-main {
     grid-column: 1;
     grid-row: 2;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    min-width: 0;
+    gap: var(--image-gap);
     width: 100%;
   }
 
   .event-poster {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
+    display: flex;
+    flex-direction: column;
     gap: var(--image-gap);
     width: 100%;
-    margin: 0;
   }
 
-  .event-poster img {
-    display: block;
+  .event-main img,
+  .event-main img.portrait,
+  .event-main img.landscape,
+  .event-main img:first-of-type {
     width: 100%;
-    height: auto;
-    aspect-ratio: var(--image-ratio);
     max-width: 100%;
-    margin: 0;
-    object-fit: contain;
-  }
-
-  .event-poster img:first-child {
-    grid-column: 1 / -1;
-    aspect-ratio: 3 / 2;
+    height: auto;
   }
 
   .programme {
+    order: 2;
     width: 100%;
     max-width: none;
-    padding: 0;
+    margin-top: 12px;
   }
 }
 </style>
 </head>
 
 <body>
-
 <header class="site-header">
   <a href="#about" id="logo-link"
      aria-label="Open About page" aria-expanded="false">
@@ -422,11 +368,8 @@ a:focus-visible {
 </header>
 
 <main>
-
-  <!-- HOMEPAGE -->
   <section id="home-view" class="home-view">
     <div class="home-layout">
-
       <nav class="home-event-list" aria-label="Screening archive">
         <a class="home-event" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
         <a class="home-event" href="#" data-event="8">Weathergirl 8</a>
@@ -443,13 +386,10 @@ a:focus-visible {
         <img id="home-random-image" class="home-random-image"
              src="32.jpg" alt="Weathergirl">
       </div>
-
     </div>
   </section>
 
-  <!-- EVENT PAGE -->
   <section id="event-view" class="event-view hidden">
-
     <nav class="archive" aria-label="Screening archive">
       <div class="archive-list">
         <a class="archive-link" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
@@ -464,17 +404,14 @@ a:focus-visible {
       </div>
     </nav>
 
-    <div class="event-main">
+    <div class="event-main" id="event-main">
       <div class="event-poster" id="event-poster"></div>
-
       <section class="programme">
         <div class="programme-content" id="programme-content"></div>
       </section>
     </div>
-
   </section>
 
-  <!-- ABOUT -->
   <section class="about-panel" id="about-panel">
     <div class="about-content">
       <p>
@@ -482,7 +419,6 @@ a:focus-visible {
       </p>
     </div>
   </section>
-
 </main>
 
 <script>
@@ -492,33 +428,21 @@ const programmes = {
     images: ["12delete.jpg", "baudelaire.jpg", "11.jpg"],
     html: `
       <p>A programme of works by:</p>
-
       <p>
         Shirley Clarke<br>
         Therese Henningsen &amp; Aki Ilomäki<br>
         Steve Reinke<br>
         Deniz Ünal
       </p>
-
       <p>With contributions by Tim Donovan and Gina Dow</p>
-
-      <p>15 March 2025<br>
-      Pelican House, London</p>
-
+      <p>15 March 2025<br>Pelican House, London</p>
       <p class="separator">––</p>
-
       <p>Shirley Clarke was an American filmmaker.</p>
-
       <p>Tim Donovan is an artist and tiler based in Austin, Texas.</p>
-
       <p>Gina Dow is a Canberran based in southern New South Wales, Australia.</p>
-
       <p>Therese Henningsen is a filmmaker based in London.</p>
-
       <p>Aki Ilomäki is an artist based in Palermo, Italy.</p>
-
       <p>Steve Reinke is a Canadian artist and writer.</p>
-
       <p>Deniz Ünal is an artist and teacher, born in Istanbul and living in London.</p>
     `
   },
@@ -528,7 +452,6 @@ const programmes = {
     images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png", "df.jpg"],
     html: `
       <p>A programme of works by:</p>
-
       <p>
         Adam Christensen<br>
         Keren Cytter<br>
@@ -536,11 +459,8 @@ const programmes = {
         Leslie Thornton<br>
         Sam Tierney
       </p>
-
       <p>And music from Katie Shannon, Ed Lehan and Jim Janco.</p>
-
-      <p>10 August 2024<br>
-      Avalon Cafe, London</p>
+      <p>10 August 2024<br>Avalon Cafe, London</p>
     `
   },
 
@@ -549,7 +469,6 @@ const programmes = {
     images: ["e1.jpg", "e2.jpg", "e3.jpg", "e4.jpg", "13.png", "15.png", "32.jpg", "17.jpg"],
     html: `
       <p>A programme of works by:</p>
-
       <p>
         Andrew Kӧtting<br>
         Stan Douglas<br>
@@ -557,26 +476,29 @@ const programmes = {
         Rosalind Nashashibi<br>
         Ryan Trecartin
       </p>
-
-      <p>Friday 22 November<br>
-      Existers, London</p>
+      <p>Friday 22 November<br>Existers, London</p>
     `
   },
 
   4: {
     poster: null,
-    images: ["2poster.jpg", "17.png", "tm1.jpg", "tm2.jpg", "tm3.jpg", "tm4.jpg", "7.png", "29.png"],
+    images: [
+      "newscreening invite (10 Aug) A3.png",
+      "2poster.jpg",
+      "17.png",
+      "tm1.jpg",
+      "tm2.jpg",
+      "tm3.jpg",
+      "tm4.jpg",
+      "7.png"
+    ],
     html: `
       <p>Programme of works by Therese Henningsen and Marc Isaacs.</p>
-
-      <p>Friday 14 March 2025<br>
-      Avalon Cafe, London</p>
-
+      <p>Friday 14 March 2025<br>Avalon Cafe, London</p>
       <p>Programme:<br>
       Therese Henningsen, <em>After Time</em> (2023)<br>
       Sidsel Meineche Hansen, Therese Henningsen, <em>Baby Jesus</em> (2023)<br>
       Marc Isaacs, <em>Lift</em> (2001)</p>
-
       <p>Music from Weak DJs after the screening.</p>
     `
   },
@@ -586,15 +508,9 @@ const programmes = {
     images: ["2.jpg", "28.png", "29.png", "31.png"],
     html: `
       <p>Cittipunkt (Berlin) teamed up with Weathergirl (London) to present an XL PROGRAMME OF NEW VIDEO WORK. Artists and filmmakers were invited to produce a new work in a short space of time made specifically for the screening. The programme is an opportunity for tests, sketches, the resuscitation of lost projects, the bringing to light of unused footage, holiday pics, lo-fi ideas, speculative gestures and exorcisms. The programme was screened twice, in London and Berlin.</p>
-
-      <p>Thursday 24 July 2025<br>
-      Avalon Cafe, London</p>
-
-      <p>Saturday 2 August 2025<br>
-      Cittipunkt, Berlin</p>
-
+      <p>Thursday 24 July 2025<br>Avalon Cafe, London</p>
+      <p>Saturday 2 August 2025<br>Cittipunkt, Berlin</p>
       <p>Participating artists:</p>
-
       <p><em>Rosa Aiello / Emanuel Almborg / Leïla Arenou / Lars Karl Becker &amp; Daniela Kneip Velescu / Gabriel Bielawski / Max Bloching / Jude Browning / Cindie Cheung / Oliver Corino / Bronte Dow &amp; Freya Field-Donovan / Ruth Angel Edwards / Philip Ewe / Loretta Fahrenholz / Syd Farrington / Susan Finlay / New Noveta, Sophie Sleigh-Johnson &amp; Elena Bushueva / Adam Gallagher / Mania Godarzani-Bakhtiari / Sidsel Meineche Hansen / Edmund Hardy / Therese Henningsen / Winnie Herbstein / Umi Ishihara / Clara Jo / William Joys / Mette Juhl / Sam Kenswil / Nina Könnemann / Laura Langer / Sophie Lee / Ming Lin / Tomás Maglione / Tiphanie Mall / Chloée Maugile / Alice Mendelowitz / Stuart Middleton / Leonie Nagel / George Nesbitt / Nikhil Vettukattil / Kadeem Oak / Lennart Pasch / Ksenia Pedan &amp; Olga Pedan / François Pisapia / Piotr Urbaniec / Dudu Quintanilha / Harriet Rickard / Max Stocklosa / Alexandra Symons-Sutcliffe &amp; Simon Lässig / Katie Shannon / Sam Tierney / Viktor Timofeev / Wilf Thust / Lena Tutunjian / Dan Ward / Pitt Wenninger / Angharad Williams / Karen Zimmermann</em></p>
     `
   },
@@ -604,10 +520,7 @@ const programmes = {
     images: ["closeup1.jpg", "closeup2.jpg", "closeup3.jpg"],
     html: `
       <p>Halloween special with The Liberated Film Club. Costumes not compulsory.</p>
-
-      <p>Friday 31 October 2025<br>
-      Close-Up, London.</p>
-
+      <p>Friday 31 October 2025<br>Close-Up, London.</p>
       <p>The Liberated Film Club's policy is that the audience doesn't know what they're going to watch until the screening starts, so sorry about that.</p>
     `
   },
@@ -622,14 +535,9 @@ const programmes = {
     ],
     html: `
       <p>Launch of <em>The Charlie Chaplin</em>, a new book by Oliver Corino</p>
-
-      <p>Wednesday 25 March 2026<br>
-      Horse Hospital, London</p>
-
+      <p>Wednesday 25 March 2026<br>Horse Hospital, London</p>
       <p><em>“My immediate concenrs [sic] are with regard to the levels of intoxication involved with the victims and suspects. There is also serious concern that the staff were intoxicated and their ability to manage the venue in this instance was seriously impaired, proven by the fact that a member of the public could get behind the bar and remove a knife and then use it to cause serious injury.”</em></p>
-
       <p>A theme that figures in the literature of every era is the perception that important things are becoming lost to history. Based on news articles and police reports found online, The Charlie Chaplin returns to the dog days of The Charlie Chaplin pub in Elephant and Castle to give a literary account of the night of the 17th of June 2017, which, if it does anything, shows that there is a difference between literature and a police report.</p>
-
       <p><a href="https://www.olivercorino.co.uk/" target="_blank" rel="noopener">https://www.olivercorino.co.uk/</a></p>
     `
   },
@@ -639,9 +547,7 @@ const programmes = {
     images: ["19.png", "18.png", "26.png", "21.jpg", "27.png", "postcards.jpg", "Annetta Photos Oct 3 2026 (1).jpg"],
     html: `
       <p>A screening on the theme of housing in aid of <a href="https://rodehousingcoop.com/" target="_blank" rel="noopener">Rode</a>, a new housing co-operative and artists’ space in Lewisham.</p>
-
-      <p>Saturday 3 October 2026<br>
-      House of Annetta, London</p>
+      <p>Saturday 3 October 2026<br>House of Annetta, London</p>
     `
   },
 
@@ -670,7 +576,6 @@ let randomImageRequest = 0;
 function preloadImage(src) {
   return new Promise(resolve => {
     const image = new Image();
-
     image.onload = () => resolve(true);
     image.onerror = () => resolve(false);
     image.src = src;
@@ -679,14 +584,12 @@ function preloadImage(src) {
 
 async function showRandomImage() {
   const request = ++randomImageRequest;
-
   const candidates = randomImages
     .filter(src => src !== lastRandomImage)
     .sort(() => Math.random() - 0.5);
 
   for (const src of candidates) {
     const loaded = await preloadImage(src);
-
     if (request !== randomImageRequest) return;
 
     if (loaded) {
@@ -697,9 +600,7 @@ async function showRandomImage() {
     }
   }
 
-  console.warn(
-    "Weathergirl: no homepage images could be loaded. Check the filenames and ensure the images are in the same folder as index.html."
-  );
+  console.warn("Weathergirl: no homepage images could be loaded. Check filenames and file locations.");
 }
 
 showRandomImage();
@@ -708,6 +609,7 @@ setInterval(showRandomImage, 5000);
 /* Page elements */
 const homeView = document.getElementById("home-view");
 const eventView = document.getElementById("event-view");
+const eventMain = document.getElementById("event-main");
 const eventPoster = document.getElementById("event-poster");
 const programmeContent = document.getElementById("programme-content");
 const aboutPanel = document.getElementById("about-panel");
@@ -715,7 +617,7 @@ const logoLink = document.getElementById("logo-link");
 
 let currentPage = "home";
 
-/* Event links: keep homepage and archive navigation in sync */
+/* Navigation remains consistent across homepage and archive */
 document.querySelectorAll("[data-event]").forEach(link => {
   link.addEventListener("click", event => {
     event.preventDefault();
@@ -723,7 +625,7 @@ document.querySelectorAll("[data-event]").forEach(link => {
   });
 });
 
-/* Build the event image gallery */
+/* Add image and determine its orientation */
 function addEventImage(src, eventId, index) {
   const image = document.createElement("img");
 
@@ -731,21 +633,34 @@ function addEventImage(src, eventId, index) {
   image.alt = `Weathergirl ${eventId}, image ${index + 1}`;
   image.loading = index === 0 ? "eager" : "lazy";
 
-  image.addEventListener("error", () => {
-    console.warn(
-      `Weathergirl: could not load "${src}". Check the filename and file location.`
-    );
+  function setOrientation() {
+    if (!image.naturalWidth || !image.naturalHeight) return;
 
+    image.classList.remove("portrait", "landscape");
+
+    if (image.naturalHeight > image.naturalWidth) {
+      image.classList.add("portrait");
+    } else {
+      image.classList.add("landscape");
+    }
+  }
+
+  image.addEventListener("load", setOrientation);
+
+  image.addEventListener("error", () => {
+    console.warn(`Weathergirl: could not load "${src}". Check the filename and file location.`);
     image.remove();
   });
 
-  eventPoster.appendChild(image);
+  eventMain.insertBefore(image, document.querySelector(".programme"));
+
+  if (image.complete && image.naturalWidth) {
+    setOrientation();
+  }
 }
 
-/* Homepage */
 function showHome() {
   currentPage = "home";
-
   homeView.classList.remove("hidden");
   eventView.classList.add("hidden");
   aboutPanel.classList.remove("is-open");
@@ -758,14 +673,11 @@ function showHome() {
   window.scrollTo(0, 0);
 }
 
-/* Event page */
 function showEvent(id) {
   const programme = programmes[id];
-
   if (!programme) return;
 
   currentPage = "event";
-
   homeView.classList.add("hidden");
   aboutPanel.classList.remove("is-open");
   eventView.classList.remove("hidden");
@@ -778,18 +690,14 @@ function showEvent(id) {
     }
   });
 
-  eventPoster.replaceChildren();
-  eventPoster.dataset.event = String(id);
+  eventMain.querySelectorAll("img").forEach(image => image.remove());
 
   const images = [
     ...(programme.poster ? [programme.poster] : []),
     ...(programme.images || [])
   ];
 
-  images.forEach((src, index) => {
-    addEventImage(src, id, index);
-  });
-
+  images.forEach((src, index) => addEventImage(src, id, index));
   programmeContent.innerHTML = programme.html || "";
 
   logoLink.setAttribute("href", "#about");
@@ -799,10 +707,8 @@ function showEvent(id) {
   window.scrollTo(0, 0);
 }
 
-/* About */
 function showAbout() {
   currentPage = "about";
-
   homeView.classList.add("hidden");
   eventView.classList.add("hidden");
   aboutPanel.classList.add("is-open");
@@ -814,7 +720,6 @@ function showAbout() {
   window.scrollTo(0, 0);
 }
 
-/* Logo toggles between About and homepage */
 logoLink.addEventListener("click", event => {
   event.preventDefault();
 
@@ -825,9 +730,8 @@ logoLink.addEventListener("click", event => {
   }
 });
 
-/* Start */
 showHome();
 </script>
-
 </body>
 </html>
+```
