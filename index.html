@@ -9,7 +9,8 @@
   <style>
     :root {
       --background: #bebebe;
-      --text: #422729;
+      --text: #000000;
+      --hover: #b6ff00;
       --edge: 2.5vw;
     }
 
@@ -26,79 +27,59 @@
       margin: 0;
       min-height: 100vh;
       background: var(--background);
-      color: var(--text);
+      color: #000000;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 17px;
       line-height: 1.4;
     }
 
+    a,
+    button {
+      color: #000000;
+      font: inherit;
+    }
+
     a {
-      color: inherit;
       text-decoration: none;
     }
 
-    a:hover {
-      opacity: 0.65;
+    a:hover,
+    a:focus-visible {
+      color: var(--hover);
+      opacity: 1;
     }
 
     button {
-      color: inherit;
-      font: inherit;
+      cursor: pointer;
     }
+
+    /* Header and logo */
 
     .site-header {
       position: relative;
       z-index: 5;
       display: flex;
       justify-content: flex-end;
-      padding: 3vh var(--edge) 0;
+      padding: 2vh var(--edge) 0;
     }
 
     .header-right {
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 2vh;
+      justify-content: flex-end;
+      align-items: flex-start;
+      width: 100%;
     }
 
-    .about-toggle {
-      position: relative;
-      width: 30px;
-      height: 30px;
-      padding: 0;
-      border: 0;
-      background: none;
-      cursor: pointer;
-    }
-
-    .about-toggle::before,
-    .about-toggle::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      background: var(--text);
-      transform: translate(-50%, -50%);
-    }
-
-    .about-toggle::before {
-      width: 28px;
-      height: 1px;
-    }
-
-    .about-toggle::after {
-      width: 1px;
-      height: 28px;
-    }
-
-    .about-toggle[aria-expanded="true"]::after {
-      display: none;
+    #logo-link {
+      display: block;
+      flex: 0 1 auto;
+      max-width: 100%;
     }
 
     .logo {
       display: block;
-      width: clamp(150px, 16vw, 235px);
-      max-width: 32vw;
+      width: clamp(280px, 38vw, 560px);
+      max-width: 100%;
       height: auto;
     }
 
@@ -106,16 +87,17 @@
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(115px, 0.65fr) minmax(0, 2.35fr);
+      grid-template-columns: minmax(140px, 0.65fr) minmax(0, 2.35fr);
       column-gap: 4vw;
       align-items: start;
       width: 100%;
-      padding: 4vh var(--edge) 8vh;
+      padding: 3vh var(--edge) 8vh;
     }
 
     .archive {
       position: relative;
       z-index: 2;
+      min-width: 0;
     }
 
     .archive-list {
@@ -129,15 +111,17 @@
 
     .archive-link {
       display: inline-block;
+      color: #000000;
+      text-decoration: none;
     }
 
     .archive-link[aria-current="page"] {
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      text-decoration: none;
     }
 
     .gallery {
       min-width: 0;
+      align-self: start;
     }
 
     .gallery-images {
@@ -151,8 +135,10 @@
     .gallery-images img {
       display: block;
       width: 100%;
+      max-width: 100%;
       height: auto;
       object-fit: contain;
+      object-position: top left;
     }
 
     .home-view .gallery-images img {
@@ -162,18 +148,42 @@
     /* Individual programme compositions */
 
     .layout.composition-stacked {
-      grid-template-columns: minmax(115px, 0.65fr) minmax(0, 1.8fr) minmax(220px, 0.9fr);
+      grid-template-columns:
+        minmax(140px, 0.65fr)
+        minmax(0, 1.8fr)
+        minmax(220px, 0.9fr);
       column-gap: 3vw;
     }
 
     .layout.composition-side {
-      grid-template-columns: minmax(115px, 0.65fr) minmax(0, 1.7fr) minmax(0, 1fr);
+      grid-template-columns:
+        minmax(140px, 0.65fr)
+        minmax(0, 1.7fr)
+        minmax(0, 1fr);
       column-gap: 3vw;
     }
 
     .layout.composition-text-led {
-      grid-template-columns: minmax(115px, 0.65fr) minmax(220px, 1fr) minmax(0, 1.7fr);
+      grid-template-columns:
+        minmax(140px, 0.65fr)
+        minmax(220px, 1fr)
+        minmax(0, 1.7fr);
       column-gap: 3vw;
+    }
+
+    .composition-stacked .gallery {
+      align-self: start;
+      margin-top: 0;
+    }
+
+    /* Keep the first programme image smaller and at the top */
+    .composition-stacked .gallery-images img {
+      width: min(100%, 650px);
+      max-width: 650px;
+      height: auto;
+      margin: 0;
+      align-self: flex-start;
+      object-position: top left;
     }
 
     .composition-side .gallery-images {
@@ -193,9 +203,11 @@
 
     .programme {
       min-width: 0;
+      color: #000000;
       font-size: 16px;
       line-height: 1.5;
       overflow-wrap: anywhere;
+      align-self: start;
     }
 
     .programme-content p {
@@ -206,12 +218,12 @@
       margin: 1.5em 0;
     }
 
-    /* About and contact */
+    /* About page */
 
     .about-panel {
       display: none;
       width: 100%;
-      padding: 4vh var(--edge) 8vh;
+      padding: 3vh var(--edge) 8vh;
     }
 
     .about-panel.is-open {
@@ -220,6 +232,7 @@
 
     .about-content {
       max-width: 680px;
+      color: #000000;
       font-size: 17px;
       line-height: 1.5;
     }
@@ -230,11 +243,26 @@
 
     .contact-link {
       display: inline-block;
+      color: #000000;
+      text-decoration: none;
     }
 
     .hidden {
       display: none !important;
     }
+
+    /* Lime hover for interactive text */
+    .archive-link:hover,
+    .archive-link:focus-visible,
+    #logo-link:hover,
+    #logo-link:focus-visible,
+    .contact-link:hover,
+    .contact-link:focus-visible {
+      color: var(--hover);
+      opacity: 1;
+    }
+
+    /* Smaller screens */
 
     @media (max-width: 760px) {
       :root {
@@ -246,12 +274,12 @@
       }
 
       .site-header {
-        padding-top: 3vh;
+        padding-top: 2vh;
       }
 
       .logo {
-        width: 135px;
-        max-width: 38vw;
+        width: clamp(220px, 65vw, 360px);
+        max-width: 90vw;
       }
 
       .layout,
@@ -259,8 +287,8 @@
       .layout.composition-side,
       .layout.composition-text-led {
         grid-template-columns: minmax(0, 1fr);
-        row-gap: 4vh;
-        padding-top: 4vh;
+        row-gap: 3vh;
+        padding-top: 3vh;
       }
 
       .archive {
@@ -280,6 +308,17 @@
         grid-row: 2;
       }
 
+      .gallery-images img,
+      .home-view .gallery-images img {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .composition-stacked .gallery-images img {
+        width: min(100%, 520px);
+        max-width: 520px;
+      }
+
       .programme {
         grid-column: 1;
         grid-row: 3;
@@ -295,6 +334,10 @@
       .composition-text-led .gallery-images img {
         max-width: 100%;
       }
+
+      .about-panel {
+        padding-top: 3vh;
+      }
     }
   </style>
 </head>
@@ -302,15 +345,12 @@
 <body>
   <header class="site-header">
     <div class="header-right">
-      <button
-        class="about-toggle"
-        id="about-toggle"
-        type="button"
-        aria-label="Open About and Contact"
+      <a
+        href="#about"
+        id="logo-link"
+        aria-label="Open About page"
         aria-expanded="false"
-      ></button>
-
-      <a href="#" id="logo-link" aria-label="Home">
+      >
         <img class="logo" src="bluelogo.png" alt="Weathergirl">
       </a>
     </div>
@@ -397,10 +437,11 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
     const galleryImages = document.getElementById("gallery-images");
     const programmeContent = document.getElementById("programme-content");
     const aboutPanel = document.getElementById("about-panel");
-    const aboutToggle = document.getElementById("about-toggle");
+    const logoLink = document.getElementById("logo-link");
     const archiveLinks = [...document.querySelectorAll("[data-event]")];
 
     let currentEvent = null;
+    let currentPage = "home";
     let randomTimer = null;
     let previousRandomImage = "";
     let shuffledImages = [];
@@ -452,12 +493,23 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
       }
     }
 
+    function updateLogoState() {
+      const isAbout = currentPage === "about";
+
+      logoLink.setAttribute(
+        "aria-label",
+        isAbout ? "Return to homepage" : "Open About page"
+      );
+      logoLink.setAttribute("aria-expanded", String(isAbout));
+    }
+
     function renderProgramme(id) {
       const programme = programmes[id];
       if (!programme) return;
 
       stopRandomImages();
       currentEvent = String(id);
+      currentPage = "programme";
 
       archiveView.classList.remove(
         "home-view",
@@ -475,11 +527,7 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
       archiveView.classList.add(composition);
 
       archiveLinks.forEach(link => {
-        if (link.dataset.event === String(id)) {
-          link.setAttribute("aria-current", "page");
-        } else {
-          link.removeAttribute("aria-current");
-        }
+        link.removeAttribute("aria-current");
       });
 
       galleryImages.replaceChildren();
@@ -494,21 +542,25 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
 
       programmeContent.replaceChildren();
 
-      programme.text.split("\n\n").forEach(paragraph => {
+      programme.text.split("\n\n").filter(Boolean).forEach(paragraph => {
         const element = document.createElement("p");
         element.textContent = paragraph;
-        if (paragraph === "––") element.className = "separator";
+
+        if (paragraph === "––") {
+          element.className = "separator";
+        }
+
         programmeContent.appendChild(element);
       });
 
       archiveView.classList.remove("hidden");
       aboutPanel.classList.remove("is-open");
-      aboutToggle.setAttribute("aria-expanded", "false");
-      aboutToggle.setAttribute("aria-label", "Open About and Contact");
+      updateLogoState();
     }
 
     function showArchiveHome() {
       currentEvent = null;
+      currentPage = "home";
 
       archiveLinks.forEach(link => {
         link.removeAttribute("aria-current");
@@ -525,10 +577,16 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
       aboutPanel.classList.remove("is-open");
       archiveView.classList.remove("hidden");
 
-      aboutToggle.setAttribute("aria-expanded", "false");
-      aboutToggle.setAttribute("aria-label", "Open About and Contact");
-
+      updateLogoState();
       startRandomImages();
+    }
+
+    function showAbout() {
+      stopRandomImages();
+      archiveView.classList.add("hidden");
+      aboutPanel.classList.add("is-open");
+      currentPage = "about";
+      updateLogoState();
     }
 
     archiveLinks.forEach(link => {
@@ -544,31 +602,18 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
       });
     });
 
-    aboutToggle.addEventListener("click", () => {
-      const isOpen = aboutPanel.classList.contains("is-open");
+    logoLink.addEventListener("click", event => {
+      event.preventDefault();
 
-      if (isOpen) {
-        aboutPanel.classList.remove("is-open");
-        aboutToggle.setAttribute("aria-expanded", "false");
-        aboutToggle.setAttribute("aria-label", "Open About and Contact");
-
-        if (currentEvent === null) startRandomImages();
-        else archiveView.classList.remove("hidden");
+      if (currentPage === "about") {
+        showArchiveHome();
       } else {
-        stopRandomImages();
-        archiveView.classList.add("hidden");
-        aboutPanel.classList.add("is-open");
-        aboutToggle.setAttribute("aria-expanded", "true");
-        aboutToggle.setAttribute("aria-label", "Close About and Contact");
+        showAbout();
       }
     });
 
-    document.getElementById("logo-link").addEventListener("click", event => {
-      event.preventDefault();
-      showArchiveHome();
-    });
-
     startRandomImages();
+    updateLogoState();
   </script>
 </body>
 </html>
