@@ -1,332 +1,543 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weathergirl</title>
 
   <style>
+    :root {
+      --background: #bcc9da;
+      --text: #4b2b2e;
+      --gutter: 2.5vw;
+      --gap: 2vw;
+    }
+
     * {
       box-sizing: border-box;
     }
 
-    html,
-    body {
-      margin: 0;
+    html {
       min-height: 100%;
+      background: var(--background);
     }
 
     body {
+      margin: 0;
       min-height: 100vh;
+      background: var(--background);
+      color: var(--text);
       font-family: "Times New Roman", Times, serif;
-      font-size: 14px;
-      color: #4b2b2e;
-      background-color: #bcc9da;
+      font-size: 15px;
+      line-height: 1.35;
     }
 
     a {
-      color: #4b2b2e;
+      color: inherit;
       text-decoration: none;
-      cursor: pointer;
     }
 
     a:hover {
-      color: #914b3b;
+      opacity: 0.65;
     }
 
-    .events {
-      position: fixed;
-      top: 8.5vh;
-      left: 2.5vw;
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 5.5vh var(--gutter) 3vh;
+    }
+
+    .site-name {
+      font-size: 15px;
+      letter-spacing: 0.01em;
+    }
+
+    .header-right {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0.65em;
-      max-width: 45vw;
-      z-index: 20;
-      line-height: 1.15;
-      font-size: clamp(13px, 1.25vw, 19px);
-      font-weight: 400;
-      color: #4b2b2e;
+      align-items: flex-end;
+      gap: 2vh;
     }
 
-    .events a {
-      display: inline-block;
-      max-width: 100%;
-      overflow-wrap: anywhere;
-      font-weight: 400;
-      color: #4b2b2e;
+    .about-toggle {
+      border: 0;
+      background: none;
+      padding: 0;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      position: relative;
+      color: var(--text);
     }
 
-    .events a:hover,
-    .events a.active {
-      color: #914b3b;
+    .about-toggle::before,
+    .about-toggle::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: currentColor;
+      transform: translate(-50%, -50%);
+    }
+
+    .about-toggle::before {
+      width: 26px;
+      height: 1px;
+    }
+
+    .about-toggle::after {
+      width: 1px;
+      height: 26px;
+    }
+
+    .about-toggle[aria-expanded="true"]::after {
+      display: none;
     }
 
     .logo {
-      position: fixed;
-      top: 10.5vh;
-      right: 3vw;
       display: block;
-      width: clamp(180px, 17vw, 270px);
-      max-width: 30vw;
+      width: clamp(150px, 17vw, 245px);
       height: auto;
-      z-index: 10;
-      pointer-events: none;
+      max-width: 32vw;
     }
 
-    .random-image {
-      position: fixed;
-      top: 60%;
-      left: 62%;
-      transform: translate(-50%, -50%);
-      width: min(67vw, 920px);
-      height: min(70vh, 700px);
-      object-fit: contain;
-      object-position: center;
-      z-index: 2;
-      pointer-events: none;
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(135px, 0.8fr) minmax(0, 1.45fr) minmax(190px, 0.9fr);
+      gap: var(--gap);
+      padding: 2vh var(--gutter) 5vh;
+      align-items: start;
     }
 
-    /* Light-weight plus with longer arms */
-    .about-link {
-      position: fixed;
-      top: 5.5vh;
-      right: 7vw;
-      z-index: 30;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #4b2b2e;
+    .column-heading {
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 0;
-      font-weight: 400;
-      line-height: 1;
+      font-size: 10px;
+      font-weight: normal;
+      letter-spacing: 0.04em;
+      margin: 0 0 14px;
+      padding: 0 0 8px;
+      border-bottom: 1px solid var(--text);
     }
 
-    .about-link::before,
-    .about-link::after {
-      content: "";
-      position: absolute;
+    .archive-list {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(12px, 1.05vw, 15px);
+      line-height: 1.45;
+    }
+
+    .archive-link {
       display: block;
-      background-color: #4b2b2e;
-      border-radius: 1px;
     }
 
-    .about-link::before {
-      width: 27px;
-      height: 1.5px;
+    .archive-link[aria-current="page"] {
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
-    .about-link::after {
-      width: 1.5px;
-      height: 27px;
+    .archive-note {
+      font-size: 11px;
+      margin-top: 12px;
     }
 
-    .about-link:hover::before,
-    .about-link:hover::after {
-      background-color: #914b3b;
+    .gallery {
+      min-width: 0;
+    }
+
+    .gallery-images {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .gallery-images img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .gallery-empty {
+      font-size: 13px;
+      padding: 12px 0;
     }
 
     .programme {
-      display: none;
-      position: fixed;
-      left: 2.5vw;
-      bottom: 4vh;
-      width: min(46vw, 650px);
-      max-height: 57vh;
-      overflow-y: auto;
-      z-index: 5;
-      padding: 0;
-      font-family: "Times New Roman", Times, serif;
+      min-width: 0;
       font-size: clamp(12px, 0.95vw, 14px);
-      line-height: 1.4;
-      color: #4b2b2e;
-      background: transparent;
+      overflow-wrap: anywhere;
     }
 
-    .programme.visible {
+    .programme-content {
+      white-space: pre-line;
+    }
+
+    .programme-content p {
+      margin: 0 0 1.1em;
+    }
+
+    .programme-content .separator {
+      margin: 1.5em 0;
+    }
+
+    .about-panel {
+      display: none;
+      padding: 2vh var(--gutter) 7vh;
+      max-width: 900px;
+    }
+
+    .about-panel.is-open {
       display: block;
     }
 
-    .programme p {
-      margin: 0 0 0.85em;
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(135px, 0.8fr) minmax(0, 2.35fr);
+      gap: var(--gap);
     }
 
-    .programme .close {
-      display: inline-block;
-      margin-bottom: 14px;
-      font-family: "Times New Roman", Times, serif;
-      font-size: inherit;
-      color: #4b2b2e;
+    .about-copy {
+      max-width: 650px;
+      font-size: 15px;
+    }
+
+    .about-copy p {
+      margin: 0 0 1em;
+    }
+
+    .hidden {
+      display: none !important;
     }
 
     @media (max-width: 700px) {
-      .events {
-        top: 8vh;
-        left: 4vw;
-        max-width: 48vw;
-        gap: 0.6em;
-        font-size: clamp(13px, 3.2vw, 17px);
+      :root {
+        --gutter: 5vw;
+        --gap: 5vw;
+      }
+
+      .site-header {
+        padding-top: 3vh;
+        padding-bottom: 3vh;
       }
 
       .logo {
-        top: 11vh;
-        right: 4vw;
-        width: 30vw;
-        max-width: 180px;
+        width: 135px;
+        max-width: 38vw;
       }
 
-      .random-image {
-        top: 58%;
-        left: 60%;
-        width: 90vw;
-        height: 68vh;
+      .layout {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+        row-gap: 30px;
+        padding-top: 1vh;
       }
 
-      .about-link {
-        top: 4.5vh;
-        right: 7vw;
-        width: 30px;
-        height: 30px;
+      .archive {
+        grid-column: 1;
+        grid-row: 1;
       }
 
-      .about-link::before {
-        width: 25px;
-      }
-
-      .about-link::after {
-        height: 25px;
+      .gallery {
+        grid-column: 2;
+        grid-row: 1 / span 2;
       }
 
       .programme {
-        left: 4vw;
-        bottom: 3vh;
-        width: 60vw;
-        max-height: 53vh;
+        grid-column: 1 / -1;
+        grid-row: 3;
+        max-width: 600px;
+      }
+
+      .gallery-images {
+        gap: 12px;
+      }
+
+      .archive-list {
         font-size: 12px;
-        line-height: 1.35;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .events {
-        font-size: 13px;
       }
 
-      .programme {
-        width: 58vw;
-        font-size: 11px;
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
       }
     }
   </style>
 </head>
 
 <body>
+  <header class="site-header">
+    <a class="site-name" href="#" id="home-link">Weathergirl</a>
 
-  <nav class="events" aria-label="Screening archive">
-    <span>Weathergirl 9 (upcoming)</span>
-    <a href="./weathergirl-8.html">Weathergirl 8</a>
-    <a href="./weathergirl-7.html">Weathergirl 7</a>
-    <a href="./weathergirl-6.html">Weathergirl 6</a>
-    <a href="./weathergirl-5.html">Weathergirl 5</a>
-    <a href="./weathergirl-4.html">Weathergirl 4</a>
-    <a href="./weathergirl-3.html">Weathergirl 3</a>
-    <a href="./weathergirl-2.html">Weathergirl 2</a>
-    <a href="#" id="weathergirl1">Weathergirl 1</a>
-  </nav>
+    <div class="header-right">
+      <button
+        class="about-toggle"
+        id="about-toggle"
+        type="button"
+        aria-label="Open About and Contact"
+        aria-expanded="false"
+      ></button>
 
-  <a class="about-link" href="./aboutcontact.html" aria-label="About and contact"></a>
+      <a href="#" id="logo-link" aria-label="Weathergirl home">
+        <img class="logo" src="LOGOpng.png" alt="Weathergirl">
+      </a>
+    </div>
+  </header>
 
-  <img class="logo" src="LOGOpng.png" alt="Weathergirl">
+  <main>
+    <section class="layout" id="archive-view">
+      <nav class="archive" aria-label="Screening archive">
+        <h2 class="column-heading">ARCHIVE</h2>
 
-  <img id="randomImage" class="random-image" src="1.png" alt="">
+        <div class="archive-list">
+          <a class="archive-link" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
+          <a class="archive-link" href="#" data-event="8">Weathergirl 8</a>
+          <a class="archive-link" href="#" data-event="7">Weathergirl 7</a>
+          <a class="archive-link" href="#" data-event="6">Weathergirl 6</a>
+          <a class="archive-link" href="#" data-event="5">Weathergirl 5</a>
+          <a class="archive-link" href="#" data-event="4">Weathergirl 4</a>
+          <a class="archive-link" href="#" data-event="3">Weathergirl 3</a>
+          <a class="archive-link" href="#" data-event="2">Weathergirl 2</a>
+          <a class="archive-link" href="#" data-event="1">Weathergirl 1</a>
+        </div>
+      </nav>
 
-  <section id="programme1" class="programme" aria-live="polite">
-    <a href="#" class="close" id="closeProgramme">← Back</a>
+      <section class="gallery" aria-label="Programme images">
+        <h2 class="column-heading">IMAGES</h2>
+        <div class="gallery-images" id="gallery-images"></div>
+      </section>
 
-    <p>
-      A programme of works by Shirley Clarke, Therese Henningsen &amp; Aki Ilomäki,
-      Steve Reinke and Deniz Ünal. With contributions by Tim Donovan and Gina Dow
-    </p>
+      <section class="programme" aria-label="Programme information">
+        <h2 class="column-heading" id="programme-heading">PROGRAMME</h2>
+        <div class="programme-content" id="programme-content"></div>
+      </section>
+    </section>
 
-    <p>Friday, 15 March 2024, Pelican House, London</p>
-
-    <p>––</p>
-
-    <p>Shirley Clarke was an American filmmaker.</p>
-
-    <p>Tim Donovan is an artist and tiler based in Austin, Texas.</p>
-
-    <p>Gina Dow is a Canberran based in southern New South Wales, Australia.</p>
-
-    <p>Therese Henningsen is a filmmaker based in London.</p>
-
-    <p>Aki Ilomäki is an artist based in Palermo, Italy.</p>
-
-    <p>Steve Reinke is a Canadian artist and writer.</p>
-
-    <p>Deniz Ünal is an artist and teacher, born in Istanbul and living in London.</p>
-  </section>
+    <section class="about-panel" id="about-panel" aria-label="About and Contact">
+      <div class="about-grid">
+        <h2 class="column-heading">ABOUT / CONTACT</h2>
+        <div class="about-copy">
+          <p>Weathergirl is an artist-run moving image screening programme.</p>
+          <p>Contact details to be added.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const randomImage = document.getElementById("randomImage");
-    const programme1 = document.getElementById("programme1");
-    const weathergirl1 = document.getElementById("weathergirl1");
-    const closeProgramme = document.getElementById("closeProgramme");
+    const programmes = {
+      1: {
+        images: ["11.jpg"],
+        text: `
+A programme of works by Shirley Clarke, Therese Henningsen & Aki Ilomäki, Steve Reinke and Deniz Ünal. With contributions by Tim Donovan and Gina Dow
 
-    const imageNumbers = [
-      1, 2, 3, 5, 6, 7, 8, 9, 10, 13, 14, 15,
-      16, 17, 18, 19, 22, 25, 26, 27, 28, 31, 32
+Friday, 15 March 2024, Pelican House, London
+
+––
+
+Shirley Clarke was an American filmmaker.
+
+Tim Donovan is an artist and tiler based in Austin, Texas.
+
+Gina Dow is a Canberran based in southern New South Wales, Australia.
+
+Therese Henningsen is a filmmaker based in London.
+
+Aki Ilomäki is an artist based in Palermo, Italy.
+
+Steve Reinke is a Canadian artist and writer.
+
+Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
+`
+      },
+      2: { images: [], text: "" },
+      3: { images: [], text: "" },
+      4: { images: [], text: "" },
+      5: { images: [], text: "" },
+      6: { images: [], text: "" },
+      7: { images: [], text: "" },
+      8: { images: [], text: "" },
+      9: { images: [], text: "" }
+    };
+
+    const homeImages = [
+      "1.png", "2.png", "3.png", "5.png", "6.png", "7.png",
+      "8.png", "9.png", "10.png", "13.png", "14.png", "15.png",
+      "16.png", "17.png", "18.png", "19.png", "22.png", "25.png",
+      "26.png", "27.png", "28.png", "31.png", "32.jpg"
     ];
 
-    let previousNumber = null;
-    let imageTimer;
+    const archiveView = document.getElementById("archive-view");
+    const galleryImages = document.getElementById("gallery-images");
+    const programmeContent = document.getElementById("programme-content");
+    const programmeHeading = document.getElementById("programme-heading");
+    const aboutPanel = document.getElementById("about-panel");
+    const aboutToggle = document.getElementById("about-toggle");
+    const archiveLinks = [...document.querySelectorAll("[data-event]")];
 
-    function loadRandomImage() {
-      if (programme1.classList.contains("visible")) return;
+    let currentEvent = null;
+    let randomTimer = null;
+    let previousRandomImage = "";
+    let shuffledImages = [];
 
-      let number;
+    function shuffleImages() {
+      shuffledImages = [...homeImages];
 
-      do {
-        number = imageNumbers[
-          Math.floor(Math.random() * imageNumbers.length)
-        ];
-      } while (number === previousNumber);
+      for (let i = shuffledImages.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledImages[i], shuffledImages[j]] =
+          [shuffledImages[j], shuffledImages[i]];
+      }
 
-      previousNumber = number;
-      randomImage.src = number === 32 ? "32.jpg" : number + ".png";
+      if (
+        shuffledImages.length > 1 &&
+        shuffledImages[0] === previousRandomImage
+      ) {
+        [shuffledImages[0], shuffledImages[1]] =
+          [shuffledImages[1], shuffledImages[0]];
+      }
     }
 
-    function showProgramme1(event) {
+    function showHomeImage() {
+      if (!shuffledImages.length) shuffleImages();
+
+      const filename = shuffledImages.pop();
+      previousRandomImage = filename;
+
+      galleryImages.replaceChildren();
+
+      const image = document.createElement("img");
+      image.src = filename;
+      image.alt = "";
+      image.loading = "eager";
+      galleryImages.appendChild(image);
+
+      if (!shuffledImages.length) shuffleImages();
+    }
+
+    function startRandomImages() {
+      stopRandomImages();
+      showHomeImage();
+      randomTimer = setInterval(showHomeImage, 5000);
+    }
+
+    function stopRandomImages() {
+      if (randomTimer) {
+        clearInterval(randomTimer);
+        randomTimer = null;
+      }
+    }
+
+    function renderProgramme(id) {
+      const programme = programmes[id];
+      if (!programme) return;
+
+      stopRandomImages();
+      currentEvent = String(id);
+
+      archiveLinks.forEach(link => {
+        if (link.dataset.event === String(id)) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+
+      galleryImages.replaceChildren();
+
+      programme.images.forEach(filename => {
+        const image = document.createElement("img");
+        image.src = filename;
+        image.alt = "";
+        image.loading = "lazy";
+        galleryImages.appendChild(image);
+      });
+
+      if (programme.images.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "gallery-empty";
+        galleryImages.appendChild(empty);
+      }
+
+      programmeContent.textContent = programme.text;
+      programmeHeading.textContent = `WEATHERGIRL ${id}`;
+      archiveView.classList.remove("hidden");
+      aboutPanel.classList.remove("is-open");
+      aboutToggle.setAttribute("aria-expanded", "false");
+      aboutToggle.setAttribute("aria-label", "Open About and Contact");
+    }
+
+    function showArchiveHome() {
+      currentEvent = null;
+
+      archiveLinks.forEach(link => {
+        link.removeAttribute("aria-current");
+      });
+
+      programmeHeading.textContent = "PROGRAMME";
+      programmeContent.textContent = "";
+      aboutPanel.classList.remove("is-open");
+      archiveView.classList.remove("hidden");
+
+      aboutToggle.setAttribute("aria-expanded", "false");
+      aboutToggle.setAttribute("aria-label", "Open About and Contact");
+
+      startRandomImages();
+    }
+
+    archiveLinks.forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        const id = link.dataset.event;
+
+        if (currentEvent === id) {
+          showArchiveHome();
+        } else {
+          renderProgramme(id);
+        }
+      });
+    });
+
+    function toggleAbout() {
+      const isOpen = aboutPanel.classList.contains("is-open");
+
+      if (isOpen) {
+        aboutPanel.classList.remove("is-open");
+        aboutToggle.setAttribute("aria-expanded", "false");
+        aboutToggle.setAttribute("aria-label", "Open About and Contact");
+
+        if (currentEvent === null) startRandomImages();
+        else archiveView.classList.remove("hidden");
+      } else {
+        stopRandomImages();
+        archiveView.classList.add("hidden");
+        aboutPanel.classList.add("is-open");
+        aboutToggle.setAttribute("aria-expanded", "true");
+        aboutToggle.setAttribute("aria-label", "Close About and Contact");
+      }
+    }
+
+    aboutToggle.addEventListener("click", toggleAbout);
+
+    document.getElementById("home-link").addEventListener("click", event => {
       event.preventDefault();
-      clearInterval(imageTimer);
+      showArchiveHome();
+    });
 
-      randomImage.src = "11.jpg";
-      randomImage.style.display = "none";
-      programme1.classList.add("visible");
-      weathergirl1.classList.add("active");
-    }
-
-    function hideProgramme1(event) {
+    document.getElementById("logo-link").addEventListener("click", event => {
       event.preventDefault();
+      showArchiveHome();
+    });
 
-      programme1.classList.remove("visible");
-      weathergirl1.classList.remove("active");
-      randomImage.style.display = "block";
-
-      loadRandomImage();
-      imageTimer = setInterval(loadRandomImage, 5000);
-    }
-
-    weathergirl1.addEventListener("click", showProgramme1);
-    closeProgramme.addEventListener("click", hideProgramme1);
-
-    loadRandomImage();
-    imageTimer = setInterval(loadRandomImage, 5000);
+    startRandomImages();
   </script>
-
 </body>
 </html>
