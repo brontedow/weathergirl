@@ -42,7 +42,7 @@ a:hover, a:focus-visible {
   text-decoration: none !important;
 }
 
-/* Fixed logo: identical position on every page */
+/* Fixed blue logo */
 .site-header {
   position: fixed;
   top: 2vh;
@@ -100,8 +100,8 @@ a:hover, a:focus-visible {
 
 .home-random-image {
   display: block;
-  width: min(52vw, 700px);
-  height: min(58vh, 550px);
+  width: min(70vw, 900px);
+  height: min(70vh, 700px);
   object-fit: contain;
   object-position: center;
   filter: none;
@@ -113,7 +113,6 @@ a:hover, a:focus-visible {
   display: grid;
   grid-template-columns: minmax(130px, .65fr) minmax(0, 2.35fr);
   column-gap: 4vw;
-  row-gap: 3vh;
   align-items: start;
   padding: calc(var(--logo-width) * .2 + 3vh) var(--edge) 8vh;
 }
@@ -141,24 +140,28 @@ a:hover, a:focus-visible {
   color: var(--text);
 }
 
+/* Gallery and programme sit side by side */
 .event-main {
   grid-column: 2;
   grid-row: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(190px, .8fr);
+  column-gap: 2.5vw;
+  align-items: start;
   min-width: 0;
 }
 
-/* Collage gallery */
+/* Tessellated collage */
 .event-poster {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-auto-flow: dense;
   align-items: start;
-  gap: 18px;
+  align-content: start;
+  gap: 12px;
   min-width: 0;
-  width: 100%;
+  width: calc(100% + var(--edge));
+  margin-left: calc(-1 * var(--edge));
 }
 
 .event-poster img {
@@ -170,52 +173,66 @@ a:hover, a:focus-visible {
   object-fit: contain;
   filter: none;
   opacity: 1;
+  align-self: start;
 }
 
-/* Vary image sizes and positions to create a loose collage */
-.event-poster img:nth-child(6n + 1) {
+/* Images fit together at different scales */
+.event-poster img:nth-child(8n + 1) {
   grid-column: span 7;
 }
 
-.event-poster img:nth-child(6n + 2) {
+.event-poster img:nth-child(8n + 2) {
   grid-column: span 5;
-  margin-top: 5vh;
+  margin-top: 3vh;
 }
 
-.event-poster img:nth-child(6n + 3) {
-  grid-column: span 4;
+.event-poster img:nth-child(8n + 3) {
+  grid-column: span 5;
   margin-top: -1vh;
 }
 
-.event-poster img:nth-child(6n + 4) {
+.event-poster img:nth-child(8n + 4) {
+  grid-column: span 7;
+  margin-top: 2vh;
+}
+
+.event-poster img:nth-child(8n + 5) {
+  grid-column: span 6;
+  margin-top: 1vh;
+}
+
+.event-poster img:nth-child(8n + 6) {
   grid-column: span 6;
   margin-top: 3vh;
 }
 
-.event-poster img:nth-child(6n + 5) {
+.event-poster img:nth-child(8n + 7) {
   grid-column: span 5;
+  margin-top: -1vh;
+}
+
+.event-poster img:nth-child(8n) {
+  grid-column: span 7;
   margin-top: 2vh;
 }
 
-.event-poster img:nth-child(6n) {
-  grid-column: span 7;
-  margin-top: 4vh;
-}
-
-/* Smaller main posters for Weathergirl 5 and 7 */
+/* Slightly smaller lead posters for Weathergirl 5 and 7 */
 .event-poster[data-event="5"] img:first-child,
 .event-poster[data-event="7"] img:first-child {
   grid-column: span 5;
 }
 
-/* Programme text stays in the right-hand content column */
+/* Programme copy remains to the right of the images */
 .programme {
+  grid-column: 2;
+  grid-row: 1;
   width: 100%;
   max-width: 760px;
   min-width: 0;
   font-size: var(--font-size);
   line-height: 1.5;
   overflow-wrap: anywhere;
+  padding-right: 0;
 }
 
 .programme-content p {
@@ -267,7 +284,7 @@ a:hover, a:focus-visible {
 }
 
 /* Tablet */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   :root {
     --logo-width: clamp(220px, 34vw, 340px);
   }
@@ -278,16 +295,21 @@ a:hover, a:focus-visible {
 
   .event-view {
     grid-template-columns: minmax(110px, .55fr) minmax(0, 2fr);
-    column-gap: 4vw;
+    column-gap: 3vw;
+  }
+
+  .event-main {
+    grid-template-columns: minmax(0, 1.5fr) minmax(170px, .8fr);
+    column-gap: 2vw;
   }
 
   .event-poster {
-    gap: 12px;
+    gap: 10px;
   }
 }
 
 /* Mobile */
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   :root {
     --edge: 5vw;
     --logo-width: clamp(170px, 48vw, 260px);
@@ -317,8 +339,8 @@ a:hover, a:focus-visible {
   }
 
   .home-random-image {
-    width: 85vw;
-    height: 45vh;
+    width: 90vw;
+    height: 55vh;
   }
 
   .event-view {
@@ -341,39 +363,54 @@ a:hover, a:focus-visible {
   .event-main {
     grid-column: 1;
     grid-row: 2;
-    gap: 4vh;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    min-width: 0;
   }
 
   .event-poster {
+    width: calc(100% + 2 * var(--edge));
+    margin-left: calc(-1 * var(--edge));
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 12px;
+    gap: 10px;
   }
 
-  .event-poster img:nth-child(6n + 1) {
+  .event-poster img:nth-child(8n + 1) {
     grid-column: span 4;
   }
 
-  .event-poster img:nth-child(6n + 2) {
+  .event-poster img:nth-child(8n + 2) {
     grid-column: span 2;
-    margin-top: 3vh;
+    margin-top: 2vh;
   }
 
-  .event-poster img:nth-child(6n + 3) {
+  .event-poster img:nth-child(8n + 3) {
     grid-column: span 3;
-    margin-top: 1vh;
+    margin-top: 0;
   }
 
-  .event-poster img:nth-child(6n + 4) {
+  .event-poster img:nth-child(8n + 4) {
     grid-column: span 3;
     margin-top: 2vh;
   }
 
-  .event-poster img:nth-child(6n + 5) {
+  .event-poster img:nth-child(8n + 5) {
+    grid-column: span 3;
+    margin-top: 1vh;
+  }
+
+  .event-poster img:nth-child(8n + 6) {
+    grid-column: span 3;
+    margin-top: 2vh;
+  }
+
+  .event-poster img:nth-child(8n + 7) {
     grid-column: span 2;
     margin-top: 0;
   }
 
-  .event-poster img:nth-child(6n) {
+  .event-poster img:nth-child(8n) {
     grid-column: span 4;
     margin-top: 2vh;
   }
@@ -384,9 +421,9 @@ a:hover, a:focus-visible {
   }
 
   .programme {
-    grid-column: 1;
-    grid-row: auto;
+    width: 100%;
     max-width: 680px;
+    padding-right: 0;
   }
 
   .about-panel {
@@ -425,7 +462,7 @@ a:hover, a:focus-visible {
 
       <div class="home-image-area">
         <img id="home-random-image" class="home-random-image"
-             src="1.png" alt="Weathergirl">
+             src="32.jpg" alt="Weathergirl">
       </div>
 
     </div>
@@ -581,7 +618,7 @@ const programmes = {
 
   5: {
     poster: "Poster_CittipunktWeathergirl.png",
-    images: ["1.png", "2.jpg", "28.png", "29.png", "31.png"],
+    images: ["2.jpg", "28.png", "29.png", "31.png"],
     html: `
       <p>Thursday, 24 July 2025, Avalon Cafe, London.</p>
 
@@ -633,7 +670,7 @@ const programmes = {
 
   8: {
     poster: "FINAL_INSTA_Weathergirl_AnnettaArtboard 2 2.jpg",
-    images: ["19.png", "18.png", "26.png", "21.jpg", "27.png", "postcards.jpg"],
+    images: ["19.png", "18.png", "26.png", "21.jpg", "27.png", "postcards.jpg", "Annetta Photos Oct 3 2026 (1).jpg"],
     html: `
       <p>Weathergirl 8</p>
 
@@ -663,12 +700,13 @@ const programmes = {
 
 /* Homepage random images */
 const randomImages = [
-  "1.png",
-  "2.png",
-  "3.png",
-  "17.png",
-  "19.png",
-  "32.png"
+  "32.jpg",
+  "a5.jpg",
+  "1.jpg",
+  "3.jpg",
+  "17.jpg",
+  "27.jpg",
+  "avalon.jpg"
 ];
 
 const homeRandomImage = document.getElementById("home-random-image");
