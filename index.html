@@ -273,4 +273,563 @@ a:hover, a:focus-visible {
   }
 
   .home-layout {
-    grid-template-columns: minmax(150
+    grid-template-columns: minmax(150px, .7fr) minmax(0, 2fr);
+  }
+
+  .event-view {
+    grid-template-columns: minmax(110px, .55fr) minmax(0, 2fr);
+    column-gap: 4vw;
+  }
+
+  .event-poster {
+    gap: 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  :root {
+    --edge: 5vw;
+    --logo-width: clamp(170px, 48vw, 260px);
+  }
+
+  .site-header {
+    top: 2vh;
+    right: var(--edge);
+  }
+
+  .home-view {
+    padding-top: calc(var(--logo-width) * .25 + 4vh);
+  }
+
+  .home-layout {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4vh;
+    min-height: auto;
+  }
+
+  .home-event-list {
+    width: 100%;
+  }
+
+  .home-image-area {
+    min-height: 45vh;
+  }
+
+  .home-random-image {
+    width: 85vw;
+    height: 45vh;
+  }
+
+  .event-view {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3vh;
+    padding-top: calc(var(--logo-width) * .25 + 3vh);
+  }
+
+  .archive {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .archive-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 7px 15px;
+  }
+
+  .event-main {
+    grid-column: 1;
+    grid-row: 2;
+    gap: 4vh;
+  }
+
+  .event-poster {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .event-poster img:nth-child(6n + 1) {
+    grid-column: span 4;
+  }
+
+  .event-poster img:nth-child(6n + 2) {
+    grid-column: span 2;
+    margin-top: 3vh;
+  }
+
+  .event-poster img:nth-child(6n + 3) {
+    grid-column: span 3;
+    margin-top: 1vh;
+  }
+
+  .event-poster img:nth-child(6n + 4) {
+    grid-column: span 3;
+    margin-top: 2vh;
+  }
+
+  .event-poster img:nth-child(6n + 5) {
+    grid-column: span 2;
+    margin-top: 0;
+  }
+
+  .event-poster img:nth-child(6n) {
+    grid-column: span 4;
+    margin-top: 2vh;
+  }
+
+  .event-poster[data-event="5"] img:first-child,
+  .event-poster[data-event="7"] img:first-child {
+    grid-column: span 4;
+  }
+
+  .programme {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: 680px;
+  }
+
+  .about-panel {
+    padding-top: calc(var(--logo-width) * .25 + 4vh);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <a href="#about" id="logo-link"
+     aria-label="Open About page" aria-expanded="false">
+    <img class="logo" src="bluelogo.png" alt="Weathergirl">
+  </a>
+</header>
+
+<main>
+
+  <!-- HOMEPAGE -->
+  <section id="home-view" class="home-view">
+    <div class="home-layout">
+
+      <nav class="home-event-list" aria-label="Screening archive">
+        <a class="home-event" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
+        <a class="home-event" href="#" data-event="8">Weathergirl 8</a>
+        <a class="home-event" href="#" data-event="7">Weathergirl 7</a>
+        <a class="home-event" href="#" data-event="6">Weathergirl 6</a>
+        <a class="home-event" href="#" data-event="5">Weathergirl 5</a>
+        <a class="home-event" href="#" data-event="4">Weathergirl 4</a>
+        <a class="home-event" href="#" data-event="3">Weathergirl 3</a>
+        <a class="home-event" href="#" data-event="2">Weathergirl 2</a>
+        <a class="home-event" href="#" data-event="1">Weathergirl 1</a>
+      </nav>
+
+      <div class="home-image-area">
+        <img id="home-random-image" class="home-random-image"
+             src="1.png" alt="Weathergirl">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EVENT PAGE -->
+  <section id="event-view" class="event-view hidden">
+
+    <nav class="archive" aria-label="Screening archive">
+      <div class="archive-list">
+        <a class="archive-link" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
+        <a class="archive-link" href="#" data-event="8">Weathergirl 8</a>
+        <a class="archive-link" href="#" data-event="7">Weathergirl 7</a>
+        <a class="archive-link" href="#" data-event="6">Weathergirl 6</a>
+        <a class="archive-link" href="#" data-event="5">Weathergirl 5</a>
+        <a class="archive-link" href="#" data-event="4">Weathergirl 4</a>
+        <a class="archive-link" href="#" data-event="3">Weathergirl 3</a>
+        <a class="archive-link" href="#" data-event="2">Weathergirl 2</a>
+        <a class="archive-link" href="#" data-event="1">Weathergirl 1</a>
+      </div>
+    </nav>
+
+    <div class="event-main">
+      <div class="event-poster" id="event-poster"></div>
+
+      <section class="programme">
+        <div class="programme-content" id="programme-content"></div>
+      </section>
+    </div>
+
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-panel" id="about-panel">
+    <div class="about-content">
+      <p>
+        An itinerant screening series showcasing funny, sad and perverse artists’ moving image, organised by Bronte Dow and Freya Field-Donovan. You can contact us <a href="mailto:dowbronte@gmail.com">here</a>.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const programmes = {
+  1: {
+    poster: "11.jpg",
+    images: ["12delete.jpg", "baudelaire.jpg"],
+    html: `
+      <p>Dear friends,</p>
+
+      <p>We are showing some films on Friday 15 March 2024 at Pelican House, 144 Cambridge Heath Road, E1 5QJ.</p>
+
+      <p>Doors at 7pm, screening starts at 8pm. Bar will stay open afterwards.</p>
+
+      <p>Screening includes:<br>
+      Shirley Clarke<br>
+      Therese Henningsen &amp; Aki Ilomäki<br>
+      Steve Reinke<br>
+      Deniz Ünal</p>
+
+      <p>With contributions by Tim Donovan and Gina Dow</p>
+
+      <p class="separator">––</p>
+
+      <p>Shirley Clarke was an American filmmaker.</p>
+
+      <p>Tim Donovan is an artist and tiler based in Austin, Texas.</p>
+
+      <p>Gina Dow is a Canberran based in southern New South Wales, Australia.</p>
+
+      <p>Therese Henningsen is a filmmaker based in London.</p>
+
+      <p>Aki Ilomäki is an artist based in Palermo, Italy.</p>
+
+      <p>Steve Reinke is a Canadian artist and writer.</p>
+
+      <p>Deniz Ünal is an artist and teacher, born in Istanbul and living in London.</p>
+    `
+  },
+
+  2: {
+    poster: null,
+    images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png", "df.jpg"],
+    html: `
+      <p>Dear friends,</p>
+
+      <p>We are showing some films on Saturday 10th August 2024 at Avalon Cafe, SE14 5RW. There will be some music after from Katie Shannon, Ed Lehan and Jim Janco.</p>
+
+      <p>Screening includes:<br>
+      Adam Christensen<br>
+      Keren Cytter<br>
+      Marion Scemama &amp; David Wojnarowicz<br>
+      Leslie Thornton<br>
+      Sam Tierney</p>
+
+      <p>7pm - 2am. Films start promptly at 7:30. Music after until 2am.</p>
+
+      <p>Avalon's bar open throughout. £6 OTD so we can pay DJs.</p>
+
+      <p>See you soon.<br>
+      Bronte and Freya</p>
+    `
+  },
+
+  3: {
+    poster: "Weathergirl-Existers-Flyer.jpg",
+    images: ["e1.jpg", "e2.jpg", "e3.jpg", "e4.jpg", "13.png", "15.png", "32.jpg", "17.jpg"],
+    html: `
+      <p>Dear friends,</p>
+
+      <p>We will be showing some films this Friday 22 November 2024 at Existers, 125 Shaftesbury Avenue, London WC2H 8HR.</p>
+
+      <p>We will be screening works by:<br>
+      Andrew Kӧtting<br>
+      Stan Douglas<br>
+      George Kuchar<br>
+      Rosalind Nashashibi<br>
+      Ryan Trecartin</p>
+
+      <p>Doors at 6pm, films will start at 6.30pm. It’s free and there will be some beers.</p>
+
+      <p>+ Friday 22 November, 6pm<br>
+      + Existers, 125 Shaftesbury Avenue, London WC2H 8HR<br>
+      + Free entrance<br>
+      + Some beers and BYOB if you like</p>
+
+      <p>RSVP is essential - <a href="https://www.eventbrite.com/e/existers-weathergirl-film-screening-tickets-1049018631967?aff=oddtdtcreator" target="_blank" rel="noopener">link here</a>. Hope to see you there.</p>
+
+      <p>Bronte &amp; Freya</p>
+    `
+  },
+
+  4: {
+    poster: "weathergirl4poster.jpg",
+    images: ["17.png"],
+    html: `
+      <p>You are invited to a screening on Friday 14 March 2025 at Avalon Cafe, SE14 5RW. There will be an introduction to the films by Therese Henningsen and Marc Isaacs.</p>
+
+      <p>Programme:<br>
+      Therese Henningsen, <em>After Time</em> (2023)<br>
+      Sidsel Meineche Hansen, Therese Henningsen, <em>Baby Jesus</em> (2023)<br>
+      Marc Isaacs, <em>Lift</em> (2001)</p>
+
+      <p>Music from Weak DJs after the screening.</p>
+
+      <p>Doors at 8pm. £5 OTD. Avalon's bar will be open throughout.</p>
+
+      <p>Hope to see you there,<br>
+      Bronte and Freya</p>
+    `
+  },
+
+  5: {
+    poster: "Poster_CittipunktWeathergirl.png",
+    images: ["1.png", "2.jpg", "28.png", "29.png", "31.png"],
+    html: `
+      <p>Thursday, 24 July 2025, Avalon Cafe, London.</p>
+
+      <p>Saturday, 2 August 2025, Cittipunkt, Berlin.</p>
+
+      <p>Co-curated with Cittipunkt, presenting an XL programme of new video work by an extended community of artists, writers and filmmakers.</p>
+    `
+  },
+
+  6: {
+    poster: "Screenshot 2026-10-26 at 22.24.20.png",
+    images: ["closeup1.jpg", "closeup2.jpg", "closeup3.jpg"],
+    html: `
+      <p>Dear friends,</p>
+
+      <p>We are excited to invite you to a Halloween special we have programmed for The Liberated Film Club.</p>
+
+      <p>8.30pm, Friday, 31 October 2025 at Close-Up, 97 Sclater St, London E1 6HR.</p>
+
+      <p>You can purchase tickets <a href="https://www.closeupfilmcentre.com/film_programmes/2025/the-liberated-film-club/the-liberated-film-club-weathergirl" target="_blank" rel="noopener">here</a>.</p>
+
+      <p>The Liberated Film Club's policy is that the audience doesn't know what they're going to watch until the screening starts, so sorry about that.</p>
+
+      <p>We would love to see you there. Costumes not compulsory.</p>
+
+      <p>Bronte &amp; Freya</p>
+    `
+  },
+
+  7: {
+    poster: "Book Launch Charlie Chaplin.jpg",
+    images: [],
+    html: `
+      <p>Dear friends,</p>
+
+      <p>You are invited to the launch of Oliver Corino's new book <em>The Charlie Chaplin</em> on Wednesday March 25th at the <a href="https://www.google.com/maps/search/?api=1&query=The+Horse+Hospital+London" target="_blank" rel="noopener">Horse Hospital</a>. Doors at 7pm. Readings begin at 8pm.</p>
+
+      <p>Oliver's reading will take place in three parts, with music and drinks in between.</p>
+
+      <p>£8 OTD. Books available to buy on the night.</p>
+
+      <p><em>“My immediate concenrs [sic] are with regard to the levels of intoxication involved with the victims and suspects. There is also serious concern that the staff were intoxicated and their ability to manage the venue in this instance was seriously impaired, proven by the fact that a member of the public could get behind the bar and remove a knife and then use it to cause serious injury.”</em></p>
+
+      <p>A theme that figures in the literature of every era is the perception that important things are becoming lost to history. Based on news articles and police reports found online, <em>The Charlie Chaplin</em> returns to the dog days of The Charlie Chaplin pub in Elephant and Castle to give a literary account of the night of the 17th of June 2017, which, if it does anything, shows that there is a difference between literature and a police report.</p>
+
+      <p><a href="https://www.olivercorino.co.uk/" target="_blank" rel="noopener">https://www.olivercorino.co.uk/</a></p>
+    `
+  },
+
+  8: {
+    poster: "FINAL_INSTA_Weathergirl_AnnettaArtboard 2 2.jpg",
+    images: ["19.png", "18.png", "26.png", "21.jpg", "27.png", "postcards.jpg"],
+    html: `
+      <p>Weathergirl 8</p>
+
+      <p>Dear friends,</p>
+
+      <p>We are excited to invite you to a screening on the theme of housing in aid of Rode, a new housing co-op and artists’ space that we are helping to set up with Collective Ownership Society.</p>
+
+      <p>The screening will take place on Saturday 3 October at House of Annetta, 25 Princelet St, London E1 6QH. Doors will open at 6.30pm, with films beginning at 7pm and will run for around one hour. The programme list will be available on the night.</p>
+
+      <p>The event is BYOB. We can go to the Pride afterwards.</p>
+
+      <p>Space is limited to 30 people max. Tickets are £8. Please buy your ticket ahead of time via the link in our bio.</p>
+
+      <p>If you like, you can also separately donate to Rode Housing Co-op (link also in bio).</p>
+
+      <p>We hope to see you there,<br>
+      Bronte and Freya</p>
+    `
+  },
+
+  9: {
+    poster: null,
+    images: [],
+    html: `<p>Upcoming screening. Details to follow.</p>`
+  }
+};
+
+/* Homepage random images */
+const randomImages = [
+  "1.png",
+  "2.png",
+  "3.png",
+  "17.png",
+  "19.png",
+  "32.png"
+];
+
+const homeRandomImage = document.getElementById("home-random-image");
+let lastRandomImage = null;
+let randomImageRequest = 0;
+
+function preloadImage(src) {
+  return new Promise(resolve => {
+    const image = new Image();
+    image.onload = () => resolve(true);
+    image.onerror = () => resolve(false);
+    image.src = src;
+  });
+}
+
+async function showRandomImage() {
+  const request = ++randomImageRequest;
+  const candidates = randomImages
+    .filter(src => src !== lastRandomImage)
+    .sort(() => Math.random() - 0.5);
+
+  for (const src of candidates) {
+    const loaded = await preloadImage(src);
+
+    if (request !== randomImageRequest) return;
+
+    if (loaded) {
+      homeRandomImage.src = src;
+      homeRandomImage.alt = "Weathergirl";
+      lastRandomImage = src;
+      return;
+    }
+  }
+
+  console.warn(
+    "Weathergirl: no homepage images could be loaded. Check the filenames and ensure the images are in the same folder as index.html."
+  );
+}
+
+showRandomImage();
+setInterval(showRandomImage, 5000);
+
+/* Page elements */
+const homeView = document.getElementById("home-view");
+const eventView = document.getElementById("event-view");
+const eventPoster = document.getElementById("event-poster");
+const programmeContent = document.getElementById("programme-content");
+const aboutPanel = document.getElementById("about-panel");
+const logoLink = document.getElementById("logo-link");
+
+let currentPage = "home";
+
+/* Event links */
+document.querySelectorAll("[data-event]").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+    showEvent(link.dataset.event);
+  });
+});
+
+/* Build the event image collage */
+function addEventImage(src, eventId, index) {
+  const image = document.createElement("img");
+
+  image.src = src;
+  image.alt = `Weathergirl ${eventId}, image ${index + 1}`;
+  image.loading = "lazy";
+
+  image.addEventListener("error", () => {
+    console.warn(
+      `Weathergirl: could not load "${src}". Check the filename and file location.`
+    );
+    image.remove();
+  });
+
+  eventPoster.appendChild(image);
+}
+
+/* Homepage */
+function showHome() {
+  currentPage = "home";
+
+  homeView.classList.remove("hidden");
+  eventView.classList.add("hidden");
+  aboutPanel.classList.remove("is-open");
+
+  logoLink.setAttribute("href", "#about");
+  logoLink.setAttribute("aria-label", "Open About page");
+  logoLink.setAttribute("aria-expanded", "false");
+
+  showRandomImage();
+  window.scrollTo(0, 0);
+}
+
+/* Event page */
+function showEvent(id) {
+  const programme = programmes[id];
+  if (!programme) return;
+
+  currentPage = "event";
+
+  homeView.classList.add("hidden");
+  aboutPanel.classList.remove("is-open");
+  eventView.classList.remove("hidden");
+
+  document.querySelectorAll(".archive-link").forEach(link => {
+    if (link.dataset.event === String(id)) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+
+  eventPoster.replaceChildren();
+  eventPoster.dataset.event = String(id);
+
+  const images = [
+    ...(programme.poster ? [programme.poster] : []),
+    ...(programme.images || [])
+  ];
+
+  images.forEach((src, index) => addEventImage(src, id, index));
+
+  programmeContent.innerHTML = programme.html || "";
+
+  logoLink.setAttribute("href", "#about");
+  logoLink.setAttribute("aria-label", "Open About page");
+  logoLink.setAttribute("aria-expanded", "false");
+
+  window.scrollTo(0, 0);
+}
+
+/* About */
+function showAbout() {
+  currentPage = "about";
+
+  homeView.classList.add("hidden");
+  eventView.classList.add("hidden");
+  aboutPanel.classList.add("is-open");
+
+  logoLink.setAttribute("href", "#home");
+  logoLink.setAttribute("aria-label", "Return to homepage");
+  logoLink.setAttribute("aria-expanded", "true");
+
+  window.scrollTo(0, 0);
+}
+
+/* Logo toggles between About and homepage */
+logoLink.addEventListener("click", event => {
+  event.preventDefault();
+
+  if (currentPage === "about") {
+    showHome();
+  } else {
+    showAbout();
+  }
+});
+
+/* Start */
+showHome();
+</script>
+
+</body>
+</html>
