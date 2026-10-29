@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,13 +15,16 @@
   --font-size: 16px;
   --archive-width: 180px;
   --content-gap: 4vw;
+  --image-gap: 14px;
+  --image-ratio: 4 / 3;
 }
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   min-height: 100%;
   background: var(--background);
@@ -40,7 +42,8 @@ a {
   text-decoration: none !important;
 }
 
-a:hover, a:focus-visible {
+a:hover,
+a:focus-visible {
   color: var(--hover);
   text-decoration: none !important;
 }
@@ -66,7 +69,7 @@ a:hover, a:focus-visible {
   object-fit: contain;
 }
 
-/* Shared top spacing keeps the archive list in the same position */
+/* Keep the archive list in the same position on every page */
 .home-view,
 .event-view,
 .about-panel {
@@ -159,7 +162,7 @@ a:hover, a:focus-visible {
   color: var(--hover) !important;
 }
 
-/* Event content: image collage on the left, text on the right */
+/* Event content: uniform image grid on the left, text on the right */
 .event-main {
   grid-column: 2;
   grid-row: 1;
@@ -172,82 +175,36 @@ a:hover, a:focus-visible {
 }
 
 /*
-  Loose, staggered collage.
-  Images keep their natural proportions and are not cropped.
-  The larger cells give smaller images more room.
+  Every image occupies an identical grid cell.
+  Images retain their original proportions and are never cropped.
+  Grid gaps are consistent, with no negative margins or overlapping.
 */
 .event-poster {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: 18px;
-  grid-auto-flow: dense;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
-  align-items: start;
-  gap: 12px;
+  align-items: stretch;
+  gap: var(--image-gap);
   min-width: 0;
-  width: calc(100% + 2vw);
-  margin: 0 0 0 -1vw;
+  width: 100%;
+  margin: 0;
 }
 
 .event-poster img {
   display: block;
   width: 100%;
   height: auto;
-  max-width: 100%;
+  aspect-ratio: var(--image-ratio);
   min-width: 0;
+  max-width: 100%;
   object-fit: contain;
   object-position: center;
+  background: #fff;
+  margin: 0;
+  padding: 0;
   filter: none !important;
   opacity: 1 !important;
   mix-blend-mode: normal !important;
-}
-
-/* Vary image widths to create a tighter, more tessellated arrangement */
-.event-poster img:nth-child(6n + 1) {
-  grid-column: span 4;
-  grid-row: span 12;
-}
-
-.event-poster img:nth-child(6n + 2) {
-  grid-column: span 2;
-  grid-row: span 9;
-  margin-top: 22px;
-}
-
-.event-poster img:nth-child(6n + 3) {
-  grid-column: span 3;
-  grid-row: span 10;
-  margin-top: 4px;
-}
-
-.event-poster img:nth-child(6n + 4) {
-  grid-column: span 3;
-  grid-row: span 12;
-  margin-top: 18px;
-}
-
-.event-poster img:nth-child(6n + 5) {
-  grid-column: span 2;
-  grid-row: span 9;
-  margin-top: 8px;
-}
-
-.event-poster img:nth-child(6n) {
-  grid-column: span 4;
-  grid-row: span 12;
-  margin-top: 14px;
-}
-
-/* Give the smaller images in these galleries more space */
-.event-poster[data-event="1"] img,
-.event-poster[data-event="2"] img,
-.event-poster[data-event="3"] img,
-.event-poster[data-event="4"] img,
-.event-poster[data-event="5"] img,
-.event-poster[data-event="6"] img,
-.event-poster[data-event="7"] img,
-.event-poster[data-event="8"] img {
-  max-width: none;
 }
 
 /* Event text */
@@ -317,6 +274,7 @@ a:hover, a:focus-visible {
     --logo-width: clamp(220px, 34vw, 340px);
     --archive-width: 155px;
     --content-gap: 3vw;
+    --image-gap: 10px;
   }
 
   .home-layout {
@@ -329,34 +287,16 @@ a:hover, a:focus-visible {
   }
 
   .event-poster {
-    gap: 9px;
-    width: calc(100% + 1vw);
-    margin-left: -.5vw;
-    grid-auto-rows: 15px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    margin: 0;
   }
 
-  .event-poster img:nth-child(6n + 1) {
-    grid-row: span 13;
-  }
-
-  .event-poster img:nth-child(6n + 2) {
-    grid-row: span 10;
-  }
-
-  .event-poster img:nth-child(6n + 3) {
-    grid-row: span 11;
-  }
-
-  .event-poster img:nth-child(6n + 4) {
-    grid-row: span 13;
-  }
-
-  .event-poster img:nth-child(6n + 5) {
-    grid-row: span 10;
-  }
-
-  .event-poster img:nth-child(6n) {
-    grid-row: span 13;
+  .event-poster img {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: var(--image-ratio);
+    margin: 0;
   }
 }
 
@@ -367,6 +307,8 @@ a:hover, a:focus-visible {
     --logo-width: clamp(170px, 48vw, 260px);
     --archive-width: 100%;
     --content-gap: 0;
+    --image-gap: 12px;
+    --image-ratio: 4 / 3;
   }
 
   .site-header {
@@ -432,46 +374,22 @@ a:hover, a:focus-visible {
   }
 
   .event-poster {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    grid-auto-rows: 15px;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: var(--image-gap);
     width: 100%;
     margin: 0;
   }
 
-  .event-poster img:nth-child(6n + 1) {
-    grid-column: span 4;
-    grid-row: span 12;
-  }
-
-  .event-poster img:nth-child(6n + 2) {
-    grid-column: span 2;
-    grid-row: span 9;
-    margin-top: 12px;
-  }
-
-  .event-poster img:nth-child(6n + 3) {
-    grid-column: span 3;
-    grid-row: span 10;
-    margin-top: 4px;
-  }
-
-  .event-poster img:nth-child(6n + 4) {
-    grid-column: span 3;
-    grid-row: span 12;
-    margin-top: 12px;
-  }
-
-  .event-poster img:nth-child(6n + 5) {
-    grid-column: span 2;
-    grid-row: span 9;
-    margin-top: 0;
-  }
-
-  .event-poster img:nth-child(6n) {
-    grid-column: span 4;
-    grid-row: span 12;
-    margin-top: 8px;
+  .event-poster img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--image-ratio);
+    max-width: 100%;
+    margin: 0;
+    object-fit: contain;
   }
 
   .programme {
@@ -596,7 +514,7 @@ const programmes = {
 
   2: {
     poster: null,
-    images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png"],
+    images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png", "df.jpg"],
     html: `
       <p>A programme of works by:</p>
 
@@ -902,4 +820,3 @@ showHome();
 
 </body>
 </html>
-```
