@@ -56,24 +56,27 @@ a:hover, a:focus-visible {
   width: var(--logo-width);
   max-width: 100%;
   height: auto;
+  object-fit: contain;
 }
 
 .event-logo {
   display: none;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: clamp(48px, 7.2vw, 106px);
-  font-weight: 400;
-  line-height: .9;
-  letter-spacing: -.065em;
-  white-space: nowrap;
-  color: #283428;
+  width: var(--logo-width);
+  height: 110px;
+  object-fit: contain;
+  object-position: right top;
 }
 
-#logo-link.event-logo-active .logo { display: none; }
-#logo-link.event-logo-active .event-logo { display: block; }
+#logo-link.event-logo-active .logo {
+  display: none;
+}
 
-#logo-link.event-logo-active:hover .event-logo {
-  color: var(--hover);
+#logo-link.event-logo-active .event-logo {
+  display: block;
+}
+
+#logo-link:hover .event-logo {
+  opacity: .8;
 }
 
 /* Homepage */
@@ -82,30 +85,48 @@ a:hover, a:focus-visible {
   padding: 4vh var(--edge) 8vh;
 }
 
+.home-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, .7fr) minmax(0, 2.3fr);
+  column-gap: 5vw;
+  min-height: 72vh;
+}
+
 .home-event-list {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   width: 100%;
 }
 
 .home-event {
+  display: block;
+  padding: 2px 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.home-event:hover,
+.home-event:focus-visible {
+  color: var(--hover);
+}
+
+.home-image-area {
+  position: relative;
+  min-width: 0;
+  min-height: 72vh;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 10px 0;
-  border-top: 1px solid #000;
+  align-items: center;
+  justify-content: center;
 }
 
-.home-event:last-child {
-  border-bottom: 1px solid #000;
-}
-
-.home-event-title {
-  font-size: 16px;
-}
-
-.home-event-number {
-  font-size: 16px;
+.home-random-image {
+  display: block;
+  width: min(52vw, 700px);
+  height: min(58vh, 550px);
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
 }
 
 /* Event pages */
@@ -121,7 +142,7 @@ a:hover, a:focus-visible {
 
 .archive {
   grid-column: 1;
-  grid-row: 1 / span 2;
+  grid-row: 1;
   min-width: 0;
 }
 
@@ -138,64 +159,74 @@ a:hover, a:focus-visible {
   display: inline-block;
 }
 
+.archive-link:hover,
+.archive-link:focus-visible {
+  color: var(--hover);
+}
+
 .archive-link[aria-current="page"] {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.event-poster {
+.event-main {
   grid-column: 2;
   grid-row: 1;
-  width: min(100%, 420px);
-  height: 280px;
+  display: grid;
+  grid-template-columns: minmax(180px, 420px) minmax(0, 760px);
+  column-gap: 4vw;
+  align-items: start;
+  min-width: 0;
+}
+
+.event-poster {
   min-width: 0;
   align-self: start;
 }
 
-.event-logo-link {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
 .event-poster img {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 65vh;
   object-fit: contain;
   object-position: top left;
   margin: 0;
 }
 
-.event-logo-link:hover img,
-.event-logo-link:focus-visible img {
-  opacity: .8;
-}
-
 .programme {
-  grid-column: 2;
-  grid-row: 2;
   width: 100%;
-  max-width: 760px;
   min-width: 0;
   font-size: 16px;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
-.programme-content p { margin: 0 0 1.2em; }
-.programme-content .separator { margin: 1.5em 0; }
-.programme-content strong { font-weight: 700; }
-.programme-content em { font-style: italic; }
+.programme-content p {
+  margin: 0 0 1.2em;
+}
+
+.programme-content .separator {
+  margin: 1.5em 0;
+}
+
+.programme-content strong {
+  font-weight: 700;
+}
+
+.programme-content em {
+  font-style: italic;
+}
 
 .programme-content a {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.programme-content a:hover { color: var(--hover); }
+.programme-content a:hover {
+  color: var(--hover);
+}
 
 /* About page */
 
@@ -204,7 +235,9 @@ a:hover, a:focus-visible {
   padding: 4vh var(--edge) 8vh;
 }
 
-.about-panel.is-open { display: block; }
+.about-panel.is-open {
+  display: block;
+}
 
 .about-content {
   max-width: 680px;
@@ -212,7 +245,9 @@ a:hover, a:focus-visible {
   line-height: 1.5;
 }
 
-.about-content p { margin: 0 0 1.2em; }
+.about-content p {
+  margin: 0 0 1.2em;
+}
 
 .about-content a {
   text-decoration: underline;
@@ -223,7 +258,27 @@ a:hover, a:focus-visible {
   color: var(--hover);
 }
 
-.hidden { display: none !important; }
+.hidden {
+  display: none !important;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .home-layout {
+    grid-template-columns: minmax(150px, .7fr) minmax(0, 2fr);
+  }
+
+  .event-view {
+    grid-template-columns: minmax(110px, .55fr) minmax(0, 2fr);
+    column-gap: 4vw;
+  }
+
+  .event-main {
+    grid-template-columns: minmax(150px, 1fr) minmax(0, 1.5fr);
+    column-gap: 4vw;
+  }
+}
 
 /* Mobile */
 
@@ -233,8 +288,23 @@ a:hover, a:focus-visible {
     --logo-width: clamp(220px, 65vw, 360px);
   }
 
-  .home-event {
-    padding: 9px 0;
+  .home-layout {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4vh;
+    min-height: auto;
+  }
+
+  .home-event-list {
+    width: 100%;
+  }
+
+  .home-image-area {
+    min-height: 55vh;
+  }
+
+  .home-random-image {
+    width: min(85vw, 500px);
+    height: 50vh;
   }
 
   .event-view {
@@ -255,40 +325,89 @@ a:hover, a:focus-visible {
     font-size: 14px;
   }
 
-  .event-poster {
+  .event-main {
     grid-column: 1;
     grid-row: 2;
-    width: min(100%, 360px);
-    height: 220px;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3vh;
+  }
+
+  .event-poster {
+    width: 100%;
+  }
+
+  .event-poster img {
+    max-width: min(100%, 360px);
+    max-height: none;
   }
 
   .programme {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 2;
     max-width: 680px;
   }
 
   .event-logo {
-    font-size: clamp(40px, 10vw, 68px);
+    width: var(--logo-width);
+    height: 70px;
   }
 }
 </style>
 </head>
 
 <body>
+
 <header class="site-header">
   <a href="#about" id="logo-link" aria-label="Open About page" aria-expanded="false">
     <img class="logo" src="bluelogo.png" alt="Weathergirl">
-    <span class="event-logo">WEATHERGIRL</span>
+
+    <img
+      class="event-logo"
+      id="event-logo"
+      src="bluelogo.png"
+      alt="Weathergirl"
+    >
   </a>
 </header>
 
 <main>
+
+  <!-- HOMEPAGE -->
+
   <section id="home-view" class="home-view">
-    <div class="home-event-list" id="home-event-list"></div>
+
+    <div class="home-layout">
+
+      <nav class="home-event-list" aria-label="Screening archive">
+        <a class="home-event" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
+        <a class="home-event" href="#" data-event="8">Weathergirl 8</a>
+        <a class="home-event" href="#" data-event="7">Weathergirl 7</a>
+        <a class="home-event" href="#" data-event="6">Weathergirl 6</a>
+        <a class="home-event" href="#" data-event="5">Weathergirl 5</a>
+        <a class="home-event" href="#" data-event="4">Weathergirl 4</a>
+        <a class="home-event" href="#" data-event="3">Weathergirl 3</a>
+        <a class="home-event" href="#" data-event="2">Weathergirl 2</a>
+        <a class="home-event" href="#" data-event="1">Weathergirl 1</a>
+      </nav>
+
+      <div class="home-image-area">
+        <img
+          id="home-random-image"
+          class="home-random-image"
+          src=""
+          alt=""
+        >
+      </div>
+
+    </div>
+
   </section>
 
+
+  <!-- EVENT PAGE -->
+
   <section id="event-view" class="event-view hidden">
+
     <nav class="archive" aria-label="Screening archive">
       <div class="archive-list">
         <a class="archive-link" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
@@ -303,24 +422,39 @@ a:hover, a:focus-visible {
       </div>
     </nav>
 
-    <div class="event-poster" id="event-poster"></div>
+    <div class="event-main">
 
-    <section class="programme">
-      <div class="programme-content" id="programme-content"></div>
-    </section>
+      <div class="event-poster" id="event-poster"></div>
+
+      <section class="programme">
+        <div class="programme-content" id="programme-content"></div>
+      </section>
+
+    </div>
+
   </section>
+
+
+  <!-- ABOUT -->
 
   <section class="about-panel" id="about-panel">
     <div class="about-content">
-      <p>An itinerant screening series showcasing funny, sad and perverse artists’ moving image, organised by Bronte Dow and Freya Field-Donovan. You can contact us <a href="mailto:dowbronte@gmail.com">here</a>.</p>
+      <p>
+        An itinerant screening series showcasing funny, sad and perverse artists’ moving image, organised by Bronte Dow and Freya Field-Donovan. You can contact us <a href="mailto:dowbronte@gmail.com">here</a>.
+      </p>
     </div>
   </section>
+
 </main>
 
+
 <script>
+
 const programmes = {
+
   1: {
-    poster: "1.png",
+    logo: "1.png",
+    poster: "11.jpg",
     html: `
       <p>Friday, 15 March 2024, Pelican House, London.</p>
       <p>Works by Shirley Clarke, Therese Henningsen, Aki Ilomäki, Steve Reinke and Deniz Ünal, with contributions by Tim Donovan and Gina Dow.</p>
@@ -328,7 +462,8 @@ const programmes = {
   },
 
   2: {
-    poster: "1.png",
+    logo: "1.png",
+    poster: "2poster.jpg",
     html: `
       <p>Saturday, 10 August 2024, Avalon Cafe, SE14 5RW.</p>
       <p>Works by Adam Christensen, Keren Cytter, Marion Scemama &amp; David Wojnarowicz, Leslie Thornton and Sam Tierney.</p>
@@ -337,7 +472,8 @@ const programmes = {
   },
 
   3: {
-    poster: "existers.png",
+    logo: "existers.png",
+    poster: "Weathergirl-Existers-Flyer.jpg",
     html: `
       <p>Friday, 22 November 2024, Existers, 125 Shaftesbury Avenue, London WC2H 8HR.</p>
       <p>Works by Andrew Kӧtting, Stan Douglas, George Kuchar, Rosalind Nashashibi and Ryan Trecartin.</p>
@@ -345,7 +481,8 @@ const programmes = {
   },
 
   4: {
-    poster: "Weathergirl4.png",
+    logo: "Weathergirl4.png",
+    poster: "weathergirl4poster.jpg",
     html: `
       <p>Friday, 14 March 2025, Avalon Cafe, SE14 5RW.</p>
       <p>Works by Therese Henningsen, Sidsel Meineche Hansen and Marc Isaacs.</p>
@@ -354,7 +491,8 @@ const programmes = {
   },
 
   5: {
-    poster: "weathergirl/cittipinkt.jpg",
+    logo: "weathergirl/cittipinkt.jpg",
+    poster: "Poster_CittipunktWeathergirl.png",
     html: `
       <p>Thursday, 24 July 2025, Avalon Cafe, London.</p>
       <p>Saturday, 2 August 2025, Cittipunkt, Berlin.</p>
@@ -363,16 +501,17 @@ const programmes = {
   },
 
   6: {
-    poster: "Weathergirl-orange.png",
+    logo: "Weathergirl-orange.png",
+    poster: "Screenshot 2026-10-26 at 22.24.20.png",
     html: `
-      <p>Halloween special for The Liberated Film Club.</p>
       <p>Friday, 31 October 2025, Close-Up, 97 Sclater St, London E1 6HR.</p>
-      <p>The programme was kept secret until the screening.</p>
+      <p>Halloween special programmed for The Liberated Film Club. The programme was kept secret until the screening.</p>
     `
   },
 
   7: {
-    poster: "1.png",
+    logo: "1.png",
+    poster: "Book Launch Charlie Chaplin.jpg",
     html: `
       <p>Wednesday, 25 March, Horse Hospital, London.</p>
       <p>Launch of Oliver Corino's book <em>The Charlie Chaplin</em>, with readings, music and drinks.</p>
@@ -380,82 +519,131 @@ const programmes = {
   },
 
   8: {
+    logo: "bluelogo.png",
     poster: "FINAL_INSTA_Weathergirl_AnnettaArtboard 2 2.jpg",
     html: `
       <p>Saturday, 3 October, House of Annetta, 25 Princelet St, London E1 6QH.</p>
       <p>A screening on the theme of housing in aid of Rode, a new housing co-op and artists’ space being set up with Collective Ownership Society.</p>
-      <p>Films began at 7pm and the programme ran for around one hour.</p>
     `
   },
 
   9: {
+    logo: "bluelogo.png",
     poster: null,
     html: ""
   }
+
 };
 
-/* Events shown on the homepage, newest first */
-const eventOrder = [9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+/* Homepage random images */
+
+const randomImages = [
+  "1.png",
+  "2.png",
+  "3.png",
+  "17.png",
+  "19.png",
+  "32.png"
+];
+
+let lastRandomImage = null;
+
+const homeRandomImage = document.getElementById("home-random-image");
+
+function showRandomImage() {
+
+  let available = randomImages.filter(
+    image => image !== lastRandomImage
+  );
+
+  const image =
+    available[Math.floor(Math.random() * available.length)];
+
+  lastRandomImage = image;
+
+  homeRandomImage.src = image;
+  homeRandomImage.alt = "Weathergirl";
+}
+
+showRandomImage();
+
+let randomImageTimer = setInterval(showRandomImage, 5000);
+
+
+/* Elements */
 
 const homeView = document.getElementById("home-view");
 const eventView = document.getElementById("event-view");
-const homeEventList = document.getElementById("home-event-list");
 const eventPoster = document.getElementById("event-poster");
 const programmeContent = document.getElementById("programme-content");
 const aboutPanel = document.getElementById("about-panel");
 const logoLink = document.getElementById("logo-link");
+const eventLogo = document.getElementById("event-logo");
 
 let currentPage = "home";
 let currentEvent = null;
 
-function buildHomepage() {
-  homeEventList.replaceChildren();
 
-  eventOrder.forEach(id => {
-    const link = document.createElement("a");
-    link.className = "home-event";
-    link.href = "#event-" + id;
-    link.setAttribute("aria-label", "Open Weathergirl " + id);
+/* Homepage event links */
 
-    const title = document.createElement("span");
-    title.className = "home-event-title";
-    title.textContent = id === 9
-      ? "Weathergirl 9 (upcoming)"
-      : "Weathergirl " + id;
+document.querySelectorAll(".home-event").forEach(link => {
 
-    const number = document.createElement("span");
-    number.className = "home-event-number";
-    number.textContent = id;
+  link.addEventListener("click", event => {
 
-    link.appendChild(title);
-    link.appendChild(number);
+    event.preventDefault();
 
-    link.addEventListener("click", event => {
-      event.preventDefault();
-      showEvent(id);
-    });
+    showEvent(link.dataset.event);
 
-    homeEventList.appendChild(link);
   });
-}
+
+});
+
+
+/* Archive event links */
+
+document.querySelectorAll(".archive-link").forEach(link => {
+
+  link.addEventListener("click", event => {
+
+    event.preventDefault();
+
+    showEvent(link.dataset.event);
+
+  });
+
+});
+
+
+/* Update header logo */
 
 function updateLogo() {
-  const onAbout = currentPage === "about";
 
-  logoLink.setAttribute(
-    "aria-label",
-    onAbout ? "Return to homepage" : "Open About page"
-  );
+  if (currentPage === "event" && currentEvent) {
 
-  logoLink.setAttribute("aria-expanded", String(onAbout));
+    const programme = programmes[currentEvent];
 
-  logoLink.classList.toggle(
-    "event-logo-active",
-    currentPage === "event" && String(currentEvent) === "1"
-  );
+    eventLogo.src = programme.logo || "bluelogo.png";
+    eventLogo.alt = "Weathergirl " + currentEvent;
+
+    logoLink.classList.add("event-logo-active");
+
+  } else {
+
+    logoLink.classList.remove("event-logo-active");
+
+    eventLogo.src = "bluelogo.png";
+    eventLogo.alt = "Weathergirl";
+
+  }
+
 }
 
+
+/* Homepage */
+
 function showHome() {
+
   currentPage = "home";
   currentEvent = null;
 
@@ -463,12 +651,21 @@ function showHome() {
   eventView.classList.add("hidden");
   aboutPanel.classList.remove("is-open");
 
+  showRandomImage();
+
   updateLogo();
+
   window.scrollTo(0, 0);
+
 }
 
+
+/* Event page */
+
 function showEvent(id) {
+
   const programme = programmes[id];
+
   if (!programme) return;
 
   currentPage = "event";
@@ -478,73 +675,93 @@ function showEvent(id) {
   aboutPanel.classList.remove("is-open");
   eventView.classList.remove("hidden");
 
+
   document.querySelectorAll(".archive-link").forEach(link => {
+
     if (link.dataset.event === String(id)) {
+
       link.setAttribute("aria-current", "page");
+
     } else {
+
       link.removeAttribute("aria-current");
+
     }
+
   });
+
 
   eventPoster.replaceChildren();
 
+
   if (programme.poster) {
-    const logo = document.createElement("a");
-    logo.className = "event-logo-link";
-    logo.href = "#about";
-    logo.setAttribute("aria-label", "Open About page");
 
     const image = document.createElement("img");
+
     image.src = programme.poster;
-    image.alt = "Weathergirl " + id;
+    image.alt = "Weathergirl " + id + " poster";
     image.loading = "eager";
 
-    logo.appendChild(image);
+    eventPoster.appendChild(image);
 
-    logo.addEventListener("click", event => {
-      event.preventDefault();
-      showAbout();
-    });
-
-    eventPoster.appendChild(logo);
   }
 
+
   programmeContent.innerHTML = programme.html || "";
+
   updateLogo();
+
   window.scrollTo(0, 0);
+
 }
 
+
+/* About */
+
 function showAbout() {
+
   currentPage = "about";
-  currentEvent = null;
 
   homeView.classList.add("hidden");
   eventView.classList.add("hidden");
   aboutPanel.classList.add("is-open");
 
+  /*
+   Keep the current event logo visible on About.
+   Clicking it again returns to the homepage.
+  */
+
   updateLogo();
+
   window.scrollTo(0, 0);
+
 }
 
-document.querySelectorAll(".archive-link").forEach(link => {
-  link.addEventListener("click", event => {
-    event.preventDefault();
-    showEvent(link.dataset.event);
-  });
-});
+
+/* Header logo */
 
 logoLink.addEventListener("click", event => {
+
   event.preventDefault();
 
   if (currentPage === "about") {
+
     showHome();
+
   } else {
+
     showAbout();
+
   }
+
 });
 
-buildHomepage();
+
+/* Start */
+
 showHome();
+
 </script>
+
 </body>
 </html>
