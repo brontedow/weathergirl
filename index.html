@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +16,6 @@
   --font-size: 16px;
   --archive-width: 180px;
   --content-gap: 4vw;
-  --gallery-image-height: 175px;
 }
 
 * {
@@ -67,9 +66,18 @@ a:hover, a:focus-visible {
   object-fit: contain;
 }
 
+/* Shared top spacing keeps the archive list in the same position */
+.home-view,
+.event-view,
+.about-panel {
+  padding-top: calc(var(--logo-width) * .2 + 4vh);
+}
+
 /* Homepage */
 .home-view {
-  padding: calc(var(--logo-width) * .2 + 4vh) var(--edge) 8vh;
+  padding-right: var(--edge);
+  padding-bottom: 8vh;
+  padding-left: var(--edge);
 }
 
 .home-layout {
@@ -112,13 +120,15 @@ a:hover, a:focus-visible {
   opacity: 1 !important;
 }
 
-/* Event page: fixed archive column */
+/* Event page */
 .event-view {
   display: grid;
   grid-template-columns: var(--archive-width) minmax(0, 1fr);
   column-gap: var(--content-gap);
   align-items: start;
-  padding: calc(var(--logo-width) * .2 + 3vh) var(--edge) 8vh;
+  padding-right: var(--edge);
+  padding-bottom: 8vh;
+  padding-left: var(--edge);
 }
 
 .archive {
@@ -143,42 +153,46 @@ a:hover, a:focus-visible {
   width: 100%;
 }
 
-/* Current event highlighted in lime green */
 .archive-link[aria-current="page"],
 .archive-link[aria-current="page"]:hover,
 .archive-link[aria-current="page"]:focus-visible {
   color: var(--hover) !important;
 }
 
-/* Event content: image gallery on left, text on right */
+/* Event content: image collage on the left, text on the right */
 .event-main {
   grid-column: 2;
   grid-row: 1;
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
   column-gap: 28px;
   align-items: start;
   min-width: 0;
   width: 100%;
 }
 
-/* Consistent image grid; no oversized full-width posters */
+/*
+  Loose, staggered collage.
+  Images keep their natural proportions and are not cropped.
+  The larger cells give smaller images more room.
+*/
 .event-poster {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-rows: var(--gallery-image-height);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 18px;
+  grid-auto-flow: dense;
   align-content: start;
-  align-items: stretch;
-  gap: 10px;
+  align-items: start;
+  gap: 12px;
   min-width: 0;
-  width: 100%;
-  margin: 0;
+  width: calc(100% + 2vw);
+  margin: 0 0 0 -1vw;
 }
 
 .event-poster img {
   display: block;
   width: 100%;
-  height: var(--gallery-image-height);
+  height: auto;
   max-width: 100%;
   min-width: 0;
   object-fit: contain;
@@ -188,15 +202,52 @@ a:hover, a:focus-visible {
   mix-blend-mode: normal !important;
 }
 
-/* Posters use the same image cell size as the rest of the gallery */
-.event-poster img.is-poster {
-  grid-column: span 1;
-  grid-row: auto;
-  width: 100%;
-  height: var(--gallery-image-height);
-  max-width: 100%;
-  object-fit: contain;
-  object-position: center;
+/* Vary image widths to create a tighter, more tessellated arrangement */
+.event-poster img:nth-child(6n + 1) {
+  grid-column: span 4;
+  grid-row: span 12;
+}
+
+.event-poster img:nth-child(6n + 2) {
+  grid-column: span 2;
+  grid-row: span 9;
+  margin-top: 22px;
+}
+
+.event-poster img:nth-child(6n + 3) {
+  grid-column: span 3;
+  grid-row: span 10;
+  margin-top: 4px;
+}
+
+.event-poster img:nth-child(6n + 4) {
+  grid-column: span 3;
+  grid-row: span 12;
+  margin-top: 18px;
+}
+
+.event-poster img:nth-child(6n + 5) {
+  grid-column: span 2;
+  grid-row: span 9;
+  margin-top: 8px;
+}
+
+.event-poster img:nth-child(6n) {
+  grid-column: span 4;
+  grid-row: span 12;
+  margin-top: 14px;
+}
+
+/* Give the smaller images in these galleries more space */
+.event-poster[data-event="1"] img,
+.event-poster[data-event="2"] img,
+.event-poster[data-event="3"] img,
+.event-poster[data-event="4"] img,
+.event-poster[data-event="5"] img,
+.event-poster[data-event="6"] img,
+.event-poster[data-event="7"] img,
+.event-poster[data-event="8"] img {
+  max-width: none;
 }
 
 /* Event text */
@@ -233,7 +284,9 @@ a:hover, a:focus-visible {
 /* About page */
 .about-panel {
   display: none;
-  padding: calc(var(--logo-width) * .2 + 4vh) var(--edge) 8vh;
+  padding-right: var(--edge);
+  padding-bottom: 8vh;
+  padding-left: var(--edge);
 }
 
 .about-panel.is-open {
@@ -264,7 +317,6 @@ a:hover, a:focus-visible {
     --logo-width: clamp(220px, 34vw, 340px);
     --archive-width: 155px;
     --content-gap: 3vw;
-    --gallery-image-height: 145px;
   }
 
   .home-layout {
@@ -272,19 +324,39 @@ a:hover, a:focus-visible {
   }
 
   .event-main {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 18px;
   }
 
   .event-poster {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: var(--gallery-image-height);
-    gap: 8px;
+    gap: 9px;
+    width: calc(100% + 1vw);
+    margin-left: -.5vw;
+    grid-auto-rows: 15px;
   }
 
-  .event-poster img,
-  .event-poster img.is-poster {
-    height: var(--gallery-image-height);
+  .event-poster img:nth-child(6n + 1) {
+    grid-row: span 13;
+  }
+
+  .event-poster img:nth-child(6n + 2) {
+    grid-row: span 10;
+  }
+
+  .event-poster img:nth-child(6n + 3) {
+    grid-row: span 11;
+  }
+
+  .event-poster img:nth-child(6n + 4) {
+    grid-row: span 13;
+  }
+
+  .event-poster img:nth-child(6n + 5) {
+    grid-row: span 10;
+  }
+
+  .event-poster img:nth-child(6n) {
+    grid-row: span 13;
   }
 }
 
@@ -295,7 +367,6 @@ a:hover, a:focus-visible {
     --logo-width: clamp(170px, 48vw, 260px);
     --archive-width: 100%;
     --content-gap: 0;
-    --gallery-image-height: 150px;
   }
 
   .site-header {
@@ -303,7 +374,8 @@ a:hover, a:focus-visible {
     right: var(--edge);
   }
 
-  .home-view {
+  .home-view,
+  .about-panel {
     padding-top: calc(var(--logo-width) * .25 + 4vh);
   }
 
@@ -329,7 +401,7 @@ a:hover, a:focus-visible {
   .event-view {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 3vh;
-    padding-top: calc(var(--logo-width) * .25 + 3vh);
+    padding-top: calc(var(--logo-width) * .25 + 4vh);
   }
 
   .archive {
@@ -360,30 +432,52 @@ a:hover, a:focus-visible {
   }
 
   .event-poster {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: var(--gallery-image-height);
-    gap: 8px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: 15px;
+    gap: 10px;
     width: 100%;
     margin: 0;
   }
 
-  .event-poster img,
-  .event-poster img.is-poster {
-    grid-column: span 1;
-    grid-row: auto;
-    height: var(--gallery-image-height);
-    max-height: var(--gallery-image-height);
-    object-fit: contain;
+  .event-poster img:nth-child(6n + 1) {
+    grid-column: span 4;
+    grid-row: span 12;
+  }
+
+  .event-poster img:nth-child(6n + 2) {
+    grid-column: span 2;
+    grid-row: span 9;
+    margin-top: 12px;
+  }
+
+  .event-poster img:nth-child(6n + 3) {
+    grid-column: span 3;
+    grid-row: span 10;
+    margin-top: 4px;
+  }
+
+  .event-poster img:nth-child(6n + 4) {
+    grid-column: span 3;
+    grid-row: span 12;
+    margin-top: 12px;
+  }
+
+  .event-poster img:nth-child(6n + 5) {
+    grid-column: span 2;
+    grid-row: span 9;
+    margin-top: 0;
+  }
+
+  .event-poster img:nth-child(6n) {
+    grid-column: span 4;
+    grid-row: span 12;
+    margin-top: 8px;
   }
 
   .programme {
     width: 100%;
     max-width: none;
     padding: 0;
-  }
-
-  .about-panel {
-    padding-top: calc(var(--logo-width) * .25 + 4vh);
   }
 }
 </style>
@@ -704,13 +798,6 @@ document.querySelectorAll("[data-event]").forEach(link => {
 function addEventImage(src, eventId, index) {
   const image = document.createElement("img");
 
-  const isPoster =
-    programmes[String(eventId)]?.poster === src && index === 0;
-
-  if (isPoster) {
-    image.classList.add("is-poster");
-  }
-
   image.src = src;
   image.alt = `Weathergirl ${eventId}, image ${index + 1}`;
   image.loading = "lazy";
@@ -754,7 +841,6 @@ function showEvent(id) {
   aboutPanel.classList.remove("is-open");
   eventView.classList.remove("hidden");
 
-  /* Highlight the selected event in lime green */
   document.querySelectorAll(".archive-link").forEach(link => {
     if (link.dataset.event === String(id)) {
       link.setAttribute("aria-current", "page");
@@ -816,3 +902,4 @@ showHome();
 
 </body>
 </html>
+```
