@@ -137,30 +137,33 @@ a:focus-visible {
   display: inline-block;
 }
 
-/* Keep the current event lime green */
+/* Current event highlighted in lime green */
 .archive-link[aria-current="page"],
 .archive-link[aria-current="page"]:hover,
 .archive-link[aria-current="page"]:focus-visible {
   color: var(--hover) !important;
 }
 
-/* Gallery and programme sit side by side */
+/* Gallery and programme */
 .event-main {
   grid-column: 2;
   grid-row: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--logo-width);
-  column-gap: 2.5vw;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: stretch;
   min-width: 0;
+  width: 100%;
 }
 
-/* Event images: tiled gallery, with a designated poster across the top */
+/* Irregular collage rather than a uniform tiled grid */
 .event-poster {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-  gap: 14px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 55px;
+  grid-auto-flow: dense;
+  align-items: stretch;
+  gap: 12px;
   min-width: 0;
   width: 100%;
   margin: 0;
@@ -169,30 +172,60 @@ a:focus-visible {
 .event-poster img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
-  max-height: none;
-  object-fit: contain;
-  object-position: top left;
+  min-width: 0;
+  object-fit: cover;
+  object-position: center;
   filter: none !important;
   opacity: 1 !important;
   mix-blend-mode: normal !important;
 }
 
-/* Only the designated poster spans the full gallery width */
-.event-poster img.is-poster {
-  grid-column: 1 / -1;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  max-height: none;
-  object-fit: contain;
+/* Varied image proportions */
+.event-poster img:nth-child(6n + 1) {
+  grid-column: span 3;
+  grid-row: span 4;
 }
 
-/* Programme text */
+.event-poster img:nth-child(6n + 2) {
+  grid-column: span 3;
+  grid-row: span 3;
+}
+
+.event-poster img:nth-child(6n + 3) {
+  grid-column: span 2;
+  grid-row: span 3;
+}
+
+.event-poster img:nth-child(6n + 4) {
+  grid-column: span 2;
+  grid-row: span 4;
+}
+
+.event-poster img:nth-child(6n + 5) {
+  grid-column: span 2;
+  grid-row: span 3;
+}
+
+.event-poster img:nth-child(6n) {
+  grid-column: span 3;
+  grid-row: span 3;
+}
+
+/* Designated posters span the gallery width */
+.event-poster img.is-poster {
+  grid-column: 1 / -1;
+  grid-row: span 5;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Programme text below the images */
 .programme {
-  grid-column: 2;
-  grid-row: 1;
   width: 100%;
   max-width: none;
   min-width: 0;
@@ -266,12 +299,41 @@ a:focus-visible {
   }
 
   .event-main {
-    grid-template-columns: minmax(0, 1fr) var(--logo-width);
-    column-gap: 2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
   }
 
   .event-poster {
-    gap: 12px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 55px;
+    gap: 10px;
+  }
+
+  .event-poster img:nth-child(4n + 1) {
+    grid-column: span 2;
+    grid-row: span 4;
+  }
+
+  .event-poster img:nth-child(4n + 2) {
+    grid-column: span 2;
+    grid-row: span 3;
+  }
+
+  .event-poster img:nth-child(4n + 3) {
+    grid-column: span 2;
+    grid-row: span 3;
+  }
+
+  .event-poster img:nth-child(4n) {
+    grid-column: span 2;
+    grid-row: span 4;
+  }
+
+  .event-poster img.is-poster {
+    grid-column: 1 / -1;
+    grid-row: span 5;
   }
 }
 
@@ -332,24 +394,49 @@ a:focus-visible {
     grid-row: 2;
     display: flex;
     flex-direction: column;
-    gap: 3vh;
+    gap: 24px;
     min-width: 0;
+    width: 100%;
   }
 
   .event-poster {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 50px;
+    gap: 8px;
     width: 100%;
     margin-left: 0;
-    gap: 10px;
   }
 
-  .event-poster img,
+  .event-poster img:nth-child(n) {
+    grid-column: span 1;
+    grid-row: span 3;
+  }
+
+  .event-poster img:nth-child(4n + 1) {
+    grid-column: span 2;
+    grid-row: span 4;
+  }
+
+  .event-poster img:nth-child(4n + 2) {
+    grid-column: span 1;
+    grid-row: span 3;
+  }
+
+  .event-poster img:nth-child(4n + 3) {
+    grid-column: span 1;
+    grid-row: span 3;
+  }
+
+  .event-poster img:nth-child(4n) {
+    grid-column: span 2;
+    grid-row: span 3;
+  }
+
   .event-poster img.is-poster {
-    width: 100%;
-    max-width: 100%;
+    grid-column: 1 / -1;
+    grid-row: span 4;
+    height: 100%;
     max-height: none;
-    height: auto;
     object-fit: contain;
   }
 
@@ -445,19 +532,20 @@ const programmes = {
     poster: "ab.jpg",
     images: ["12delete.jpg", "baudelaire.jpg", "11.jpg"],
     html: `
-      <p>Dear friends,</p>
+      <p>A programme of works by:</p>
 
-      <p>We are showing some films on Friday 15 March 2024 at Pelican House, 144 Cambridge Heath Road, E1 5QJ.</p>
-
-      <p>Doors at 7pm, screening starts at 8pm. Bar will stay open afterwards.</p>
-
-      <p>Screening includes:<br>
-      Shirley Clarke<br>
-      Therese Henningsen &amp; Aki Ilomäki<br>
-      Steve Reinke<br>
-      Deniz Ünal</p>
+      <p>
+        Shirley Clarke<br>
+        Therese Henningsen &amp; Aki Ilomäki<br>
+        Steve Reinke<br>
+        Deniz Ünal
+      </p>
 
       <p>With contributions by Tim Donovan and Gina Dow</p>
+
+      <p>15 March 2025</p>
+
+      <p>Pelican House, London</p>
 
       <p class="separator">––</p>
 
@@ -481,23 +569,21 @@ const programmes = {
     poster: null,
     images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png"],
     html: `
-      <p>Dear friends,</p>
+      <p>A programme of works by:</p>
 
-      <p>We are showing some films on Saturday 10th August 2024 at Avalon Cafe, SE14 5RW. There will be some music after from Katie Shannon, Ed Lehan and Jim Janco.</p>
+      <p>
+        Adam Christensen<br>
+        Keren Cytter<br>
+        Marion Scemama &amp; David Wojnarowicz<br>
+        Leslie Thornton<br>
+        Sam Tierney
+      </p>
 
-      <p>Screening includes:<br>
-      Adam Christensen<br>
-      Keren Cytter<br>
-      Marion Scemama &amp; David Wojnarowicz<br>
-      Leslie Thornton<br>
-      Sam Tierney</p>
+      <p>And music from Katie Shannon, Ed Lehan and Jim Janco.</p>
 
-      <p>7pm - 2am. Films start promptly at 7:30. Music after until 2am.</p>
+      <p>10 August 2024</p>
 
-      <p>Avalon's bar open throughout. £6 OTD so we can pay DJs.</p>
-
-      <p>See you soon.<br>
-      Bronte and Freya</p>
+      <p>Avalon Cafe, London</p>
     `
   },
 
@@ -505,47 +591,40 @@ const programmes = {
     poster: "Weathergirl-Existers-Flyer.jpg",
     images: ["e1.jpg", "e2.jpg", "e3.jpg", "e4.jpg", "13.png", "15.png", "32.jpg", "17.jpg"],
     html: `
-      <p>Dear friends,</p>
+      <p>A programme of works by:</p>
 
-      <p>We will be showing some films this Friday 22 November 2024 at Existers, 125 Shaftesbury Avenue, London WC2H 8HR.</p>
+      <p>
+        Andrew Kӧtting<br><br>
+        Stan Douglas<br><br>
+        George Kuchar<br><br>
+        Rosalind Nashashibi<br><br>
+        Ryan Trecartin
+      </p>
 
-      <p>We will be screening works by:<br>
-      Andrew Kӧtting<br>
-      Stan Douglas<br>
-      George Kuchar<br>
-      Rosalind Nashashibi<br>
-      Ryan Trecartin</p>
+      <p>Friday 22 November</p>
 
-      <p>Doors at 6pm, films will start at 6.30pm. It’s free and there will be some beers.</p>
-
-      <p>+ Friday 22 November, 6pm<br>
-      + Existers, 125 Shaftesbury Avenue, London WC2H 8HR<br>
-      + Free entrance<br>
-      + Some beers and BYOB if you like</p>
-
-      <p>RSVP is essential - <a href="https://www.eventbrite.com/e/existers-weathergirl-film-screening-tickets-1049018631967?aff=oddtdtcreator" target="_blank" rel="noopener">link here</a>. Hope to see you there.</p>
-
-      <p>Bronte &amp; Freya</p>
+      <p>Existers, London</p>
     `
   },
 
   4: {
     poster: null,
-    images: ["17.png", "tm1.jpg", "tm2.jpg", "tm3.jpg", "tm4.jpg", "7.png", "29.png", "28.png", "1.png"],
+    images: ["17.png", "tm1.jpg", "tm2.jpg", "tm3.jpg", "tm4.jpg", "7.png", "29.png", "28.png"],
     html: `
-      <p>You are invited to a screening on Friday 14 March 2025 at Avalon Cafe, SE14 5RW. There will be an introduction to the films by Therese Henningsen and Marc Isaacs.</p>
+      <p>Programme of works by Therese Henningsen and Marc Isaacs.</p>
 
-      <p>Programme:<br>
-      Therese Henningsen, <em>After Time</em> (2023)<br>
-      Sidsel Meineche Hansen, Therese Henningsen, <em>Baby Jesus</em> (2023)<br>
-      Marc Isaacs, <em>Lift</em> (2001)</p>
+      <p>Friday 14 March 2025</p>
+
+      <p>Avalon Cafe, London</p>
+
+      <p>
+        Programme:<br>
+        Therese Henningsen, <em>After Time</em> (2023)<br><br>
+        Sidsel Meineche Hansen, Therese Henningsen, <em>Baby Jesus</em> (2023)<br><br>
+        Marc Isaacs, <em>Lift</em> (2001)
+      </p>
 
       <p>Music from Weak DJs after the screening.</p>
-
-      <p>Doors at 8pm. £5 OTD. Avalon's bar will be open throughout.</p>
-
-      <p>Hope to see you there,<br>
-      Bronte and Freya</p>
     `
   },
 
@@ -553,11 +632,19 @@ const programmes = {
     poster: "Poster_CittipunktWeathergirl.png",
     images: ["2.jpg", "28.png", "29.png", "31.png"],
     html: `
-      <p>Thursday, 24 July 2025, Avalon Cafe, London.</p>
+      <p>Cittipunkt (Berlin) teamed up with Weathergirl (London) to present an XL PROGRAMME OF NEW VIDEO WORK. Artists and filmmakers were invited to produce a new work in a short space of time made specifically for the screening. The programme is an opportunity for tests, sketches, the resuscitation of lost projects, the bringing to light of unused footage, holiday pics, lo-fi ideas, speculative gestures and exorcisms. The programme was screened twice, in London and Berlin.</p>
 
-      <p>Saturday, 2 August 2025, Cittipunkt, Berlin.</p>
+      <p>Thursday 24 July 2025</p>
 
-      <p>Co-curated with Cittipunkt, presenting an XL programme of new video work by an extended community of artists, writers and filmmakers.</p>
+      <p>Avalon Cafe, London</p>
+
+      <p>Saturday 2 August 2025</p>
+
+      <p>Cittipunkt, Berlin</p>
+
+      <p>Participating artists:</p>
+
+      <p><em>Rosa Aiello / Emanuel Almborg / Leïla Arenou / Lars Karl Becker &amp; Daniela Kneip Velescu / Gabriel Bielawski / Max Bloching / Jude Browning / Cindie Cheung / Oliver Corino / Bronte Dow &amp; Freya Field-Donovan / Ruth Angel Edwards / Philip Ewe / Loretta Fahrenholz / Syd Farrington / Susan Finlay / New Noveta, Sophie Sleigh-Johnson &amp; Elena Bushueva / Adam Gallagher / Mania Godarzani-Bakhtiari / Sidsel Meineche Hansen / Edmund Hardy / Therese Henningsen / Winnie Herbstein / Umi Ishihara / Clara Jo / William Joys / Mette Juhl / Sam Kenswil / Nina Könnemann / Laura Langer / Sophie Lee / Ming Lin / Tomás Maglione / Tiphanie Mall / Chloée Maugile / Alice Mendelowitz / Stuart Middleton / Leonie Nagel / George Nesbitt / Nikhil Vettukattil / Kadeem Oak / Lennart Pasch / Ksenia Pedan &amp; Olga Pedan / François Pisapia / Piotr Urbaniec / Dudu Quintanilha / Harriet Rickard / Max Stocklosa / Alexandra Symons-Sutcliffe &amp; Simon Lässig / Katie Shannon / Sam Tierney / Viktor Timofeev / Wilf Thust / Lena Tutunjian / Dan Ward / Pitt Wenninger / Angharad Williams / Karen Zimmermann</em></p>
     `
   },
 
@@ -565,19 +652,13 @@ const programmes = {
     poster: "Screenshot 2026-10-26 at 22.24.20.png",
     images: ["closeup1.jpg", "closeup2.jpg", "closeup3.jpg"],
     html: `
-      <p>Dear friends,</p>
+      <p>Halloween special with The Liberated Film Club. Costumes not compulsory.</p>
 
-      <p>We are excited to invite you to a Halloween special we have programmed for The Liberated Film Club.</p>
+      <p>Friday 31 October 2025</p>
 
-      <p>8.30pm, Friday, 31 October 2025 at Close-Up, 97 Sclater St, London E1 6HR.</p>
-
-      <p>You can purchase tickets <a href="https://www.closeupfilmcentre.com/film_programmes/2025/the-liberated-film-club/the-liberated-film-club-weathergirl" target="_blank" rel="noopener">here</a>.</p>
+      <p>Close-Up, London.</p>
 
       <p>The Liberated Film Club's policy is that the audience doesn't know what they're going to watch until the screening starts, so sorry about that.</p>
-
-      <p>We would love to see you there. Costumes not compulsory.</p>
-
-      <p>Bronte &amp; Freya</p>
     `
   },
 
@@ -590,17 +671,15 @@ const programmes = {
       "WhatsApp Image 2026-10-29 at 11.45.32 (12).jpeg"
     ],
     html: `
-      <p>Dear friends,</p>
+      <p>Launch of <em>The Charlie Chaplin</em>, a new book by Oliver Corino</p>
 
-      <p>You are invited to the launch of Oliver Corino's new book <em>The Charlie Chaplin</em> on Wednesday March 25th at the <a href="https://www.google.com/maps/search/?api=1&query=The+Horse+Hospital+London" target="_blank" rel="noopener">Horse Hospital</a>. Doors at 7pm. Readings begin at 8pm.</p>
+      <p>Wednesday 25 March 2026</p>
 
-      <p>Oliver's reading will take place in three parts, with music and drinks in between.</p>
-
-      <p>£8 OTD. Books available to buy on the night.</p>
+      <p>Horse Hospital, London</p>
 
       <p><em>“My immediate concenrs [sic] are with regard to the levels of intoxication involved with the victims and suspects. There is also serious concern that the staff were intoxicated and their ability to manage the venue in this instance was seriously impaired, proven by the fact that a member of the public could get behind the bar and remove a knife and then use it to cause serious injury.”</em></p>
 
-      <p>A theme that figures in the literature of every era is the perception that important things are becoming lost to history. Based on news articles and police reports found online, <em>The Charlie Chaplin</em> returns to the dog days of The Charlie Chaplin pub in Elephant and Castle to give a literary account of the night of the 17th of June 2017, which, if it does anything, shows that there is a difference between literature and a police report.</p>
+      <p>A theme that figures in the literature of every era is the perception that important things are becoming lost to history. Based on news articles and police reports found online, The Charlie Chaplin returns to the dog days of The Charlie Chaplin pub in Elephant and Castle to give a literary account of the night of the 17th of June 2017, which, if it does anything, shows that there is a difference between literature and a police report.</p>
 
       <p><a href="https://www.olivercorino.co.uk/" target="_blank" rel="noopener">https://www.olivercorino.co.uk/</a></p>
     `
@@ -610,22 +689,11 @@ const programmes = {
     poster: "FINAL_INSTA_Weathergirl_AnnettaArtboard 2 2.jpg",
     images: ["19.png", "18.png", "26.png", "21.jpg", "27.png", "postcards.jpg", "Annetta Photos Oct 3 2026 (1).jpg"],
     html: `
-      <p>Weathergirl 8</p>
+      <p>A screening on the theme of housing in aid of <a href="https://rodehousingcoop.com/" target="_blank" rel="noopener">Rode</a>, a new housing co-operative and artists’ space in Lewisham.</p>
 
-      <p>Dear friends,</p>
+      <p>Saturday 3 October 2026</p>
 
-      <p>We are excited to invite you to a screening on the theme of housing in aid of Rode, a new housing co-op and artists’ space that we are helping to set up with Collective Ownership Society.</p>
-
-      <p>The screening will take place on Saturday 3 October at House of Annetta, 25 Princelet St, London E1 6QH. Doors will open at 6.30pm, with films beginning at 7pm and will run for around one hour. The programme list will be available on the night.</p>
-
-      <p>The event is BYOB. We can go to the Pride afterwards.</p>
-
-      <p>Space is limited to 30 people max. Tickets are £8. Please buy your ticket ahead of time via the link in our bio.</p>
-
-      <p>If you like, you can also separately donate to Rode Housing Co-op (link also in bio).</p>
-
-      <p>We hope to see you there,<br>
-      Bronte and Freya</p>
+      <p>House of Annetta, London</p>
     `
   },
 
@@ -711,7 +779,9 @@ document.querySelectorAll("[data-event]").forEach(link => {
 function addEventImage(src, eventId, index) {
   const image = document.createElement("img");
 
-  const isPoster = programmes[String(eventId)]?.poster === src && index === 0;
+  const isPoster =
+    programmes[String(eventId)]?.poster === src && index === 0;
+
   if (isPoster) {
     image.classList.add("is-poster");
   }
@@ -759,7 +829,7 @@ function showEvent(id) {
   aboutPanel.classList.remove("is-open");
   eventView.classList.remove("hidden");
 
-  /* Highlight the currently selected event in lime green */
+  /* Highlight the selected event in lime green */
   document.querySelectorAll(".archive-link").forEach(link => {
     if (link.dataset.event === String(id)) {
       link.setAttribute("aria-current", "page");
