@@ -14,11 +14,9 @@
       --edge: 2.5vw;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
+    html, body {
       min-height: 100%;
       background: var(--background);
     }
@@ -26,34 +24,25 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--background);
-      color: #000000;
+      color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
       font-size: 17px;
       line-height: 1.4;
     }
 
-    a,
-    button {
-      color: #000000;
+    a, button {
+      color: var(--text);
       font: inherit;
     }
 
-    a {
-      text-decoration: none;
-    }
+    a { text-decoration: none; }
 
-    a:hover,
-    a:focus-visible {
+    a:hover, a:focus-visible {
       color: var(--hover);
       opacity: 1;
     }
 
-    button {
-      cursor: pointer;
-    }
-
-    /* Header and logo */
+    button { cursor: pointer; }
 
     .site-header {
       position: relative;
@@ -83,8 +72,6 @@
       height: auto;
     }
 
-    /* Archive home */
-
     .layout {
       display: grid;
       grid-template-columns: minmax(140px, 0.65fr) minmax(0, 2.35fr);
@@ -111,11 +98,7 @@
 
     .archive-link {
       display: inline-block;
-      color: #000000;
-      text-decoration: none;
-    }
-
-    .archive-link[aria-current="page"] {
+      color: #000;
       text-decoration: none;
     }
 
@@ -145,7 +128,7 @@
       width: min(100%, 1050px);
     }
 
-    /* Individual programme compositions */
+    /* Programme layouts */
 
     .layout.composition-stacked {
       grid-template-columns:
@@ -155,55 +138,44 @@
       column-gap: 3vw;
     }
 
-    .layout.composition-side {
-      grid-template-columns:
-        minmax(140px, 0.65fr)
-        minmax(0, 1.7fr)
-        minmax(0, 1fr);
-      column-gap: 3vw;
-    }
-
-    .layout.composition-text-led {
-      grid-template-columns:
-        minmax(140px, 0.65fr)
-        minmax(220px, 1fr)
-        minmax(0, 1.7fr);
-      column-gap: 3vw;
-    }
-
     .composition-stacked .gallery {
       align-self: start;
       margin-top: 0;
     }
 
-    /* Keep the first programme image smaller and at the top */
-    .composition-stacked .gallery-images img {
-      width: min(100%, 650px);
-      max-width: 650px;
+    /* Weathergirl 1: smaller image, slightly shifted left */
+    .composition-stacked[data-event="1"] .gallery-images img {
+      width: min(100%, 480px);
+      max-width: 480px;
       height: auto;
-      margin: 0;
+      margin: 0 0 0 -1vw;
       align-self: flex-start;
       object-position: top left;
     }
 
-    .composition-side .gallery-images {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      align-items: start;
-      gap: 1.5vw;
+    /* Event posters: display above their accompanying text */
+    .composition-stacked:not([data-event="1"]) .gallery-images img {
+      width: min(100%, 760px);
+      max-width: 760px;
+      height: auto;
+      margin: 0;
     }
 
-    .composition-side .gallery-images img {
+    .composition-stacked .programme {
       width: 100%;
+      max-width: 560px;
+      margin-left: auto;
     }
 
-    .composition-text-led .gallery-images img {
-      max-width: 700px;
+    /* Weathergirl 1 text shares the logo's right edge */
+    .composition-stacked[data-event="1"] .programme {
+      max-width: min(100%, 560px);
+      margin-left: auto;
     }
 
     .programme {
       min-width: 0;
-      color: #000000;
+      color: #000;
       font-size: 16px;
       line-height: 1.5;
       overflow-wrap: anywhere;
@@ -218,7 +190,20 @@
       margin: 1.5em 0;
     }
 
-    /* About page */
+    .programme-content strong { font-weight: 700; }
+    .programme-content em { font-style: italic; }
+
+    .programme-content a {
+      color: #000;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    .programme-content a:hover,
+    .programme-content a:focus-visible {
+      color: var(--hover);
+    }
 
     .about-panel {
       display: none;
@@ -226,32 +211,23 @@
       padding: 3vh var(--edge) 8vh;
     }
 
-    .about-panel.is-open {
-      display: block;
-    }
+    .about-panel.is-open { display: block; }
 
     .about-content {
       max-width: 680px;
-      color: #000000;
+      color: #000;
       font-size: 17px;
       line-height: 1.5;
     }
 
-    .about-content p {
-      margin: 0 0 1.2em;
-    }
+    .about-content p { margin: 0 0 1.2em; }
 
     .contact-link {
       display: inline-block;
-      color: #000000;
+      color: #000;
       text-decoration: none;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    /* Lime hover for interactive text */
     .archive-link:hover,
     .archive-link:focus-visible,
     #logo-link:hover,
@@ -262,20 +238,14 @@
       opacity: 1;
     }
 
-    /* Smaller screens */
+    .hidden { display: none !important; }
 
     @media (max-width: 760px) {
-      :root {
-        --edge: 5vw;
-      }
+      :root { --edge: 5vw; }
 
-      body {
-        font-size: 16px;
-      }
+      body { font-size: 16px; }
 
-      .site-header {
-        padding-top: 2vh;
-      }
+      .site-header { padding-top: 2vh; }
 
       .logo {
         width: clamp(220px, 65vw, 360px);
@@ -283,9 +253,7 @@
       }
 
       .layout,
-      .layout.composition-stacked,
-      .layout.composition-side,
-      .layout.composition-text-led {
+      .layout.composition-stacked {
         grid-template-columns: minmax(0, 1fr);
         row-gap: 3vh;
         padding-top: 3vh;
@@ -314,30 +282,29 @@
         max-width: 100%;
       }
 
-      .composition-stacked .gallery-images img {
-        width: min(100%, 520px);
-        max-width: 520px;
+      .composition-stacked[data-event="1"] .gallery-images img {
+        width: min(100%, 420px);
+        max-width: 420px;
+        margin-left: 0;
       }
 
-      .programme {
-        grid-column: 1;
-        grid-row: 3;
-        max-width: 680px;
-        font-size: 16px;
-      }
-
-      .composition-side .gallery-images {
-        grid-template-columns: 1fr;
-        gap: 3vh;
-      }
-
-      .composition-text-led .gallery-images img {
+      .composition-stacked:not([data-event="1"]) .gallery-images img {
+        width: min(100%, 760px);
         max-width: 100%;
       }
 
-      .about-panel {
-        padding-top: 3vh;
+      .programme,
+      .composition-stacked .programme,
+      .composition-stacked[data-event="1"] .programme {
+        grid-column: 1;
+        grid-row: 3;
+        width: 100%;
+        max-width: 680px;
+        margin-left: 0;
+        font-size: 16px;
       }
+
+      .about-panel { padding-top: 3vh; }
     }
   </style>
 </head>
@@ -345,12 +312,8 @@
 <body>
   <header class="site-header">
     <div class="header-right">
-      <a
-        href="#about"
-        id="logo-link"
-        aria-label="Open About page"
-        aria-expanded="false"
-      >
+      <a href="#about" id="logo-link" aria-label="Open About page"
+         aria-expanded="false">
         <img class="logo" src="bluelogo.png" alt="Weathergirl">
       </a>
     </div>
@@ -384,7 +347,6 @@
     <section class="about-panel" id="about-panel">
       <div class="about-content">
         <p>An itinerant screening series showcasing funny, sad and perverse artists’ moving image, organised by Bronte Dow and Freya Field-Donovan. A roaming institution for the collective viewing of marginalised, strange and thought-provoking films.</p>
-
         <p>Contact: <a class="contact-link" href="mailto:dowbronte@gmail.com">dowbronte@gmail.com</a></p>
       </div>
     </section>
@@ -395,35 +357,146 @@
       1: {
         layout: "stacked",
         images: ["11.jpg"],
-        text: `A programme of works by Shirley Clarke, Therese Henningsen & Aki Ilomäki, Steve Reinke and Deniz Ünal. With contributions by Tim Donovan and Gina Dow
-
-Friday, 15 March 2024, Pelican House, London
-
-––
-
-Shirley Clarke was an American filmmaker.
-
-Tim Donovan is an artist and tiler based in Austin, Texas.
-
-Gina Dow is a Canberran based in southern New South Wales, Australia.
-
-Therese Henningsen is a filmmaker based in London.
-
-Aki Ilomäki is an artist based in Palermo, Italy.
-
-Steve Reinke is a Canadian artist and writer.
-
-Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
+        html: `
+          <p>A programme of works by Shirley Clarke, Therese Henningsen &amp; Aki Ilomäki, Steve Reinke and Deniz Ünal. With contributions by Tim Donovan and Gina Dow</p>
+          <p>Friday, 15 March 2024, Pelican House, London</p>
+          <p class="separator">––</p>
+          <p>Shirley Clarke was an American filmmaker.</p>
+          <p>Tim Donovan is an artist and tiler based in Austin, Texas.</p>
+          <p>Gina Dow is a Canberran based in southern New South Wales, Australia.</p>
+          <p>Therese Henningsen is a filmmaker based in London.</p>
+          <p>Aki Ilomäki is an artist based in Palermo, Italy.</p>
+          <p>Steve Reinke is a Canadian artist and writer.</p>
+          <p>Deniz Ünal is an artist and teacher, born in Istanbul and living in London.</p>
+        `
       },
 
-      2: { layout: "stacked", images: [], text: "" },
-      3: { layout: "stacked", images: [], text: "" },
-      4: { layout: "stacked", images: [], text: "" },
-      5: { layout: "stacked", images: [], text: "" },
-      6: { layout: "stacked", images: [], text: "" },
-      7: { layout: "stacked", images: [], text: "" },
-      8: { layout: "stacked", images: [], text: "" },
-      9: { layout: "stacked", images: [], text: "" }
+      2: {
+        layout: "stacked",
+        images: ["DRAFT screening invite (10 Aug) A3.jpg"],
+        html: `
+          <p>Dear friends,</p>
+          <p>We are showing some films on <strong>Saturday 10th August 2024</strong> at <strong>Avalon Cafe, SE14 5RW</strong>. There will be some music after from Katie Shannon, Ed Lehan and Jim Janco.</p>
+          <p>Screening includes:</p>
+          <p>Adam Christensen</p>
+          <p>Keren Cytter</p>
+          <p>Marion Scemama &amp; David Wojnarowicz</p>
+          <p>Leslie Thornton</p>
+          <p>Sam Tierney</p>
+          <p><strong>7pm - 2am.</strong> Films start promptly at <strong>7:30.</strong> Music after until 2am.</p>
+          <p>Avalon's bar open throughout. £6 OTD so we can pay DJs.</p>
+          <p>See you soon.</p>
+          <p>Bronte and Freya</p>
+        `
+      },
+
+      3: {
+        layout: "stacked",
+        images: ["Weathergirl-Existers-Flyer.jpg"],
+        html: `
+          <p>Dear friends,</p>
+          <p>We will be showing some films this Friday 22 November 2024 at Existers, 125 Shaftesbury Avenue, London WC2H 8HR.</p>
+          <p>We will be screening works by:</p>
+          <p>Andrew Kӧtting</p>
+          <p>Stan Douglas</p>
+          <p>George Kuchar</p>
+          <p>Rosalind Nashashibi</p>
+          <p>Ryan Trecartin</p>
+          <p><strong>+ Friday 22 November, 6pm</strong></p>
+          <p><strong>+ Existers, 125 Shaftesbury Avenue, London WC2H 8HR</strong></p>
+          <p><strong>+ Free entrance</strong></p>
+          <p><strong>+ Some beers and BYOB if you like</strong></p>
+          <p>RSVP is essential - <a href="https://www.eventbrite.com/e/existers-weathergirl-film-screening-tickets-1049018631967?aff=oddtdtcreator" target="_blank" rel="noopener noreferrer">link here</a>. Hope to see you there.</p>
+          <p>Bronte &amp; Freya</p>
+        `
+      },
+
+      4: {
+        layout: "stacked",
+        images: ["weathergirl4poster.jpg"],
+        html: `
+          <p>You are invited to a screening on Friday 14 March 2025 at Avalon Cafe, SE14 5RW. There will be an introduction to the films by Therese Henningsen and Marc Isaacs.</p>
+          <p>Programme:</p>
+          <p>Therese Henningsen, <em>After Time</em> (2023)</p>
+          <p>Sidsel Meineche Hansen, Therese Henningsen, <em>Baby Jesus</em> (2023)</p>
+          <p>Marc Isaacs, <em>Lift</em> (2001)</p>
+          <p>Music from Weak DJs after the screening.</p>
+          <p>Doors at 8pm. £5 OTD. Avalon's bar will be open throughout.</p>
+          <p>Hope to see you there,</p>
+          <p>Bronte and Freya</p>
+        `
+      },
+
+      5: {
+        layout: "stacked",
+        images: ["Poster_CittipunktWeathergirl.png"],
+        html: `
+          <p>Dear friends,</p>
+          <p>We are excited to invite you to the third edition of the new works screenings. For this event Cittipunkt (Berlin) has teamed up with Weathergirl (London) to present an <strong>XL PROGRAMME OF NEW VIDEO WORK.</strong></p>
+          <p>The new works screening series has been running in Berlin since 2022 (<a href="https://www.instagram.com/p/C9WoABho5fw/" target="_blank" rel="noopener noreferrer">last event here</a>). Each year artists are invited to produce a new work in a short space of time made specifically for the screening. The programme is an opportunity for tests, sketches, the resuscitation of lost projects, the bringing to light of unused footage, holiday pics, lo-fi ideas, speculative gestures and exorcisms.</p>
+          <p>As a co-curation with Weathergirl, this edition features works by an extended community of artists, writers and filmmakers. This longer programme will be screened twice, in London and Berlin. Details below:</p>
+          <p>The <strong>LONDON</strong> screening will take place at <a href="https://www.instagram.com/avaloncafebermondsey/?hl=en" target="_blank" rel="noopener noreferrer">Avalon Cafe</a> on <strong>Thursday 24 July</strong> starting at 6pm.</p>
+          <p><em>Avalon Cafe, Juno Wy., London, UK, SE14 5RZ</em></p>
+          <p>The <strong>BERLIN</strong> screening will take place at <a href="https://www.instagram.com/cittipunkt/?hl=en" target="_blank" rel="noopener noreferrer">Cittipunkt</a> in Berlin on <strong>Saturday 2nd August</strong> starting at 6pm.</p>
+          <p><em>Cittipunkt, Brüsseler Str. 36A, 13353 Berlin, Germany</em></p>
+          <p>At each location, the programme will be broken up into a series of shorter screenings with breaks. The running orders will be made available in advance.</p>
+          <p>Participating artists include:</p>
+          <p><em>Rosa Aiello / Emanuel Almborg / Leïla Arenou / Lars Karl Becker &amp; Daniela Kneip Velescu / Gabriel Bielawski / Max Bloching / Jude Browning / Cindie Cheung / Oliver Corino / Bronte Dow &amp; Freya Field-Donovan / Ruth Angel Edwards / Philip Ewe / Loretta Fahrenholz / Syd Farrington / Susan Finlay / New Noveta, Sophie Sleigh-Johnson &amp; Elena Bushueva / Adam Gallagher / Mania Godarzani-Bakhtiari / Sidsel Meineche Hansen / Edmund Hardy / Therese Henningsen / Winnie Herbstein / Umi Ishihara / Clara Jo / William Joys / Mette Juhl / Sam Kenswil / Nina Könnemann / Laura Langer / Sophie Lee / Ming Lin / Tomás Maglione / Tiphanie Mall / Chloée Maugile / Alice Mendelowitz / Stuart Middleton / Leonie Nagel / George Nesbitt / Nikhil Vettukattil / Kadeem Oak / Lennart Pasch / Ksenia Pedan &amp; Olga Pedan / François Pisapia / Piotr Urbaniec / Dudu Quintanilha / Harriet Rickard / Max Stocklosa / Alexandra Symons-Sutcliffe &amp; Simon Lässig / Katie Shannon / Sam Tierney / Viktor Timofeev / Wilf Thust / Lena Tutunjian / Dan Ward / Pitt Wenninger / Angharad Williams / Karen Zimmermann</em></p>
+          <p>The event is free, drinks available at the bar in both London and Berlin.</p>
+          <p>Thank you to the artists.</p>
+          <p><strong>SEE YOU THERE.</strong></p>
+          <p>Bronte, Freya, Pitt &amp; Sophie</p>
+        `
+      },
+
+      6: {
+        layout: "stacked",
+        images: ["Screenshot 2026-10-26 at 22.24.20.png"],
+        html: `
+          <p>Dear friends,</p>
+          <p>We are excited to invite you to a Halloween special we have programmed for The Liberated Film Club.</p>
+          <p><strong>8.30pm, Friday, 31 October 2025 at Close-Up, 97 Sclater St, London E1 6HR.</strong></p>
+          <p>You can purchase tickets here: <a href="https://www.closeupfilmcentre.com/film_programmes/2025/the-liberated-film-club/the-liberated-film-club-weathergirl" target="_blank" rel="noopener noreferrer">The Liberated Film Club – Weathergirl</a></p>
+          <p>The Liberated Film Club's policy is that the audience doesn't know what they're going to watch until the screening starts, so sorry about that.</p>
+          <p>We would love to see you there. Costumes not compulsory.</p>
+          <p>Bronte &amp; Freya</p>
+        `
+      },
+
+      7: {
+        layout: "stacked",
+        images: ["Book Launch Charlie Chaplin.jpg"],
+        html: `
+          <p>Dear friends,</p>
+          <p>You are invited to the launch of Oliver Corino's new book <em>The Charlie Chaplin</em> on Wednesday March 25th at the <a href="https://www.google.com/maps/place/The+Horse+Hospital/@51.5227581,-0.1269774,17z/data=!3m1!4b1!4m6!3m5!1s0x48761b312748cf5b:0x60266559f3b5807c!8m2!3d51.5227581!4d-0.1244025!16s%2Fm%2F025wjc0?entry=ttu&amp;g_ep=EgoyMDI2MDMwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">Horse Hospital</a>. Doors at 7pm. Readings begin at 8pm.</p>
+          <p>Oliver's reading will take place in three parts, with music and drinks in between.</p>
+          <p>£8 OTD. Books available to buy on the night.</p>
+          <p><em>“My immediate concenrs [sic] are with regard to the levels of intoxication involved with the victims and suspects. There is also serious concern that the staff were intoxicated and their ability to manage the venue in this instance was seriously impaired, proven by the fact that a member of the public could get behind the bar and remove a knife and then use it to cause serious injury.”</em></p>
+          <p>A theme that figures in the literature of every era is the perception that important things are becoming lost to history. Based on news articles and police reports found online, <em>The Charlie Chaplin</em> returns to the dog days of The Charlie Chaplin pub in Elephant and Castle to give a literary account of the night of the 17th of June 2017, which, if it does anything, shows that there is a difference between literature and a police report.</p>
+          <p><a href="https://www.olivercorino.co.uk/" target="_blank" rel="noopener noreferrer">olivercorino.co.uk</a></p>
+        `
+      },
+
+      8: {
+        layout: "stacked",
+        images: ["FINAL_INSTA_Weathergirl_AnnettaArtboard 2 2.jpg"],
+        html: `
+          <p>Dear friends,</p>
+          <p>We are excited to invite you to a screening on the theme of housing in aid of Rode, a new housing co-op and artists’ space that we are helping to set up with Collective Ownership Society.</p>
+          <p>The screening will take place on Saturday 3 October at House of Annetta, 25 Princelet St, London E1 6QH. Doors will open at 6.30pm, with films beginning at 7pm and will run for around one hour. The programme list will be available on the night.</p>
+          <p>The event is BYOB. We can go to the Pride afterwards.</p>
+          <p>Space is limited to 30 people max. Tickets are £8. Please buy your ticket ahead of time via the link in our bio.</p>
+          <p>If you like, you can also separately donate to Rode Housing Co-op (link also in bio).</p>
+          <p>We hope to see you there,</p>
+          <p>Bronte and Freya</p>
+        `
+      },
+
+      9: {
+        layout: "stacked",
+        images: [],
+        html: ""
+      }
     };
 
     const homeImages = [
@@ -474,7 +547,6 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
       image.src = filename;
       image.alt = "";
       image.loading = "eager";
-
       galleryImages.replaceChildren(image);
 
       if (!shuffledImages.length) shuffleImages();
@@ -495,7 +567,6 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
 
     function updateLogoState() {
       const isAbout = currentPage === "about";
-
       logoLink.setAttribute(
         "aria-label",
         isAbout ? "Return to homepage" : "Open About page"
@@ -518,17 +589,15 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
         "composition-text-led"
       );
 
-      const composition = {
-        stacked: "composition-stacked",
-        "side-by-side": "composition-side",
-        "text-led": "composition-text-led"
-      }[programme.layout] || "composition-stacked";
-
-      archiveView.classList.add(composition);
+      archiveView.classList.add("composition-stacked");
+      archiveView.dataset.event = String(id);
 
       archiveLinks.forEach(link => {
         link.removeAttribute("aria-current");
       });
+
+      const activeLink = archiveLinks.find(link => link.dataset.event === String(id));
+      if (activeLink) activeLink.setAttribute("aria-current", "page");
 
       galleryImages.replaceChildren();
 
@@ -536,23 +605,11 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
         const image = document.createElement("img");
         image.src = filename;
         image.alt = "";
-        image.loading = "lazy";
+        image.loading = "eager";
         galleryImages.appendChild(image);
       });
 
-      programmeContent.replaceChildren();
-
-      programme.text.split("\n\n").filter(Boolean).forEach(paragraph => {
-        const element = document.createElement("p");
-        element.textContent = paragraph;
-
-        if (paragraph === "––") {
-          element.className = "separator";
-        }
-
-        programmeContent.appendChild(element);
-      });
-
+      programmeContent.innerHTML = programme.html || "";
       archiveView.classList.remove("hidden");
       aboutPanel.classList.remove("is-open");
       updateLogoState();
@@ -561,10 +618,9 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
     function showArchiveHome() {
       currentEvent = null;
       currentPage = "home";
+      delete archiveView.dataset.event;
 
-      archiveLinks.forEach(link => {
-        link.removeAttribute("aria-current");
-      });
+      archiveLinks.forEach(link => link.removeAttribute("aria-current"));
 
       archiveView.classList.remove(
         "composition-stacked",
