@@ -9,9 +9,9 @@
   <style>
     :root {
       --background: #bcc9da;
-      --text: #4b2b2e;
-      --gutter: 2.5vw;
-      --gap: 2vw;
+      --text: #422729;
+      --edge: 2.5vw;
+      --gap: 3vw;
     }
 
     * {
@@ -28,9 +28,9 @@
       min-height: 100vh;
       background: var(--background);
       color: var(--text);
-      font-family: "Times New Roman", Times, serif;
-      font-size: 15px;
-      line-height: 1.35;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.4;
     }
 
     a {
@@ -49,14 +49,11 @@
 
     .site-header {
       display: flex;
+      justify-content: flex-end;
       align-items: flex-start;
-      justify-content: space-between;
-      padding: 5.5vh var(--gutter) 3vh;
-    }
-
-    .site-name {
-      font-size: 15px;
-      letter-spacing: 0.01em;
+      padding: 4vh var(--edge) 0;
+      position: relative;
+      z-index: 5;
     }
 
     .header-right {
@@ -67,34 +64,33 @@
     }
 
     .about-toggle {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      padding: 0;
       border: 0;
       background: none;
-      padding: 0;
-      width: 28px;
-      height: 28px;
       cursor: pointer;
-      position: relative;
-      color: var(--text);
     }
 
     .about-toggle::before,
     .about-toggle::after {
       content: "";
       position: absolute;
-      top: 50%;
       left: 50%;
-      background: currentColor;
+      top: 50%;
+      background: var(--text);
       transform: translate(-50%, -50%);
     }
 
     .about-toggle::before {
-      width: 26px;
+      width: 28px;
       height: 1px;
     }
 
     .about-toggle::after {
       width: 1px;
-      height: 26px;
+      height: 28px;
     }
 
     .about-toggle[aria-expanded="true"]::after {
@@ -103,51 +99,36 @@
 
     .logo {
       display: block;
-      width: clamp(150px, 17vw, 245px);
-      height: auto;
+      width: clamp(150px, 16vw, 235px);
       max-width: 32vw;
+      height: auto;
     }
 
     .layout {
+      width: 100%;
       display: grid;
-      grid-template-columns: minmax(135px, 0.8fr) minmax(0, 1.45fr) minmax(190px, 0.9fr);
-      gap: var(--gap);
-      padding: 2vh var(--gutter) 5vh;
+      grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.5fr) minmax(230px, 0.9fr);
+      column-gap: var(--gap);
       align-items: start;
-    }
-
-    .column-heading {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 10px;
-      font-weight: normal;
-      letter-spacing: 0.04em;
-      margin: 0 0 14px;
-      padding: 0 0 8px;
-      border-bottom: 1px solid var(--text);
+      padding: 4vh var(--edge) 8vh;
     }
 
     .archive-list {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 5px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: clamp(12px, 1.05vw, 15px);
-      line-height: 1.45;
+      gap: 7px;
+      font-size: 16px;
+      line-height: 1.35;
     }
 
     .archive-link {
-      display: block;
+      display: inline-block;
     }
 
     .archive-link[aria-current="page"] {
       text-decoration: underline;
       text-underline-offset: 3px;
-    }
-
-    .archive-note {
-      font-size: 11px;
-      margin-top: 12px;
     }
 
     .gallery {
@@ -157,7 +138,9 @@
     .gallery-images {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      align-items: flex-start;
+      gap: 22px;
+      min-width: 0;
     }
 
     .gallery-images img {
@@ -167,14 +150,39 @@
       object-fit: contain;
     }
 
-    .gallery-empty {
-      font-size: 13px;
-      padding: 12px 0;
+    /*
+      Each event can have its own composition.
+      Use these classes in the event data below:
+      stacked, side-by-side, or text-led.
+    */
+
+    .layout.side-by-side {
+      grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.2fr) minmax(0, 1.2fr);
+    }
+
+    .layout.side-by-side .gallery-images {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+      gap: 16px;
+    }
+
+    .layout.side-by-side .gallery-images img {
+      width: 100%;
+    }
+
+    .layout.text-led {
+      grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1fr) minmax(0, 1.5fr);
+    }
+
+    .layout.text-led .gallery-images img {
+      max-width: 550px;
     }
 
     .programme {
       min-width: 0;
-      font-size: clamp(12px, 0.95vw, 14px);
+      font-size: 16px;
+      line-height: 1.45;
       overflow-wrap: anywhere;
     }
 
@@ -183,7 +191,7 @@
     }
 
     .programme-content p {
-      margin: 0 0 1.1em;
+      margin: 0 0 1.2em;
     }
 
     .programme-content .separator {
@@ -192,42 +200,36 @@
 
     .about-panel {
       display: none;
-      padding: 2vh var(--gutter) 7vh;
-      max-width: 900px;
+      padding: 4vh var(--edge) 8vh;
+      width: 100%;
     }
 
     .about-panel.is-open {
       display: block;
     }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(135px, 0.8fr) minmax(0, 2.35fr);
-      gap: var(--gap);
+    .about-content {
+      max-width: 750px;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
-    .about-copy {
-      max-width: 650px;
-      font-size: 15px;
-    }
-
-    .about-copy p {
-      margin: 0 0 1em;
+    .about-content p {
+      margin: 0 0 1.2em;
     }
 
     .hidden {
       display: none !important;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 760px) {
       :root {
-        --gutter: 5vw;
+        --edge: 5vw;
         --gap: 5vw;
       }
 
       .site-header {
         padding-top: 3vh;
-        padding-bottom: 3vh;
       }
 
       .logo {
@@ -235,10 +237,12 @@
         max-width: 38vw;
       }
 
-      .layout {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-        row-gap: 30px;
-        padding-top: 1vh;
+      .layout,
+      .layout.side-by-side,
+      .layout.text-led {
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+        gap: 28px var(--gap);
+        padding-top: 4vh;
       }
 
       .archive {
@@ -248,26 +252,26 @@
 
       .gallery {
         grid-column: 2;
-        grid-row: 1 / span 2;
+        grid-row: 1;
       }
 
       .programme {
         grid-column: 1 / -1;
-        grid-row: 3;
-        max-width: 600px;
+        grid-row: 2;
+        max-width: 750px;
       }
 
-      .gallery-images {
-        gap: 12px;
+      .layout.side-by-side .gallery-images {
+        grid-template-columns: 1fr;
       }
 
       .archive-list {
-        font-size: 12px;
+        font-size: 14px;
+        gap: 8px;
       }
 
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
+      .programme {
+        font-size: 15px;
       }
     }
   </style>
@@ -275,8 +279,6 @@
 
 <body>
   <header class="site-header">
-    <a class="site-name" href="#" id="home-link">Weathergirl</a>
-
     <div class="header-right">
       <button
         class="about-toggle"
@@ -286,7 +288,7 @@
         aria-expanded="false"
       ></button>
 
-      <a href="#" id="logo-link" aria-label="Weathergirl home">
+      <a href="#" id="logo-link" aria-label="Home">
         <img class="logo" src="LOGOpng.png" alt="Weathergirl">
       </a>
     </div>
@@ -295,8 +297,6 @@
   <main>
     <section class="layout" id="archive-view">
       <nav class="archive" aria-label="Screening archive">
-        <h2 class="column-heading">ARCHIVE</h2>
-
         <div class="archive-list">
           <a class="archive-link" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
           <a class="archive-link" href="#" data-event="8">Weathergirl 8</a>
@@ -311,33 +311,34 @@
       </nav>
 
       <section class="gallery" aria-label="Programme images">
-        <h2 class="column-heading">IMAGES</h2>
         <div class="gallery-images" id="gallery-images"></div>
       </section>
 
-      <section class="programme" aria-label="Programme information">
-        <h2 class="column-heading" id="programme-heading">PROGRAMME</h2>
+      <section class="programme" aria-label="Programme text">
         <div class="programme-content" id="programme-content"></div>
       </section>
     </section>
 
-    <section class="about-panel" id="about-panel" aria-label="About and Contact">
-      <div class="about-grid">
-        <h2 class="column-heading">ABOUT / CONTACT</h2>
-        <div class="about-copy">
-          <p>Weathergirl is an artist-run moving image screening programme.</p>
-          <p>Contact details to be added.</p>
-        </div>
+    <section class="about-panel" id="about-panel">
+      <div class="about-content">
+        <p>Weathergirl is an artist-run moving image screening programme.</p>
+        <p>Contact details to be added.</p>
       </div>
     </section>
   </main>
 
   <script>
+    /*
+      Each event is configured independently.
+      Images can be added in any order and can be PNG, JPG or WebP.
+      Change "layout" per event to choose its composition.
+    */
+
     const programmes = {
       1: {
+        layout: "stacked",
         images: ["11.jpg"],
-        text: `
-A programme of works by Shirley Clarke, Therese Henningsen & Aki Ilomäki, Steve Reinke and Deniz Ünal. With contributions by Tim Donovan and Gina Dow
+        text: `A programme of works by Shirley Clarke, Therese Henningsen & Aki Ilomäki, Steve Reinke and Deniz Ünal. With contributions by Tim Donovan and Gina Dow
 
 Friday, 15 March 2024, Pelican House, London
 
@@ -355,17 +356,17 @@ Aki Ilomäki is an artist based in Palermo, Italy.
 
 Steve Reinke is a Canadian artist and writer.
 
-Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
-`
+Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
       },
-      2: { images: [], text: "" },
-      3: { images: [], text: "" },
-      4: { images: [], text: "" },
-      5: { images: [], text: "" },
-      6: { images: [], text: "" },
-      7: { images: [], text: "" },
-      8: { images: [], text: "" },
-      9: { images: [], text: "" }
+
+      2: { layout: "stacked", images: [], text: "" },
+      3: { layout: "stacked", images: [], text: "" },
+      4: { layout: "stacked", images: [], text: "" },
+      5: { layout: "stacked", images: [], text: "" },
+      6: { layout: "stacked", images: [], text: "" },
+      7: { layout: "stacked", images: [], text: "" },
+      8: { layout: "stacked", images: [], text: "" },
+      9: { layout: "stacked", images: [], text: "" }
     };
 
     const homeImages = [
@@ -378,7 +379,6 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
     const archiveView = document.getElementById("archive-view");
     const galleryImages = document.getElementById("gallery-images");
     const programmeContent = document.getElementById("programme-content");
-    const programmeHeading = document.getElementById("programme-heading");
     const aboutPanel = document.getElementById("about-panel");
     const aboutToggle = document.getElementById("about-toggle");
     const archiveLinks = [...document.querySelectorAll("[data-event]")];
@@ -411,7 +411,6 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
 
       const filename = shuffledImages.pop();
       previousRandomImage = filename;
-
       galleryImages.replaceChildren();
 
       const image = document.createElement("img");
@@ -443,6 +442,11 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
       stopRandomImages();
       currentEvent = String(id);
 
+      archiveView.classList.remove("side-by-side", "text-led");
+      if (programme.layout !== "stacked") {
+        archiveView.classList.add(programme.layout);
+      }
+
       archiveLinks.forEach(link => {
         if (link.dataset.event === String(id)) {
           link.setAttribute("aria-current", "page");
@@ -461,14 +465,7 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
         galleryImages.appendChild(image);
       });
 
-      if (programme.images.length === 0) {
-        const empty = document.createElement("div");
-        empty.className = "gallery-empty";
-        galleryImages.appendChild(empty);
-      }
-
       programmeContent.textContent = programme.text;
-      programmeHeading.textContent = `WEATHERGIRL ${id}`;
       archiveView.classList.remove("hidden");
       aboutPanel.classList.remove("is-open");
       aboutToggle.setAttribute("aria-expanded", "false");
@@ -482,7 +479,7 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
         link.removeAttribute("aria-current");
       });
 
-      programmeHeading.textContent = "PROGRAMME";
+      archiveView.classList.remove("side-by-side", "text-led");
       programmeContent.textContent = "";
       aboutPanel.classList.remove("is-open");
       archiveView.classList.remove("hidden");
@@ -506,7 +503,7 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
       });
     });
 
-    function toggleAbout() {
+    aboutToggle.addEventListener("click", () => {
       const isOpen = aboutPanel.classList.contains("is-open");
 
       if (isOpen) {
@@ -523,13 +520,6 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.
         aboutToggle.setAttribute("aria-expanded", "true");
         aboutToggle.setAttribute("aria-label", "Close About and Contact");
       }
-    }
-
-    aboutToggle.addEventListener("click", toggleAbout);
-
-    document.getElementById("home-link").addEventListener("click", event => {
-      event.preventDefault();
-      showArchiveHome();
     });
 
     document.getElementById("logo-link").addEventListener("click", event => {
