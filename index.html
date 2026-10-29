@@ -144,8 +144,7 @@ a:focus-visible {
   color: var(--hover) !important;
 }
 
-/* Gallery and programme sit side by side.
-   Programme width matches the blue logo. */
+/* Gallery and programme sit side by side */
 .event-main {
   grid-column: 2;
   grid-row: 1;
@@ -156,14 +155,12 @@ a:focus-visible {
   min-width: 0;
 }
 
-/* Image collage */
+/* Event images: vertical gallery, not a tiled grid */
 .event-poster {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-flow: row;
-  align-items: start;
-  align-content: start;
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
   min-width: 0;
   width: 100%;
   margin: 0;
@@ -173,37 +170,26 @@ a:focus-visible {
   display: block;
   width: 100%;
   height: auto;
-  max-width: none;
+  max-width: 100%;
   max-height: none;
   object-fit: contain;
+  object-position: top left;
   filter: none !important;
   opacity: 1 !important;
   mix-blend-mode: normal !important;
-  align-self: start;
+  align-self: flex-start;
 }
 
-/* Keep images large: two images per row where possible */
-.event-poster img:nth-child(4n + 1),
-.event-poster img:nth-child(4n + 2),
-.event-poster img:nth-child(4n + 3),
-.event-poster img:nth-child(4n) {
-  grid-column: span 6;
+/* Posters display prominently */
+.event-poster img.is-poster {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
 }
 
-/* Explicitly remove any CSS colour treatment from df.jpg */
-.event-poster img[src*="df.jpg"] {
-  filter: none !important;
-  opacity: 1 !important;
-  mix-blend-mode: normal !important;
-}
-
-/* Keep lead posters prominent */
-.event-poster[data-event="5"] img:first-child,
-.event-poster[data-event="7"] img:first-child {
-  grid-column: span 7;
-}
-
-/* Programme text aligns with the logo's left and right edges */
+/* Programme text */
 .programme {
   grid-column: 2;
   grid-row: 1;
@@ -285,7 +271,7 @@ a:focus-visible {
   }
 
   .event-poster {
-    gap: 10px;
+    gap: 20px;
   }
 }
 
@@ -351,23 +337,20 @@ a:focus-visible {
   }
 
   .event-poster {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin-left: 0;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 10px;
+    gap: 18px;
   }
 
-  /* At least half the gallery width for every image */
-  .event-poster img:nth-child(4n + 1),
-  .event-poster img:nth-child(4n + 2),
-  .event-poster img:nth-child(4n + 3),
-  .event-poster img:nth-child(4n) {
-    grid-column: span 3;
-  }
-
-  .event-poster[data-event="5"] img:first-child,
-  .event-poster[data-event="7"] img:first-child {
-    grid-column: span 4;
+  .event-poster img,
+  .event-poster img.is-poster {
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    height: auto;
+    object-fit: contain;
   }
 
   .programme {
@@ -459,8 +442,8 @@ a:focus-visible {
 <script>
 const programmes = {
   1: {
-    poster: "11.jpg",
-    images: ["12delete.jpg", "baudelaire.jpg"],
+    poster: null,
+    images: ["12delete.jpg", "baudelaire.jpg", "11.jpg"],
     html: `
       <p>Dear friends,</p>
 
@@ -495,8 +478,8 @@ const programmes = {
   },
 
   2: {
-    poster: null,
-    images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png", "df.jpg"],
+    poster: "newscreening invite (10 Aug) A3.png",
+    images: ["2poster.jpg", "a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png"],
     html: `
       <p>Dear friends,</p>
 
@@ -579,7 +562,7 @@ const programmes = {
   },
 
   6: {
-    poster: "Screenshot 2026-10-26 at 22.24.20.png",
+    poster: "Book Launch Charlie Chaplin.jpg",
     images: ["closeup1.jpg", "closeup2.jpg", "closeup3.jpg"],
     html: `
       <p>Dear friends,</p>
@@ -599,8 +582,13 @@ const programmes = {
   },
 
   7: {
-    poster: "Book Launch Charlie Chaplin.jpg",
-    images: [],
+    poster: "Screenshot 2026-10-26 at 22.24.20.png",
+    images: [
+      "WhatsApp Image 2026-10-29 at 11.45.32 (30).jpeg",
+      "WhatsApp Image 2026-10-29 at 11.45.32 (29).jpeg",
+      "WhatsApp Image 2026-10-29 at 11.45.32 (28).jpeg",
+      "WhatsApp Image 2026-10-29 at 11.45.32 (12).jpeg"
+    ],
     html: `
       <p>Dear friends,</p>
 
@@ -644,7 +632,7 @@ const programmes = {
   9: {
     poster: null,
     images: [],
-    html: `<p>Upcoming screening. Details to follow.</p>`
+    html: ``
   }
 };
 
@@ -719,9 +707,15 @@ document.querySelectorAll("[data-event]").forEach(link => {
   });
 });
 
-/* Build the event image collage */
+/* Build the event image gallery */
 function addEventImage(src, eventId, index) {
   const image = document.createElement("img");
+
+  const isPoster = (String(eventId) !== "1" && index === 0) ||
+                   (String(eventId) === "1" && src === "11.jpg");
+  if (isPoster || (String(eventId) === "2" && src === "2poster.jpg")) {
+    image.classList.add("is-poster");
+  }
 
   image.src = src;
   image.alt = `Weathergirl ${eventId}, image ${index + 1}`;
