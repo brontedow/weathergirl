@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -150,11 +150,11 @@ a:hover, a:focus-visible {
 }
 
 /*
-  Desktop layout:
+  Desktop event layout:
   Four shared columns.
-  Portrait images occupy one column.
-  Landscape images span the complete event area.
-  Programme text occupies the right-hand column.
+  Portrait images occupy one column each.
+  Landscape images span the full event area.
+  Programme text occupies the fourth column.
 */
 .event-main {
   grid-column: 2;
@@ -168,7 +168,7 @@ a:hover, a:focus-visible {
   width: 100%;
 }
 
-/* Let gallery images participate in the event grid */
+/* Allow images to participate in the shared grid */
 .event-poster {
   display: contents;
 }
@@ -191,7 +191,6 @@ a:hover, a:focus-visible {
   mix-blend-mode: normal !important;
 }
 
-/* Image orientation is assigned after loading */
 .event-poster img.portrait {
   grid-column: span 1;
 }
@@ -200,10 +199,10 @@ a:hover, a:focus-visible {
   grid-column: 1 / -1;
 }
 
-/* Programme */
+/* Programme text */
 .programme {
   grid-column: 4;
-  grid-row: 1 / span 100;
+  grid-row: 1;
   align-self: start;
   width: 100%;
   max-width: none;
@@ -328,7 +327,8 @@ a:hover, a:focus-visible {
     width: 100%;
   }
 
-  /* On mobile, use a separate two-column image gallery */
+  /* Mobile gallery: portraits sit side by side;
+     landscape images span both columns. */
   .event-poster {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -350,7 +350,8 @@ a:hover, a:focus-visible {
 
   .programme {
     display: block;
-    order: 2;
+    grid-column: auto;
+    grid-row: auto;
     width: 100%;
     max-width: none;
     margin-top: 12px;
@@ -483,8 +484,6 @@ const programmes = {
   4: {
     poster: null,
     images: [
-      "newscreening invite (10 Aug) A3.png",
-      "2poster.jpg",
       "17.png",
       "tm1.jpg",
       "tm2.jpg",
@@ -625,14 +624,16 @@ document.querySelectorAll("[data-event]").forEach(link => {
   });
 });
 
-/* Add images to the gallery and detect their orientation */
+/* Add images and detect orientation */
 function addEventImage(src, eventId, index) {
   const image = document.createElement("img");
 
   image.alt = `Weathergirl ${eventId}, image ${index + 1}`;
   image.loading = index === 0 ? "eager" : "lazy";
 
-  image.addEventListener("load", () => {
+  function setOrientation() {
+    if (!image.naturalWidth || !image.naturalHeight) return;
+
     image.classList.remove("portrait", "landscape");
 
     if (image.naturalHeight > image.naturalWidth) {
@@ -640,7 +641,9 @@ function addEventImage(src, eventId, index) {
     } else {
       image.classList.add("landscape");
     }
-  });
+  }
+
+  image.addEventListener("load", setOrientation);
 
   image.addEventListener("error", () => {
     console.warn(
@@ -649,15 +652,11 @@ function addEventImage(src, eventId, index) {
     image.remove();
   });
 
-  /* Append to the gallery, not directly to the event grid */
   eventPoster.appendChild(image);
   image.src = src;
 
-  /* Handle cached images that have already loaded */
   if (image.complete && image.naturalWidth > 0) {
-    image.classList.add(
-      image.naturalHeight > image.naturalWidth ? "portrait" : "landscape"
-    );
+    setOrientation();
   }
 }
 
@@ -692,7 +691,7 @@ function showEvent(id) {
     }
   });
 
-  /* Clear the previous gallery */
+  /* Clear all images from the previous event */
   eventPoster.replaceChildren();
 
   const images = [
