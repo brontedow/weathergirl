@@ -155,12 +155,12 @@ a:focus-visible {
   min-width: 0;
 }
 
-/* Event images: vertical gallery, not a tiled grid */
+/* Event images: tiled gallery, with a designated poster across the top */
 .event-poster {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 14px;
   min-width: 0;
   width: 100%;
   margin: 0;
@@ -177,11 +177,11 @@ a:focus-visible {
   filter: none !important;
   opacity: 1 !important;
   mix-blend-mode: normal !important;
-  align-self: flex-start;
 }
 
-/* Posters display prominently */
+/* Only the designated poster spans the full gallery width */
 .event-poster img.is-poster {
+  grid-column: 1 / -1;
   width: 100%;
   max-width: 100%;
   height: auto;
@@ -271,7 +271,7 @@ a:focus-visible {
   }
 
   .event-poster {
-    gap: 20px;
+    gap: 12px;
   }
 }
 
@@ -337,11 +337,11 @@ a:focus-visible {
   }
 
   .event-poster {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
     margin-left: 0;
-    gap: 18px;
+    gap: 10px;
   }
 
   .event-poster img,
@@ -442,7 +442,7 @@ a:focus-visible {
 <script>
 const programmes = {
   1: {
-    poster: null,
+    poster: "ab.jpg",
     images: ["12delete.jpg", "baudelaire.jpg", "11.jpg"],
     html: `
       <p>Dear friends,</p>
@@ -478,8 +478,8 @@ const programmes = {
   },
 
   2: {
-    poster: "newscreening invite (10 Aug) A3.png",
-    images: ["2poster.jpg", "a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png"],
+    poster: null,
+    images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png"],
     html: `
       <p>Dear friends,</p>
 
@@ -530,8 +530,8 @@ const programmes = {
   },
 
   4: {
-    poster: "weathergirl4poster.jpg",
-    images: ["17.png", "tm1.jpg", "tm2.jpg", "tm3.jpg", "tm4.jpg"],
+    poster: null,
+    images: ["17.png", "tm1.jpg", "tm2.jpg", "tm3.jpg", "tm4.jpg", "7.png", "29.png", "28.png", "1.png"],
     html: `
       <p>You are invited to a screening on Friday 14 March 2025 at Avalon Cafe, SE14 5RW. There will be an introduction to the films by Therese Henningsen and Marc Isaacs.</p>
 
@@ -562,7 +562,7 @@ const programmes = {
   },
 
   6: {
-    poster: "Book Launch Charlie Chaplin.jpg",
+    poster: "Screenshot 2026-10-26 at 22.24.20.png",
     images: ["closeup1.jpg", "closeup2.jpg", "closeup3.jpg"],
     html: `
       <p>Dear friends,</p>
@@ -582,7 +582,7 @@ const programmes = {
   },
 
   7: {
-    poster: "Screenshot 2026-10-26 at 22.24.20.png",
+    poster: "Book Launch Charlie Chaplin.jpg",
     images: [
       "WhatsApp Image 2026-10-29 at 11.45.32 (30).jpeg",
       "WhatsApp Image 2026-10-29 at 11.45.32 (29).jpeg",
@@ -711,9 +711,8 @@ document.querySelectorAll("[data-event]").forEach(link => {
 function addEventImage(src, eventId, index) {
   const image = document.createElement("img");
 
-  const isPoster = (String(eventId) !== "1" && index === 0) ||
-                   (String(eventId) === "1" && src === "11.jpg");
-  if (isPoster || (String(eventId) === "2" && src === "2poster.jpg")) {
+  const isPoster = programmes[String(eventId)]?.poster === src && index === 0;
+  if (isPoster) {
     image.classList.add("is-poster");
   }
 
