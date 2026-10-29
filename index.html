@@ -77,55 +77,71 @@ a:hover, a:focus-visible {
   color: var(--hover);
 }
 
-/* Homepage event list */
+/* Homepage poster grid */
 
 .home-view {
   padding: 4vh var(--edge) 8vh;
 }
 
-.event-list {
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 3vw;
+  row-gap: 5vh;
+  align-items: start;
+}
+
+.poster-tile {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  max-width: 100%;
-}
-
-.home-event-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 20px;
-  padding: 12px 0;
-  border-bottom: 1px solid #000;
-  color: #000;
-  font-size: clamp(18px, 2vw, 28px);
-  line-height: 1.25;
-}
-
-.home-event-link:first-child {
-  border-top: 1px solid #000;
-}
-
-.home-event-link:hover,
-.home-event-link:focus-visible {
-  color: var(--hover);
-}
-
-.home-event-title {
+  align-items: flex-start;
   min-width: 0;
+  width: 100%;
+  color: #000;
 }
 
-.home-event-number {
-  flex-shrink: 0;
-  font-size: 14px;
-  white-space: nowrap;
+.poster-tile img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  object-position: top left;
+  align-self: flex-start;
 }
 
-.home-event-link.upcoming .home-event-title::after {
-  content: " · Upcoming";
+.poster-tile:hover img,
+.poster-tile:focus-visible img {
+  opacity: .8;
+}
+
+.poster-caption {
+  margin-top: 10px;
   font-size: 14px;
-  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+.poster-caption .event-number {
+  display: block;
+}
+
+.upcoming-tile {
+  min-height: 200px;
+  justify-content: flex-start;
+}
+
+.upcoming-poster {
+  width: 100%;
+  min-height: 160px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 16px 0;
+  font-size: clamp(28px, 4vw, 54px);
+  line-height: .95;
+  letter-spacing: -.05em;
+  overflow-wrap: anywhere;
 }
 
 /* Event pages */
@@ -225,6 +241,14 @@ a:hover, a:focus-visible {
 /* Tablet */
 
 @media (max-width: 900px) {
+  .poster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 4vw;
+    row-gap: 4vh;
+  }
+
+  .poster-tile img { max-height: 60vh; }
+
   .event-view {
     grid-template-columns: minmax(110px, .55fr) minmax(0, 2fr);
     column-gap: 4vw;
@@ -239,15 +263,18 @@ a:hover, a:focus-visible {
     --logo-width: clamp(220px, 65vw, 360px);
   }
 
-  .home-event-link {
-    gap: 12px;
-    padding: 12px 0;
-    font-size: 19px;
+  .poster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 4vw;
+    row-gap: 3vh;
   }
 
-  .home-event-number {
-    font-size: 12px;
+  .poster-tile img {
+    max-width: 100%;
+    max-height: 45vh;
   }
+
+  .poster-caption { font-size: 13px; }
 
   .event-view {
     grid-template-columns: minmax(0, 1fr);
@@ -300,7 +327,7 @@ a:hover, a:focus-visible {
 
 <main>
   <section id="home-view" class="home-view">
-    <nav class="event-list" id="event-list" aria-label="Screening events"></nav>
+    <div class="poster-grid" id="poster-grid"></div>
   </section>
 
   <section id="event-view" class="event-view hidden">
@@ -351,7 +378,7 @@ const programmes = {
   },
 
   2: {
-    poster: "weathergirl2.jpg",
+    poster: "DRAFT screening invite (10 Aug) A3.jpg",
     html: `
       <p>Dear friends,</p>
       <p>We are showing some films on <strong>Saturday 10th August 2024</strong> at <strong>Avalon Cafe, SE14 5RW</strong>. There will be some music after from Katie Shannon, Ed Lehan and Jim Janco.</p>
@@ -470,12 +497,12 @@ const programmes = {
   }
 };
 
-/* Homepage list, newest first */
-const eventOrder = [9, 8, 7, 6, 5, 4, 3, 2, 1];
+/* Posters shown on the homepage, newest first */
+const posterOrder = [9, 8, 7, 6, 5, 4, 3, 2, 1];
 
 const homeView = document.getElementById("home-view");
 const eventView = document.getElementById("event-view");
-const eventList = document.getElementById("event-list");
+const posterGrid = document.getElementById("poster-grid");
 const eventPoster = document.getElementById("event-poster");
 const programmeContent = document.getElementById("programme-content");
 const aboutPanel = document.getElementById("about-panel");
@@ -485,39 +512,43 @@ let currentPage = "home";
 let currentEvent = null;
 
 function buildHomepage() {
-  eventList.replaceChildren();
+  posterGrid.replaceChildren();
 
-  eventOrder.forEach(id => {
-    const link = document.createElement("a");
-    link.className = "home-event-link";
-    link.href = "#event-" + id;
+  posterOrder.forEach(id => {
+    const programme = programmes[id];
+    const tile = document.createElement("a");
+    tile.className = "poster-tile";
+    tile.href = "#event-" + id;
+    tile.setAttribute("aria-label", "Open Weathergirl " + id);
 
-    if (id === 9) {
-      link.classList.add("upcoming");
+    if (programme.poster) {
+      const image = document.createElement("img");
+      image.src = programme.poster;
+      image.alt = "Weathergirl " + id + " poster";
+      image.loading = "lazy";
+      tile.appendChild(image);
+    } else {
+      tile.classList.add("upcoming-tile");
+      const placeholder = document.createElement("div");
+      placeholder.className = "upcoming-poster";
+      placeholder.textContent = "WEATHERGIRL 9";
+      tile.appendChild(placeholder);
     }
 
-    const title = document.createElement("span");
-    title.className = "home-event-title";
-    title.textContent = "Weathergirl " + id;
+    const caption = document.createElement("div");
+    caption.className = "poster-caption";
+    caption.textContent = id === 9
+      ? "Weathergirl 9 · Upcoming"
+      : "Weathergirl " + id;
 
-    const number = document.createElement("span");
-    number.className = "home-event-number";
-    number.textContent = id === 9 ? "UPCOMING" : String(id).padStart(2, "0");
+    tile.appendChild(caption);
 
-    link.appendChild(title);
-    link.appendChild(number);
-
-    link.setAttribute("aria-label", id === 9
-      ? "Open Weathergirl 9, upcoming"
-      : "Open Weathergirl " + id
-    );
-
-    link.addEventListener("click", event => {
+    tile.addEventListener("click", event => {
       event.preventDefault();
       showEvent(id);
     });
 
-    eventList.appendChild(link);
+    posterGrid.appendChild(tile);
   });
 }
 
