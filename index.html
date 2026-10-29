@@ -37,7 +37,8 @@ a {
   text-decoration: none !important;
 }
 
-a:hover, a:focus-visible {
+a:hover,
+a:focus-visible {
   color: var(--hover);
   text-decoration: none !important;
 }
@@ -104,8 +105,8 @@ a:hover, a:focus-visible {
   height: min(70vh, 700px);
   object-fit: contain;
   object-position: center;
-  filter: none;
-  opacity: 1;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 /* Event pages */
@@ -136,12 +137,15 @@ a:hover, a:focus-visible {
   display: inline-block;
 }
 
-.archive-link[aria-current="page"] {
-  color: var(--text);
+/* Keep the current event lime green */
+.archive-link[aria-current="page"],
+.archive-link[aria-current="page"]:hover,
+.archive-link[aria-current="page"]:focus-visible {
+  color: var(--hover) !important;
 }
 
 /* Gallery and programme sit side by side.
-   The programme column matches the logo's width and right edge. */
+   Programme width matches the blue logo. */
 .event-main {
   grid-column: 2;
   grid-row: 1;
@@ -172,35 +176,34 @@ a:hover, a:focus-visible {
   max-width: none;
   max-height: none;
   object-fit: contain;
-  filter: none;
-  opacity: 1;
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
   align-self: start;
 }
 
-/* Larger images in a more balanced pattern */
-.event-poster img:nth-child(4n + 1) {
-  grid-column: span 7;
-}
-
-.event-poster img:nth-child(4n + 2) {
-  grid-column: span 5;
-}
-
-.event-poster img:nth-child(4n + 3) {
-  grid-column: span 5;
-}
-
+/* Keep images large: two images per row where possible */
+.event-poster img:nth-child(4n + 1),
+.event-poster img:nth-child(4n + 2),
+.event-poster img:nth-child(4n + 3),
 .event-poster img:nth-child(4n) {
-  grid-column: span 7;
+  grid-column: span 6;
 }
 
-/* Keep the lead posters prominent for these events */
+/* Explicitly remove any CSS colour treatment from df.jpg */
+.event-poster img[src*="df.jpg"] {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Keep lead posters prominent */
 .event-poster[data-event="5"] img:first-child,
 .event-poster[data-event="7"] img:first-child {
   grid-column: span 7;
 }
 
-/* Text aligned with the blue logo */
+/* Programme text aligns with the logo's left and right edges */
 .programme {
   grid-column: 2;
   grid-row: 1;
@@ -354,18 +357,10 @@ a:hover, a:focus-visible {
     gap: 10px;
   }
 
-  .event-poster img:nth-child(4n + 1) {
-    grid-column: span 4;
-  }
-
-  .event-poster img:nth-child(4n + 2) {
-    grid-column: span 2;
-  }
-
-  .event-poster img:nth-child(4n + 3) {
-    grid-column: span 3;
-  }
-
+  /* At least half the gallery width for every image */
+  .event-poster img:nth-child(4n + 1),
+  .event-poster img:nth-child(4n + 2),
+  .event-poster img:nth-child(4n + 3),
   .event-poster img:nth-child(4n) {
     grid-column: span 3;
   }
@@ -553,7 +548,7 @@ const programmes = {
 
   4: {
     poster: "weathergirl4poster.jpg",
-    images: ["17.png"],
+    images: ["17.png", "tm1.jpg", "tm2.jpg", "tm3.jpg", "tm4.jpg"],
     html: `
       <p>You are invited to a screening on Friday 14 March 2025 at Avalon Cafe, SE14 5RW. There will be an introduction to the films by Therese Henningsen and Marc Isaacs.</p>
 
@@ -671,6 +666,7 @@ let randomImageRequest = 0;
 function preloadImage(src) {
   return new Promise(resolve => {
     const image = new Image();
+
     image.onload = () => resolve(true);
     image.onerror = () => resolve(false);
     image.src = src;
@@ -735,6 +731,7 @@ function addEventImage(src, eventId, index) {
     console.warn(
       `Weathergirl: could not load "${src}". Check the filename and file location.`
     );
+
     image.remove();
   });
 
@@ -760,6 +757,7 @@ function showHome() {
 /* Event page */
 function showEvent(id) {
   const programme = programmes[id];
+
   if (!programme) return;
 
   currentPage = "event";
@@ -768,6 +766,7 @@ function showEvent(id) {
   aboutPanel.classList.remove("is-open");
   eventView.classList.remove("hidden");
 
+  /* Highlight the currently selected event in lime green */
   document.querySelectorAll(".archive-link").forEach(link => {
     if (link.dataset.event === String(id)) {
       link.setAttribute("aria-current", "page");
@@ -784,7 +783,9 @@ function showEvent(id) {
     ...(programme.images || [])
   ];
 
-  images.forEach((src, index) => addEventImage(src, id, index));
+  images.forEach((src, index) => {
+    addEventImage(src, id, index);
+  });
 
   programmeContent.innerHTML = programme.html || "";
 
