@@ -8,10 +8,9 @@
 
   <style>
     :root {
-      --background: #bcc9da;
+      --background: #bebebe;
       --text: #422729;
       --edge: 2.5vw;
-      --gap: 3vw;
     }
 
     * {
@@ -29,7 +28,7 @@
       background: var(--background);
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1.4;
     }
 
@@ -48,12 +47,11 @@
     }
 
     .site-header {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-start;
-      padding: 4vh var(--edge) 0;
       position: relative;
       z-index: 5;
+      display: flex;
+      justify-content: flex-end;
+      padding: 3vh var(--edge) 0;
     }
 
     .header-right {
@@ -77,8 +75,8 @@
     .about-toggle::after {
       content: "";
       position: absolute;
-      left: 50%;
       top: 50%;
+      left: 50%;
       background: var(--text);
       transform: translate(-50%, -50%);
     }
@@ -104,13 +102,20 @@
       height: auto;
     }
 
+    /* Archive home */
+
     .layout {
-      width: 100%;
       display: grid;
-      grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.5fr) minmax(230px, 0.9fr);
-      column-gap: var(--gap);
+      grid-template-columns: minmax(115px, 0.65fr) minmax(0, 2.35fr);
+      column-gap: 4vw;
       align-items: start;
+      width: 100%;
       padding: 4vh var(--edge) 8vh;
+    }
+
+    .archive {
+      position: relative;
+      z-index: 2;
     }
 
     .archive-list {
@@ -118,8 +123,8 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 7px;
-      font-size: 16px;
-      line-height: 1.35;
+      font-size: 15px;
+      line-height: 1.4;
     }
 
     .archive-link {
@@ -139,7 +144,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 22px;
+      gap: 3vh;
       min-width: 0;
     }
 
@@ -150,44 +155,47 @@
       object-fit: contain;
     }
 
-    /*
-      Each event can have its own composition.
-      Use these classes in the event data below:
-      stacked, side-by-side, or text-led.
-    */
-
-    .layout.side-by-side {
-      grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.2fr) minmax(0, 1.2fr);
+    .home-view .gallery-images img {
+      width: min(100%, 1050px);
     }
 
-    .layout.side-by-side .gallery-images {
+    /* Individual programme compositions */
+
+    .layout.composition-stacked {
+      grid-template-columns: minmax(115px, 0.65fr) minmax(0, 1.8fr) minmax(220px, 0.9fr);
+      column-gap: 3vw;
+    }
+
+    .layout.composition-side {
+      grid-template-columns: minmax(115px, 0.65fr) minmax(0, 1.7fr) minmax(0, 1fr);
+      column-gap: 3vw;
+    }
+
+    .layout.composition-text-led {
+      grid-template-columns: minmax(115px, 0.65fr) minmax(220px, 1fr) minmax(0, 1.7fr);
+      column-gap: 3vw;
+    }
+
+    .composition-side .gallery-images {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: start;
-      gap: 16px;
+      gap: 1.5vw;
     }
 
-    .layout.side-by-side .gallery-images img {
+    .composition-side .gallery-images img {
       width: 100%;
     }
 
-    .layout.text-led {
-      grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1fr) minmax(0, 1.5fr);
-    }
-
-    .layout.text-led .gallery-images img {
-      max-width: 550px;
+    .composition-text-led .gallery-images img {
+      max-width: 700px;
     }
 
     .programme {
       min-width: 0;
       font-size: 16px;
-      line-height: 1.45;
+      line-height: 1.5;
       overflow-wrap: anywhere;
-    }
-
-    .programme-content {
-      white-space: pre-line;
     }
 
     .programme-content p {
@@ -197,6 +205,8 @@
     .programme-content .separator {
       margin: 1.5em 0;
     }
+
+    /* About and contact */
 
     .about-panel {
       display: none;
@@ -209,8 +219,8 @@
     }
 
     .about-content {
-      max-width: 750px;
-      font-size: 16px;
+      max-width: 680px;
+      font-size: 17px;
       line-height: 1.5;
     }
 
@@ -225,7 +235,10 @@
     @media (max-width: 760px) {
       :root {
         --edge: 5vw;
-        --gap: 5vw;
+      }
+
+      body {
+        font-size: 16px;
       }
 
       .site-header {
@@ -238,10 +251,11 @@
       }
 
       .layout,
-      .layout.side-by-side,
-      .layout.text-led {
-        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
-        gap: 28px var(--gap);
+      .layout.composition-stacked,
+      .layout.composition-side,
+      .layout.composition-text-led {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 4vh;
         padding-top: 4vh;
       }
 
@@ -250,28 +264,32 @@
         grid-row: 1;
       }
 
-      .gallery {
-        grid-column: 2;
-        grid-row: 1;
-      }
-
-      .programme {
-        grid-column: 1 / -1;
-        grid-row: 2;
-        max-width: 750px;
-      }
-
-      .layout.side-by-side .gallery-images {
-        grid-template-columns: 1fr;
-      }
-
       .archive-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 7px 15px;
         font-size: 14px;
-        gap: 8px;
+      }
+
+      .gallery {
+        grid-column: 1;
+        grid-row: 2;
       }
 
       .programme {
-        font-size: 15px;
+        grid-column: 1;
+        grid-row: 3;
+        max-width: 680px;
+        font-size: 16px;
+      }
+
+      .composition-side .gallery-images {
+        grid-template-columns: 1fr;
+        gap: 3vh;
+      }
+
+      .composition-text-led .gallery-images img {
+        max-width: 100%;
       }
     }
   </style>
@@ -289,13 +307,13 @@
       ></button>
 
       <a href="#" id="logo-link" aria-label="Home">
-        <img class="logo" src="LOGOpng.png" alt="Weathergirl">
+        <img class="logo" src="bluelogo.png" alt="Weathergirl">
       </a>
     </div>
   </header>
 
   <main>
-    <section class="layout" id="archive-view">
+    <section class="layout home-view" id="archive-view">
       <nav class="archive" aria-label="Screening archive">
         <div class="archive-list">
           <a class="archive-link" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
@@ -328,12 +346,6 @@
   </main>
 
   <script>
-    /*
-      Each event is configured independently.
-      Images can be added in any order and can be PNG, JPG or WebP.
-      Change "layout" per event to choose its composition.
-    */
-
     const programmes = {
       1: {
         layout: "stacked",
@@ -411,13 +423,13 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
 
       const filename = shuffledImages.pop();
       previousRandomImage = filename;
-      galleryImages.replaceChildren();
 
       const image = document.createElement("img");
       image.src = filename;
       image.alt = "";
       image.loading = "eager";
-      galleryImages.appendChild(image);
+
+      galleryImages.replaceChildren(image);
 
       if (!shuffledImages.length) shuffleImages();
     }
@@ -442,10 +454,20 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
       stopRandomImages();
       currentEvent = String(id);
 
-      archiveView.classList.remove("side-by-side", "text-led");
-      if (programme.layout !== "stacked") {
-        archiveView.classList.add(programme.layout);
-      }
+      archiveView.classList.remove(
+        "home-view",
+        "composition-stacked",
+        "composition-side",
+        "composition-text-led"
+      );
+
+      const composition = {
+        stacked: "composition-stacked",
+        "side-by-side": "composition-side",
+        "text-led": "composition-text-led"
+      }[programme.layout] || "composition-stacked";
+
+      archiveView.classList.add(composition);
 
       archiveLinks.forEach(link => {
         if (link.dataset.event === String(id)) {
@@ -465,7 +487,15 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
         galleryImages.appendChild(image);
       });
 
-      programmeContent.textContent = programme.text;
+      programmeContent.replaceChildren();
+
+      programme.text.split("\n\n").forEach(paragraph => {
+        const element = document.createElement("p");
+        element.textContent = paragraph;
+        if (paragraph === "––") element.className = "separator";
+        programmeContent.appendChild(element);
+      });
+
       archiveView.classList.remove("hidden");
       aboutPanel.classList.remove("is-open");
       aboutToggle.setAttribute("aria-expanded", "false");
@@ -479,8 +509,14 @@ Deniz Ünal is an artist and teacher, born in Istanbul and living in London.`
         link.removeAttribute("aria-current");
       });
 
-      archiveView.classList.remove("side-by-side", "text-led");
-      programmeContent.textContent = "";
+      archiveView.classList.remove(
+        "composition-stacked",
+        "composition-side",
+        "composition-text-led"
+      );
+      archiveView.classList.add("home-view");
+
+      programmeContent.replaceChildren();
       aboutPanel.classList.remove("is-open");
       archiveView.classList.remove("hidden");
 
