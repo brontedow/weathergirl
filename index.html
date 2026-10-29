@@ -20,11 +20,7 @@
       min-height: 100vh;
       font-family: Helvetica, Arial, sans-serif;
       color: black;
-      background-image: url("backgroundclean.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-color: #bcc9da;
     }
 
     a {
@@ -59,6 +55,10 @@
       font-weight: 400;
     }
 
+    .events a.active {
+      color: #914b3b;
+    }
+
     .logo {
       position: fixed;
       top: -18px;
@@ -71,6 +71,7 @@
       pointer-events: none;
     }
 
+    /* Random images */
     .random-image {
       position: fixed;
       top: 60%;
@@ -84,6 +85,7 @@
       pointer-events: none;
     }
 
+    /* About and contact link */
     .about-link {
       position: fixed;
       top: 5.5vh;
@@ -94,6 +96,7 @@
       font-weight: 400;
     }
 
+    /* Screening programme */
     .programme {
       display: none;
       position: fixed;
@@ -108,7 +111,7 @@
       font-family: "Times New Roman", Times, serif;
       font-size: 16px;
       line-height: 1.5;
-      background: rgba(255, 255, 255, 0.88);
+      background: transparent;
     }
 
     .programme.visible {
@@ -126,15 +129,7 @@
       font-size: 20px;
     }
 
-    .events a.active {
-      color: #914b3b;
-    }
-
     @media (max-width: 700px) {
-      body {
-        background-attachment: scroll;
-      }
-
       .events {
         top: calc(3vh + 2.2em);
         left: 4vw;
@@ -168,8 +163,14 @@
         left: 50%;
         width: 90vw;
         height: 68vh;
-        padding: 16px;
+        padding: 16px 0;
         font-size: 15px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .events {
+        font-size: 14px;
       }
     }
   </style>
@@ -191,7 +192,7 @@
 
   <a class="about-link" href="./aboutcontact.html" aria-label="About and contact">+</a>
 
-  <img class="logo" src="logo.png" alt="Weathergirl">
+  <img class="logo" src="LOGOpng.png" alt="Weathergirl">
 
   <img id="randomImage" class="random-image" src="1.png" alt="">
 
