@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +44,7 @@ a:focus-visible {
   text-decoration: none !important;
 }
 
-/* Fixed logo: identical position on every page */
+/* Fixed blue logo */
 
 .site-header {
   position: fixed;
@@ -150,6 +151,38 @@ a:focus-visible {
   flex-direction: column;
   gap: 4vh;
   min-width: 0;
+  width: 100%;
+}
+
+/* Event text sits above the image collage */
+
+.programme {
+  width: 100%;
+  max-width: 760px;
+  min-width: 0;
+  font-size: var(--font-size);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.programme-content p {
+  margin: 0 0 1.2em;
+}
+
+.programme-content .separator {
+  margin: 1.5em 0;
+}
+
+.programme-content strong {
+  font-weight: 700;
+}
+
+.programme-content em {
+  font-style: italic;
+}
+
+.programme-content a {
+  text-decoration: none !important;
 }
 
 /* Collage gallery */
@@ -171,9 +204,11 @@ a:focus-visible {
   max-width: none;
   max-height: none;
   object-fit: contain;
+  filter: none;
+  opacity: 1;
 }
 
-/* Vary image sizes and positions to create a loose collage */
+/* Default loose collage */
 
 .event-poster img:nth-child(6n + 1) {
   grid-column: span 7;
@@ -204,33 +239,16 @@ a:focus-visible {
   margin-top: 4vh;
 }
 
-.programme {
-  width: 100%;
-  max-width: 760px;
-  min-width: 0;
-  font-size: var(--font-size);
-  line-height: 1.5;
-  overflow-wrap: anywhere;
+/* Weathergirl 5: smaller poster and no secondary logo */
+
+.event-view[data-event="5"] .event-poster img:first-child {
+  grid-column: span 5;
 }
 
-.programme-content p {
-  margin: 0 0 1.2em;
-}
+/* Weathergirl 7: smaller book-launch poster */
 
-.programme-content .separator {
-  margin: 1.5em 0;
-}
-
-.programme-content strong {
-  font-weight: 700;
-}
-
-.programme-content em {
-  font-style: italic;
-}
-
-.programme-content a {
-  text-decoration: none !important;
+.event-view[data-event="7"] .event-poster img:first-child {
+  grid-column: span 5;
 }
 
 /* About page */
@@ -376,6 +394,11 @@ a:focus-visible {
     margin-top: 2vh;
   }
 
+  .event-view[data-event="5"] .event-poster img:first-child,
+  .event-view[data-event="7"] .event-poster img:first-child {
+    grid-column: span 4;
+  }
+
   .programme {
     grid-column: 1;
     grid-row: auto;
@@ -444,11 +467,11 @@ a:focus-visible {
     </nav>
 
     <div class="event-main">
-      <div class="event-poster" id="event-poster"></div>
-
       <section class="programme">
         <div class="programme-content" id="programme-content"></div>
       </section>
+
+      <div class="event-poster" id="event-poster"></div>
     </div>
 
   </section>
@@ -469,7 +492,7 @@ a:focus-visible {
 const programmes = {
   1: {
     poster: "11.jpg",
-    images: ["12.jpg", "baudelaire.jpg"],
+    images: ["12delete.jpg", "baudelaire.jpg"],
     html: `
       <p>Dear friends,</p>
 
@@ -504,8 +527,8 @@ const programmes = {
   },
 
   2: {
-    poster: "2poster.jpg",
-    images: ["DRAFT screening invite (10 Aug) A3.jpg", "a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "a6.jpg"],
+    poster: null,
+    images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png", "df.jpg"],
     html: `
       <p>Dear friends,</p>
 
@@ -529,7 +552,7 @@ const programmes = {
 
   3: {
     poster: "Weathergirl-Existers-Flyer.jpg",
-    images: ["e1.jpg", "e2.jpg", "e3.jpg", "e4.jpg", "13.png", "15.png", "32.jpg"],
+    images: ["e1.jpg", "e2.jpg", "e3.jpg", "e4.jpg", "13.png", "15.png", "32.jpg", "17.jpg"],
     html: `
       <p>Dear friends,</p>
 
@@ -577,263 +600,6 @@ const programmes = {
 
   5: {
     poster: "Poster_CittipunktWeathergirl.png",
-    images: ["1.png", "2.jpg", "7.png", "28.png", "29.png"],
+    images: ["1.png", "2.jpg", "28.png", "29.png", "31.png"],
     html: `
-      <p>Thursday, 24 July 2025, Avalon Cafe, London.</p>
-
-      <p>Saturday, 2 August 2025, Cittipunkt, Berlin.</p>
-
-      <p>Co-curated with Cittipunkt, presenting an XL programme of new video work by an extended community of artists, writers and filmmakers.</p>
-    `
-  },
-
-  6: {
-    poster: "Screenshot 2026-10-26 at 22.24.20.png",
-    images: ["closeup1.jpg", "closeup2.jpg", "closeup3.jpg"],
-    html: `
-      <p>Dear friends,</p>
-
-      <p>We are excited to invite you to a Halloween special we have programmed for The Liberated Film Club.</p>
-
-      <p>8.30pm, Friday, 31 October 2025 at Close-Up, 97 Sclater St, London E1 6HR.</p>
-
-      <p>You can purchase tickets <a href="https://www.closeupfilmcentre.com/film_programmes/2025/the-liberated-film-club/the-liberated-film-club-weathergirl" target="_blank" rel="noopener">here</a>.</p>
-
-      <p>The Liberated Film Club's policy is that the audience doesn't know what they're going to watch until the screening starts, so sorry about that.</p>
-
-      <p>We would love to see you there. Costumes not compulsory.</p>
-
-      <p>Bronte &amp; Freya</p>
-    `
-  },
-
-  7: {
-    poster: "Book Launch Charlie Chaplin.jpg",
-    images: [],
-    html: `
-      <p>Dear friends,</p>
-
-      <p>You are invited to the launch of Oliver Corino's new book <em>The Charlie Chaplin</em> on Wednesday March 25th at the <a href="https://www.google.com/maps/search/?api=1&query=The+Horse+Hospital+London" target="_blank" rel="noopener">Horse Hospital</a>. Doors at 7pm. Readings begin at 8pm.</p>
-
-      <p>Oliver's reading will take place in three parts, with music and drinks in between.</p>
-
-      <p>£8 OTD. Books available to buy on the night.</p>
-
-      <p><em>“My immediate concenrs [sic] are with regard to the levels of intoxication involved with the victims and suspects. There is also serious concern that the staff were intoxicated and their ability to manage the venue in this instance was seriously impaired, proven by the fact that a member of the public could get behind the bar and remove a knife and then use it to cause serious injury.”</em></p>
-
-      <p>A theme that figures in the literature of every era is the perception that important things are becoming lost to history. Based on news articles and police reports found online, <em>The Charlie Chaplin</em> returns to the dog days of The Charlie Chaplin pub in Elephant and Castle to give a literary account of the night of the 17th of June 2017, which, if it does anything, shows that there is a difference between literature and a police report.</p>
-
-      <p><a href="https://www.olivercorino.co.uk/" target="_blank" rel="noopener">https://www.olivercorino.co.uk/</a></p>
-    `
-  },
-
-  8: {
-    poster: "FINAL_INSTA_Weathergirl_AnnettaArtboard 2 2.jpg",
-    images: ["19.png", "18.png", "26.png", "21.jpg", "27.png", "postcards.jpg"],
-    html: `
-      <p>Weathergirl 8</p>
-
-      <p>Dear friends,</p>
-
-      <p>We are excited to invite you to a screening on the theme of housing in aid of Rode, a new housing co-op and artists’ space that we are helping to set up with Collective Ownership Society.</p>
-
-      <p>The screening will take place on Saturday 3 October at House of Annetta, 25 Princelet St, London E1 6QH. Doors will open at 6.30pm, with films beginning at 7pm and will run for around one hour. The programme list will be available on the night.</p>
-
-      <p>The event is BYOB. We can go to the Pride afterwards.</p>
-
-      <p>Space is limited to 30 people max. Tickets are £8. Please buy your ticket ahead of time via the link in our bio.</p>
-
-      <p>If you like, you can also separately donate to Rode Housing Co-op (link also in bio).</p>
-
-      <p>We hope to see you there,<br>
-      Bronte and Freya</p>
-    `
-  },
-
-  9: {
-    poster: null,
-    images: [],
-    html: `<p>Upcoming screening. Details to follow.</p>`
-  }
-};
-
-/* Homepage random images */
-
-const randomImages = [
-  "1.png",
-  "2.png",
-  "3.png",
-  "17.png",
-  "19.png",
-  "32.png"
-];
-
-const homeRandomImage = document.getElementById("home-random-image");
-let lastRandomImage = null;
-let randomImageRequest = 0;
-
-function preloadImage(src) {
-  return new Promise(resolve => {
-    const image = new Image();
-    image.onload = () => resolve(true);
-    image.onerror = () => resolve(false);
-    image.src = src;
-  });
-}
-
-async function showRandomImage() {
-  const request = ++randomImageRequest;
-  const candidates = randomImages
-    .filter(src => src !== lastRandomImage)
-    .sort(() => Math.random() - 0.5);
-
-  for (const src of candidates) {
-    const loaded = await preloadImage(src);
-
-    if (request !== randomImageRequest) return;
-
-    if (loaded) {
-      homeRandomImage.src = src;
-      homeRandomImage.alt = "Weathergirl";
-      lastRandomImage = src;
-      return;
-    }
-  }
-
-  console.warn(
-    "Weathergirl: no homepage images could be loaded. Check the filenames and ensure the images are in the same folder as index.html."
-  );
-}
-
-showRandomImage();
-setInterval(showRandomImage, 5000);
-
-/* Page elements */
-
-const homeView = document.getElementById("home-view");
-const eventView = document.getElementById("event-view");
-const eventPoster = document.getElementById("event-poster");
-const programmeContent = document.getElementById("programme-content");
-const aboutPanel = document.getElementById("about-panel");
-const logoLink = document.getElementById("logo-link");
-
-let currentPage = "home";
-
-/* Event links */
-
-document.querySelectorAll("[data-event]").forEach(link => {
-  link.addEventListener("click", event => {
-    event.preventDefault();
-    showEvent(link.dataset.event);
-  });
-});
-
-/* Build the event image collage */
-
-function addEventImage(src, eventId, index) {
-  const image = document.createElement("img");
-
-  image.src = src;
-  image.alt = `Weathergirl ${eventId}, image ${index + 1}`;
-  image.loading = "lazy";
-
-  image.addEventListener("error", () => {
-    console.warn(
-      `Weathergirl: could not load "${src}". Check the filename and file location.`
-    );
-    image.remove();
-  });
-
-  eventPoster.appendChild(image);
-}
-
-/* Homepage */
-
-function showHome() {
-  currentPage = "home";
-
-  homeView.classList.remove("hidden");
-  eventView.classList.add("hidden");
-  aboutPanel.classList.remove("is-open");
-
-  logoLink.setAttribute("href", "#about");
-  logoLink.setAttribute("aria-label", "Open About page");
-  logoLink.setAttribute("aria-expanded", "false");
-
-  showRandomImage();
-  window.scrollTo(0, 0);
-}
-
-/* Event page */
-
-function showEvent(id) {
-  const programme = programmes[id];
-  if (!programme) return;
-
-  currentPage = "event";
-
-  homeView.classList.add("hidden");
-  aboutPanel.classList.remove("is-open");
-  eventView.classList.remove("hidden");
-
-  document.querySelectorAll(".archive-link").forEach(link => {
-    if (link.dataset.event === String(id)) {
-      link.setAttribute("aria-current", "page");
-    } else {
-      link.removeAttribute("aria-current");
-    }
-  });
-
-  eventPoster.replaceChildren();
-
-  const images = [
-    ...(programme.poster ? [programme.poster] : []),
-    ...(programme.images || [])
-  ];
-
-  images.forEach((src, index) => addEventImage(src, id, index));
-
-  programmeContent.innerHTML = programme.html || "";
-
-  logoLink.setAttribute("href", "#about");
-  logoLink.setAttribute("aria-label", "Open About page");
-  logoLink.setAttribute("aria-expanded", "false");
-
-  window.scrollTo(0, 0);
-}
-
-/* About */
-
-function showAbout() {
-  currentPage = "about";
-
-  homeView.classList.add("hidden");
-  eventView.classList.add("hidden");
-  aboutPanel.classList.add("is-open");
-
-  logoLink.setAttribute("href", "#home");
-  logoLink.setAttribute("aria-label", "Return to homepage");
-  logoLink.setAttribute("aria-expanded", "true");
-
-  window.scrollTo(0, 0);
-}
-
-/* Logo toggles between About and homepage */
-
-logoLink.addEventListener("click", event => {
-  event.preventDefault();
-
-  if (currentPage === "about") {
-    showHome();
-  } else {
-    showAbout();
-  }
-});
-
-/* Start */
-
-showHome();
-</script>
-
-</body>
-</html>
+      <p>Thursday,
