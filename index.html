@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,14 +37,12 @@ a {
   text-decoration: none !important;
 }
 
-a:hover,
-a:focus-visible {
+a:hover, a:focus-visible {
   color: var(--hover);
   text-decoration: none !important;
 }
 
-/* Fixed blue logo */
-
+/* Fixed logo: identical position on every page */
 .site-header {
   position: fixed;
   top: 2vh;
@@ -67,7 +64,6 @@ a:focus-visible {
 }
 
 /* Homepage */
-
 .home-view {
   padding: calc(var(--logo-width) * .2 + 4vh) var(--edge) 8vh;
 }
@@ -108,10 +104,11 @@ a:focus-visible {
   height: min(58vh, 550px);
   object-fit: contain;
   object-position: center;
+  filter: none;
+  opacity: 1;
 }
 
 /* Event pages */
-
 .event-view {
   display: grid;
   grid-template-columns: minmax(130px, .65fr) minmax(0, 2.35fr);
@@ -151,42 +148,9 @@ a:focus-visible {
   flex-direction: column;
   gap: 4vh;
   min-width: 0;
-  width: 100%;
-}
-
-/* Event text sits above the image collage */
-
-.programme {
-  width: 100%;
-  max-width: 760px;
-  min-width: 0;
-  font-size: var(--font-size);
-  line-height: 1.5;
-  overflow-wrap: anywhere;
-}
-
-.programme-content p {
-  margin: 0 0 1.2em;
-}
-
-.programme-content .separator {
-  margin: 1.5em 0;
-}
-
-.programme-content strong {
-  font-weight: 700;
-}
-
-.programme-content em {
-  font-style: italic;
-}
-
-.programme-content a {
-  text-decoration: none !important;
 }
 
 /* Collage gallery */
-
 .event-poster {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -208,8 +172,7 @@ a:focus-visible {
   opacity: 1;
 }
 
-/* Default loose collage */
-
+/* Vary image sizes and positions to create a loose collage */
 .event-poster img:nth-child(6n + 1) {
   grid-column: span 7;
 }
@@ -239,20 +202,43 @@ a:focus-visible {
   margin-top: 4vh;
 }
 
-/* Weathergirl 5: smaller poster and no secondary logo */
-
-.event-view[data-event="5"] .event-poster img:first-child {
+/* Smaller main posters for Weathergirl 5 and 7 */
+.event-poster[data-event="5"] img:first-child,
+.event-poster[data-event="7"] img:first-child {
   grid-column: span 5;
 }
 
-/* Weathergirl 7: smaller book-launch poster */
+/* Programme text stays in the right-hand content column */
+.programme {
+  width: 100%;
+  max-width: 760px;
+  min-width: 0;
+  font-size: var(--font-size);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
 
-.event-view[data-event="7"] .event-poster img:first-child {
-  grid-column: span 5;
+.programme-content p {
+  margin: 0 0 1.2em;
+}
+
+.programme-content .separator {
+  margin: 1.5em 0;
+}
+
+.programme-content strong {
+  font-weight: 700;
+}
+
+.programme-content em {
+  font-style: italic;
+}
+
+.programme-content a {
+  text-decoration: none !important;
 }
 
 /* About page */
-
 .about-panel {
   display: none;
   padding: calc(var(--logo-width) * .2 + 4vh) var(--edge) 8vh;
@@ -281,325 +267,10 @@ a:focus-visible {
 }
 
 /* Tablet */
-
 @media (max-width: 900px) {
   :root {
     --logo-width: clamp(220px, 34vw, 340px);
   }
 
   .home-layout {
-    grid-template-columns: minmax(150px, .7fr) minmax(0, 2fr);
-  }
-
-  .event-view {
-    grid-template-columns: minmax(110px, .55fr) minmax(0, 2fr);
-    column-gap: 4vw;
-  }
-
-  .event-poster {
-    gap: 12px;
-  }
-}
-
-/* Mobile */
-
-@media (max-width: 600px) {
-  :root {
-    --edge: 5vw;
-    --logo-width: clamp(170px, 48vw, 260px);
-  }
-
-  .site-header {
-    top: 2vh;
-    right: var(--edge);
-  }
-
-  .home-view {
-    padding-top: calc(var(--logo-width) * .25 + 4vh);
-  }
-
-  .home-layout {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 4vh;
-    min-height: auto;
-  }
-
-  .home-event-list {
-    width: 100%;
-  }
-
-  .home-image-area {
-    min-height: 45vh;
-  }
-
-  .home-random-image {
-    width: 85vw;
-    height: 45vh;
-  }
-
-  .event-view {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 3vh;
-    padding-top: calc(var(--logo-width) * .25 + 3vh);
-  }
-
-  .archive {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .archive-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 7px 15px;
-  }
-
-  .event-main {
-    grid-column: 1;
-    grid-row: 2;
-    gap: 4vh;
-  }
-
-  .event-poster {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .event-poster img:nth-child(6n + 1) {
-    grid-column: span 4;
-  }
-
-  .event-poster img:nth-child(6n + 2) {
-    grid-column: span 2;
-    margin-top: 3vh;
-  }
-
-  .event-poster img:nth-child(6n + 3) {
-    grid-column: span 3;
-    margin-top: 1vh;
-  }
-
-  .event-poster img:nth-child(6n + 4) {
-    grid-column: span 3;
-    margin-top: 2vh;
-  }
-
-  .event-poster img:nth-child(6n + 5) {
-    grid-column: span 2;
-    margin-top: 0;
-  }
-
-  .event-poster img:nth-child(6n) {
-    grid-column: span 4;
-    margin-top: 2vh;
-  }
-
-  .event-view[data-event="5"] .event-poster img:first-child,
-  .event-view[data-event="7"] .event-poster img:first-child {
-    grid-column: span 4;
-  }
-
-  .programme {
-    grid-column: 1;
-    grid-row: auto;
-    max-width: 680px;
-  }
-
-  .about-panel {
-    padding-top: calc(var(--logo-width) * .25 + 4vh);
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header class="site-header">
-  <a href="#about" id="logo-link"
-     aria-label="Open About page" aria-expanded="false">
-    <img class="logo" src="bluelogo.png" alt="Weathergirl">
-  </a>
-</header>
-
-<main>
-
-  <!-- HOMEPAGE -->
-
-  <section id="home-view" class="home-view">
-    <div class="home-layout">
-
-      <nav class="home-event-list" aria-label="Screening archive">
-        <a class="home-event" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
-        <a class="home-event" href="#" data-event="8">Weathergirl 8</a>
-        <a class="home-event" href="#" data-event="7">Weathergirl 7</a>
-        <a class="home-event" href="#" data-event="6">Weathergirl 6</a>
-        <a class="home-event" href="#" data-event="5">Weathergirl 5</a>
-        <a class="home-event" href="#" data-event="4">Weathergirl 4</a>
-        <a class="home-event" href="#" data-event="3">Weathergirl 3</a>
-        <a class="home-event" href="#" data-event="2">Weathergirl 2</a>
-        <a class="home-event" href="#" data-event="1">Weathergirl 1</a>
-      </nav>
-
-      <div class="home-image-area">
-        <img id="home-random-image" class="home-random-image"
-             src="1.png" alt="Weathergirl">
-      </div>
-
-    </div>
-  </section>
-
-  <!-- EVENT PAGE -->
-
-  <section id="event-view" class="event-view hidden">
-
-    <nav class="archive" aria-label="Screening archive">
-      <div class="archive-list">
-        <a class="archive-link" href="#" data-event="9">Weathergirl 9 (upcoming)</a>
-        <a class="archive-link" href="#" data-event="8">Weathergirl 8</a>
-        <a class="archive-link" href="#" data-event="7">Weathergirl 7</a>
-        <a class="archive-link" href="#" data-event="6">Weathergirl 6</a>
-        <a class="archive-link" href="#" data-event="5">Weathergirl 5</a>
-        <a class="archive-link" href="#" data-event="4">Weathergirl 4</a>
-        <a class="archive-link" href="#" data-event="3">Weathergirl 3</a>
-        <a class="archive-link" href="#" data-event="2">Weathergirl 2</a>
-        <a class="archive-link" href="#" data-event="1">Weathergirl 1</a>
-      </div>
-    </nav>
-
-    <div class="event-main">
-      <section class="programme">
-        <div class="programme-content" id="programme-content"></div>
-      </section>
-
-      <div class="event-poster" id="event-poster"></div>
-    </div>
-
-  </section>
-
-  <!-- ABOUT -->
-
-  <section class="about-panel" id="about-panel">
-    <div class="about-content">
-      <p>
-        An itinerant screening series showcasing funny, sad and perverse artists’ moving image, organised by Bronte Dow and Freya Field-Donovan. You can contact us <a href="mailto:dowbronte@gmail.com">here</a>.
-      </p>
-    </div>
-  </section>
-
-</main>
-
-<script>
-const programmes = {
-  1: {
-    poster: "11.jpg",
-    images: ["12delete.jpg", "baudelaire.jpg"],
-    html: `
-      <p>Dear friends,</p>
-
-      <p>We are showing some films on Friday 15 March 2024 at Pelican House, 144 Cambridge Heath Road, E1 5QJ.</p>
-
-      <p>Doors at 7pm, screening starts at 8pm. Bar will stay open afterwards.</p>
-
-      <p>Screening includes:<br>
-      Shirley Clarke<br>
-      Therese Henningsen &amp; Aki Ilomäki<br>
-      Steve Reinke<br>
-      Deniz Ünal</p>
-
-      <p>With contributions by Tim Donovan and Gina Dow</p>
-
-      <p class="separator">––</p>
-
-      <p>Shirley Clarke was an American filmmaker.</p>
-
-      <p>Tim Donovan is an artist and tiler based in Austin, Texas.</p>
-
-      <p>Gina Dow is a Canberran based in southern New South Wales, Australia.</p>
-
-      <p>Therese Henningsen is a filmmaker based in London.</p>
-
-      <p>Aki Ilomäki is an artist based in Palermo, Italy.</p>
-
-      <p>Steve Reinke is a Canadian artist and writer.</p>
-
-      <p>Deniz Ünal is an artist and teacher, born in Istanbul and living in London.</p>
-    `
-  },
-
-  2: {
-    poster: null,
-    images: ["a1.jpg", "a3.jpg", "a4.jpg", "a5.jpg", "16.png", "df.jpg"],
-    html: `
-      <p>Dear friends,</p>
-
-      <p>We are showing some films on Saturday 10th August 2024 at Avalon Cafe, SE14 5RW. There will be some music after from Katie Shannon, Ed Lehan and Jim Janco.</p>
-
-      <p>Screening includes:<br>
-      Adam Christensen<br>
-      Keren Cytter<br>
-      Marion Scemama &amp; David Wojnarowicz<br>
-      Leslie Thornton<br>
-      Sam Tierney</p>
-
-      <p>7pm - 2am. Films start promptly at 7:30. Music after until 2am.</p>
-
-      <p>Avalon's bar open throughout. £6 OTD so we can pay DJs.</p>
-
-      <p>See you soon.<br>
-      Bronte and Freya</p>
-    `
-  },
-
-  3: {
-    poster: "Weathergirl-Existers-Flyer.jpg",
-    images: ["e1.jpg", "e2.jpg", "e3.jpg", "e4.jpg", "13.png", "15.png", "32.jpg", "17.jpg"],
-    html: `
-      <p>Dear friends,</p>
-
-      <p>We will be showing some films this Friday 22 November 2024 at Existers, 125 Shaftesbury Avenue, London WC2H 8HR.</p>
-
-      <p>We will be screening works by:<br>
-      Andrew Kӧtting<br>
-      Stan Douglas<br>
-      George Kuchar<br>
-      Rosalind Nashashibi<br>
-      Ryan Trecartin</p>
-
-      <p>Doors at 6pm, films will start at 6.30pm. It’s free and there will be some beers.</p>
-
-      <p>+ Friday 22 November, 6pm<br>
-      + Existers, 125 Shaftesbury Avenue, London WC2H 8HR<br>
-      + Free entrance<br>
-      + Some beers and BYOB if you like</p>
-
-      <p>RSVP is essential - <a href="https://www.eventbrite.com/e/existers-weathergirl-film-screening-tickets-1049018631967?aff=oddtdtcreator" target="_blank" rel="noopener">link here</a>. Hope to see you there.</p>
-
-      <p>Bronte &amp; Freya</p>
-    `
-  },
-
-  4: {
-    poster: "weathergirl4poster.jpg",
-    images: ["17.png"],
-    html: `
-      <p>You are invited to a screening on Friday 14 March 2025 at Avalon Cafe, SE14 5RW. There will be an introduction to the films by Therese Henningsen and Marc Isaacs.</p>
-
-      <p>Programme:<br>
-      Therese Henningsen, <em>After Time</em> (2023)<br>
-      Sidsel Meineche Hansen, Therese Henningsen, <em>Baby Jesus</em> (2023)<br>
-      Marc Isaacs, <em>Lift</em> (2001)</p>
-
-      <p>Music from Weak DJs after the screening.</p>
-
-      <p>Doors at 8pm. £5 OTD. Avalon's bar will be open throughout.</p>
-
-      <p>Hope to see you there,<br>
-      Bronte and Freya</p>
-    `
-  },
-
-  5: {
-    poster: "Poster_CittipunktWeathergirl.png",
-    images: ["1.png", "2.jpg", "28.png", "29.png", "31.png"],
-    html: `
-      <p>Thursday,
+    grid-template-columns: minmax(150
